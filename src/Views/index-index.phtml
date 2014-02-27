@@ -1,0 +1,14 @@
+<ul>
+	<?php if ($this->context->isLoggedIn): ?>
+		<li>
+			<a href="<?= \Chibi\UrlHelper::route('auth', 'logout') ?>">Log out</a>
+		</li>
+	<?php else: ?>
+		<li>
+			<a href="<?= \Chibi\UrlHelper::route('auth', 'login') ?>">Log in</a>
+		</li>
+		<li>
+			<a href="<?= \Chibi\UrlHelper::route('auth', 'register') ?>">Register</a>
+		</li>
+	<?php endif ?>
+</ul>

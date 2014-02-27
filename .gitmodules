@@ -1,0 +1,6 @@
+[submodule "lib/chibi-core"]
+	path = lib/chibi-core
+	url = https://github.com/rr-/chibi-core.git
+[submodule "lib/chibi-sql"]
+	path = lib/chibi-sql
+	url = https://github.com/rr-/chibi-sql.git

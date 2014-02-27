@@ -1,0 +1,3 @@
+<?php foreach (Messenger::getMessages() as $message): ?>
+	<p class="message <?= $message->getType() ?>"><?= $message->getText() ?></p>
+<?php endforeach ?>

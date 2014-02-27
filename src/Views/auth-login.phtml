@@ -1,0 +1,13 @@
+<?= $this->renderFile('messages') ?>
+<form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
+
+	User name:
+	<?= HtmlHelper::textInputTag('name') ?>
+	<br/>
+
+	User password:
+	<?= HtmlHelper::passwordTag('pass') ?>
+	<br/>
+
+	<input type="submit" value="Log in"/>
+</form>

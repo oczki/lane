@@ -1,0 +1,26 @@
+<?= $this->renderFile('messages') ?>
+<form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
+
+	User name:
+	<?= HtmlHelper::textInputTag('name', ['placeholder' => 'e.g. darth_vader']) ?>
+	<br/>
+
+	E-mail (optional):
+	<?= HtmlHelper::textInputTag('e-mail', ['placeholder' => 'e.g. vader@empire.gov']) ?>
+	<br/>
+
+	Password:
+	<?= HtmlHelper::passwordTag('pass1',
+		['autocomplete' => 'off',
+		'placeholder' => 'e.g. ' . str_repeat('&bull;', 5)]) ?>
+	<br/>
+
+	Password (repeat):
+	<?= HtmlHelper::passwordTag('pass2',
+		['autocomplete' => 'off',
+		'placeholder' => 'e.g. ' . str_repeat('&bull;', 5)]) ?>
+	<br/>
+
+	<input type="submit" value="Register"/>
+
+</form>
