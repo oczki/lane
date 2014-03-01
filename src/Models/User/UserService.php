@@ -35,11 +35,11 @@ class UserService
 
 	public static function saveOrUpdate(UserEntity $userEntity)
 	{
-		UserDao::saveOrUpdate($userEntity);
+		return UserDao::saveOrUpdate($userEntity);
 	}
 
 	public static function delete(UserEntity $userEntity)
 	{
-		UserDao::delete($userEntity);
+		return UserDao::delete($userEntity);
 	}
 }

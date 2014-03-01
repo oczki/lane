@@ -33,6 +33,9 @@ class DaoHelper
 				$stmt->setColumn($key, new Sql\Binding($val));
 
 			Database::exec($stmt);
+
+			if (!$update)
+				$entity->id = Database::lastInsertId();
 		});
 	}
 

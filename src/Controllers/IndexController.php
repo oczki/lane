@@ -6,5 +6,9 @@ class IndexController
 	*/
 	public function indexAction()
 	{
+		if ($this->context->isLoggedIn)
+		{
+			\Chibi\UrlHelper::forward(\Chibi\UrlHelper::route('list', 'view'));
+		}
 	}
 }

@@ -9,6 +9,18 @@ class TextHelper
 			return $number . ' ' . $singularUnitText . 's';
 	}
 
+	public static function randomString($alphabet, $length)
+	{
+		$alphabet = str_split($alphabet);
+		if (empty($alphabet))
+			throw new Exception('Alphabet is empty.');
+
+		$out = '';
+		for ($i = 0; $i < $length; $i ++)
+			$out .= $alphabet[array_rand($alphabet)];
+		return $out;
+	}
+
 	const SNAKE_CASE = 1; //snake_case
 	const SPINAL_CASE = 2; //train-case
 	const TRAIN_CASE = 3; //Train-Case

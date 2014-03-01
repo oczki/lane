@@ -1,0 +1,22 @@
+<a href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
+	<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo-small.png') ?>" alt=""/>
+</a>
+<br/>
+
+<p>Available lists:</p>
+<ul>
+<?php foreach ($this->context->lists as $list): ?>
+	<li>
+		<a href="<?= \Chibi\UrlHelper::route('list', 'view', ['id' => $list->uniqueId]) ?>">
+			<?= $list->name ?>
+		</a>
+	</li>
+<?php endforeach ?>
+</ul>
+
+<?= $this->renderFile('messages') ?>
+<?= $this->renderView() ?>
+
+<a href="<?= \Chibi\UrlHelper::route('auth', 'logout') ?>">
+	Logout
+</a>

@@ -19,6 +19,7 @@ class Bootstrap
 		$this->context->viewDecorators []= new \Chibi\AssetViewDecorator();
 		$this->context->viewDecorators []= new \Chibi\PrettyPrintViewDecorator();
 		$this->context->layoutName = 'layout-normal';
+		$this->context->subLayoutName = 'layout-big';
 
 		$this->context->isSubmit = $_SERVER['REQUEST_METHOD'] == 'POST';
 		$this->context->isLoggedIn = isset($_SESSION['logged-in']);
