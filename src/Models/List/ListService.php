@@ -15,7 +15,7 @@ class ListService
 			return $lists;
 
 		$user = UserService::getById($userId);
-		$list = self::createNewList($user, 'New blank list');
+		$list = self::createNewList($user, 'New blank list', true);
 		return [$list];
 	}
 
@@ -40,7 +40,7 @@ class ListService
 		return ListDao::delete($listEntity);
 	}
 
-	public static function createNewList(UserEntity $owner, $title)
+	public static function createNewList(UserEntity $owner, $title, $visible)
 	{
 		$filter = new ListFilter();
 		$filter->userId = $owner->id;

@@ -24,7 +24,7 @@ class HtmlHelper
 			'name' => $name,
 			'value' => InputHelper::getPost($name)
 		];
-		return self::tag('input', array_merge($params, $otherParams));
+		return self::tag('input', array_merge($otherParams, $params), true);
 	}
 
 	public static function textInputTag($name, array $params = [])
@@ -34,6 +34,29 @@ class HtmlHelper
 			'name' => $name,
 			'value' => InputHelper::getPost($name)
 		];
-		return self::tag('input', array_merge($params, $otherParams));
+		return self::tag('input', array_merge($otherParams, $params), true);
+	}
+
+	public static function hiddenInputTag($name, array $params = [])
+	{
+		$otherParams = [
+			'type' => 'hidden',
+			'name' => $name,
+			'value' => InputHelper::getPost($name),
+		];
+		return self::tag('input', array_merge($otherParams, $params), true);
+	}
+
+	public static function checkboxInputTag($name, $checked = false, array $params = [])
+	{
+		$otherParams = [
+			'type' => 'checkbox',
+			'name' => $name,
+			'value' => '1',
+		];
+		if ($checked)
+			$otherParams['checked'] = 'checked';
+		return self::hiddenInputTag($name, ['value' => '0'])
+			. self::tag('input', array_merge($otherParams, $params), true);
 	}
 }

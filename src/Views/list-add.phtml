@@ -1,0 +1,13 @@
+<form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
+
+	List name:
+	<?= HtmlHelper::textInputTag('name') ?>
+	<br/>
+
+	Visible to everyone:
+	<?= HtmlHelper::checkboxInputTag('visible', true) ?>
+	<br/>
+
+	<input type="submit" value="Create new list"/>
+</form>
+

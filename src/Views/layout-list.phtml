@@ -11,7 +11,7 @@
 		<div id="sidebar-nav">
 			<ul id="lists">
 			<?php foreach ($this->context->lists as $list): ?>
-				<?= HtmlHelper::tag('li', $list->uniqueId == $this->context->list->uniqueId ? ['class' => 'active'] : []) ?>
+				<?= HtmlHelper::tag('li', (isset($this->context->list) and $list->uniqueId == $this->context->list->uniqueId) ? ['class' => 'active'] : []) ?>
 					<a title="<?= $list->name ?>" href="<?= \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $list->uniqueId]) ?>">
 						<?= $list->name ?>
 					</a>
@@ -22,10 +22,14 @@
 			<?php if ($this->context->canEdit): ?>
 				<ul id="list-management">
 					<li>
-						<a href="#"><i class="icon icon-manage"></i> Manage</a>
+						<a href="<?= \Chibi\UrlHelper::route('list', 'manage', ['userName' => $this->context->user->name]) ?>">
+							<i class="icon icon-manage"></i> Manage
+						</a>
 					</li>
 					<li>
-						<a href="#"><i class="icon icon-add"></i> Add</a>
+						<a href="<?= \Chibi\UrlHelper::route('list', 'add', ['userName' => $this->context->user->name]) ?>">
+							<i class="icon icon-add"></i> Add
+						</a>
 					</li>
 				</ul>
 			<?php endif ?>

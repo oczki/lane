@@ -51,4 +51,14 @@ class TextHelper
 		else
 			throw new Exception('Unknown conversion target');
 	}
+
+	public static function keepWhiteSpace($text)
+	{
+		$text = str_replace(
+			["\t", "\r", "\n"],
+			['&#9;', '&#13;', '&#10;'],
+			$text);
+		$text = str_replace('  ', '&nbsp; ', $text);
+		return $text;
+	}
 }

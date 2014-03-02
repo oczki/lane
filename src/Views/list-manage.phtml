@@ -1,0 +1,67 @@
+<?= \Chibi\AssetViewDecorator::addStylesheet('list-manage.css') ?>
+<?= \Chibi\AssetViewDecorator::addStylesheet('list-manage.js') ?>
+
+<h1>Manage lists</h1>
+
+<form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
+	<table>
+		<thead>
+			<tr>
+				<th>Order</th>
+				<th>List name</th>
+				<th>Visibility</th>
+				<th>More options</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<?php foreach ($this->context->lists as $list): ?>
+				<tr>
+					<td>
+						<?= HtmlHelper::hiddenInputTag(
+							'lists[' . $list->uniqueId . '][priority]',
+							['value' => $list->priority]) ?>
+						<a href="#" class="move-up">
+							<i class="icon icon-up"></i>
+						</a>
+						<a href="#" class="move-down">
+							<i class="icon icon-down"></i>
+						</a>
+					</td>
+
+					<td>
+						<?= HtmlHelper::textInputTag(
+							'lists[' . $list->uniqueId  . '][name]',
+							['value' => $list->name]) ?>
+					</td>
+
+					<td>
+						<?= HtmlHelper::checkboxInputTag(
+							'lists[' . $list->uniqueId . '][visible]',
+							$list->visible) ?>
+						&nbsp;public
+					</td>
+
+					<td>
+						<input type="button" value="Edit list&hellip;"/>
+					</td>
+				</tr>
+			<?php endforeach ?>
+		</tbody>
+
+		<tfoot>
+			<tr>
+				<td></td>
+
+				<td>
+					<input type="button" class="add-list" value="Add new list"/>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+
+	<div class="op">
+		<input class="save" type="submit" value="Save changes">
+		<input class="cancel" type="button" value="Cancel">
+	</div>
+</form>
