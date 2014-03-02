@@ -6,4 +6,5 @@ class ListEntity extends AbstractEntity
 	public $name;
 	public $priority;
 	public $uniqueId;
+	public $visible;
 }

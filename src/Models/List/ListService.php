@@ -62,6 +62,7 @@ class ListService
 		$listEntity->name = $title;
 		$listEntity->priority = $maxPriority + 1;
 		$listEntity->uniqueId = TextHelper::randomString($alpha, 32);
+		$listEntity->visible = true;
 		return ListDao::saveOrUpdate($listEntity);
 	}
 }
