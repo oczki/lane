@@ -6,9 +6,14 @@
 
 #sidebar ul {
 	list-style-type: none;
-	margin: 2em 0;
+	margin: 1.5em 0 2em 0;
 	padding: 0;
 }
+
+	#save-info {
+		font-size: 85%;
+		margin: 0;
+	}
 
 	#sidebar-nav {
 		position: relative;

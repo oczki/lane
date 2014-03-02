@@ -32,6 +32,7 @@ class ListService
 
 	public static function saveOrUpdate(ListEntity $listEntity)
 	{
+		$listEntity->lastUpdate = time();
 		return ListDao::saveOrUpdate($listEntity);
 	}
 
@@ -63,6 +64,6 @@ class ListService
 		$listEntity->priority = $maxPriority + 1;
 		$listEntity->uniqueId = TextHelper::randomString($alpha, 32);
 		$listEntity->visible = true;
-		return ListDao::saveOrUpdate($listEntity);
+		return self::saveOrUpdate($listEntity);
 	}
 }

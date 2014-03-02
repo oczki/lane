@@ -14,6 +14,7 @@ class Upgrade3 implements IUpgrade
 		$stmt->addColumn('name', Sql\CreateTableStatement::TYPE_VARCHAR, 20);
 		$stmt->addColumn('unique_id', Sql\CreateTableStatement::TYPE_VARCHAR, 32);
 		$stmt->addColumn('visible', Sql\CreateTableStatement::TYPE_INTEGER, 1);
+		$stmt->addColumn('last_update', Sql\CreateTableStatement::TYPE_INTEGER);
 		$stmt->setPrimaryKey('id');
 		$stmt->addUniqueKey('unique_id');
 		$stmt->addCheckContraint(new Sql\NegationFunctor(new Sql\IsFunctor('name', new Sql\NullFunctor())));

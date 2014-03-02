@@ -5,7 +5,14 @@
 	<a href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
 		<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo-small.png') ?>" alt=""/>
 	</a>
-	<br/>
+
+	<p id="save-info">
+		<?php if (isset($this->context->list) and $this->context->list->lastUpdate !== null): ?>
+			<?= 'updated ' . TextHelper::formatTimeDelta(time() - $this->context->list->lastUpdate) ?>
+		<?php else: ?>
+			&nbsp;
+		<?php endif ?>
+	</p>
 
 	<?php if (!empty($this->context->lists)): ?>
 		<div id="sidebar-nav">
