@@ -1,24 +1,85 @@
-<a href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
-	<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo-small.png') ?>" alt=""/>
-</a>
-<br/>
+<?php \Chibi\AssetViewDecorator::addStylesheet('list.css') ?>
+<?php \Chibi\AssetViewDecorator::addScript('menu.js') ?>
 
-<?php if (!empty($this->context->lists)): ?>
-	<p>Available lists:</p>
-	<ul>
-	<?php foreach ($this->context->lists as $list): ?>
-		<li>
-			<a href="<?= \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $list->uniqueId]) ?>">
-				<?= $list->name ?>
-			</a>
-		</li>
-	<?php endforeach ?>
-	</ul>
-<?php endif ?>
+<div id="sidebar">
+	<a href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
+		<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo-small.png') ?>" alt=""/>
+	</a>
+	<br/>
 
-<?php $this->renderFile('messages') ?>
-<?php $this->renderView() ?>
+	<?php if (!empty($this->context->lists)): ?>
+		<div id="sidebar-nav">
+			<ul id="lists">
+			<?php foreach ($this->context->lists as $list): ?>
+				<?= HtmlHelper::tag('li', $list->uniqueId == $this->context->list->uniqueId ? ['class' => 'active'] : []) ?>
+					<a title="<?= $list->name ?>" href="<?= \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $list->uniqueId]) ?>">
+						<?= $list->name ?>
+					</a>
+				<?= HtmlHelper::tagClose('li') ?>
+			<?php endforeach ?>
+			</ul>
 
-<a href="<?= \Chibi\UrlHelper::route('auth', 'logout') ?>">
-	Logout
-</a>
+			<?php if ($this->context->canEdit): ?>
+				<ul id="list-management">
+					<li>
+						<a href="#"><i class="icon icon-manage"></i> Manage</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon icon-add"></i> Add</a>
+					</li>
+				</ul>
+			<?php endif ?>
+		</div>
+	<?php endif ?>
+</div>
+
+<div id="outer-content">
+	<div id="inner-header">
+		<div id="search">
+			<?= HtmlHelper::textInputTag('search', ['placeholder' => 'Search on this list&hellip;']) ?>
+			<p><?= $this->context->user->name ?>&rsquo;s lane</p>
+		</div>
+		<div id="menu">
+			<div id="menu-trigger">
+				<a href="#"><i class="icon icon-menu"></i> Menu</a>
+			</div>
+			<ul>
+				<?php
+					$links = [];
+					if ($this->context->isLoggedIn)
+					{
+						$links []= ['#', 'Account settings'];
+						$links []= ['#', 'Import'];
+						$links []= ['#', 'Export'];
+					}
+
+					$links []= ['#', 'Help'];
+					$links []= ['#', 'About'];
+
+					if ($this->context->isLoggedIn)
+					{
+						$links []= [\Chibi\UrlHelper::route('auth', 'logout'), 'Log out'];
+					}
+					else
+					{
+						$links []= [\Chibi\UrlHelper::route('auth', 'login'), 'Log in'];
+						$links []= [\Chibi\UrlHelper::route('auth', 'register'), 'Register'];
+					}
+				?>
+				<?php foreach ($links as $link): ?>
+					<?php list ($url, $text) = $link ?>
+					<li>
+						<a href="<?= $url ?>">
+							<?= $text ?>
+						</a>
+					</li>
+				<?php endforeach ?>
+			</ul>
+		</div>
+	</div>
+
+	<div id="inner-content">
+		<?php $this->renderFile('messages') ?>
+		<?php $this->renderView() ?>
+	</div>
+</div>

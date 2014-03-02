@@ -1,12 +1,13 @@
-body {
+body,
+input {
 	font-size: 11pt;
 	font-family: 'Verdana', sans-serif;
 }
 
-#content {
+#main {
 	text-align: left;
 	margin: 0 auto;
-	max-width: 40em;
+	max-width: 60em;
 }
 
 .message {
@@ -26,4 +27,23 @@ body {
 }
 .message.info {
 	background: rgba(0, 0, 255, 0.1);
+}
+
+a {
+	color: black;
+	text-decoration: none;
+	transition: color 0.25s ease 0s;
+}
+a:focus {
+	outline: 1px dashed #8a8;
+}
+
+.icon {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background-image: url('/img/icons.png');
+	background-repeat: no-repeat;
+	background-color: black;
+	transition: background-color 0.25s ease 0s;
 }
