@@ -11,7 +11,12 @@ class ListService
 		$filter = new ListFilter();
 		$filter->userId = $userId;
 		$lists = self::getFilteredLists($filter);
-		return $lists;
+		if (!empty($lists))
+			return $lists;
+
+		$user = UserService::getById($userId);
+		$list = self::createNewList($user, 'New blank list');
+		return [$list];
 	}
 
 	public static function getByUniqueId($uniqueId)
@@ -37,7 +42,10 @@ class ListService
 
 	public static function createNewList(UserEntity $owner, $title)
 	{
-		$lists = self::getByUserId($owner->id);
+		$filter = new ListFilter();
+		$filter->userId = $owner->id;
+		$lists = self::getFilteredLists($filter);
+
 		$maxPriority = array_reduce($lists, function($max, $list)
 		{
 			if ($list->priority > $max)

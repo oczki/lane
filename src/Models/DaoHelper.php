@@ -6,7 +6,7 @@ class DaoHelper
 {
 	public static function saveOrUpdate($table, AbstractEntity $entity)
 	{
-		Database::transaction(function() use ($table, $entity)
+		return Database::transaction(function() use ($table, $entity)
 		{
 			$array = self::untransformEntity($entity);
 			$update = false;
@@ -36,6 +36,8 @@ class DaoHelper
 
 			if (!$update)
 				$entity->id = Database::lastInsertId();
+
+			return $entity;
 		});
 	}
 

@@ -24,13 +24,25 @@ class Bootstrap
 		$this->context->isSubmit = $_SERVER['REQUEST_METHOD'] == 'POST';
 		$this->context->isLoggedIn = isset($_SESSION['logged-in']);
 		if ($this->context->isLoggedIn)
-			$this->context->user = UserService::getById($_SESSION['user-id']);
+			$this->context->userLogged = UserService::getById($_SESSION['user-id']);
 		else
-			$this->context->user = null;
+			$this->context->userLogged = null;
 
 		try
 		{
 			$this->render($workCallback);
+		}
+		catch (\Chibi\UnhandledRouteException $e)
+		{
+			Messenger::error('Error 404.');
+			$this->context->viewName = null;
+			$this->render();
+		}
+		catch (SimpleException $e)
+		{
+			Messenger::error($e->getMessage());
+			$this->context->viewName = null;
+			$this->render();
 		}
 		catch (Exception $e)
 		{

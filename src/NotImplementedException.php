@@ -1,5 +1,5 @@
 <?php
-class NotImplementedException extends Exception
+class NotImplementedException extends SimpleException
 {
 	public function __construct()
 	{

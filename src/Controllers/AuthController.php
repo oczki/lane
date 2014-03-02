@@ -9,28 +9,29 @@ class AuthController
 		if (!$this->context->isSubmit)
 			return;
 
+		$name = InputHelper::getPost('name');
+		$pass = InputHelper::getPost('pass');
+
+		$passHash = UserService::hashPassword($pass);
+
 		try
 		{
-			$name = InputHelper::getPost('name');
-			$pass = InputHelper::getPost('pass');
-
-			$passHash = UserService::hashPassword($pass);
-
 			$user = UserService::getByName($name);
 			if (empty($user))
 				throw new ValidationException('User not found.');
 
 			if ($passHash != $user->passHash)
 				throw new ValidationException('Invalid password.');
-
-			$_SESSION['logged-in'] = true;
-			$_SESSION['user-id'] = $user->id;
-			\Chibi\UrlHelper::forward('/');
 		}
-		catch (ValidationException $e)
+		catch (SimpleException $e)
 		{
 			Messenger::error($e->getMessage());
+			return;
 		}
+
+		$_SESSION['logged-in'] = true;
+		$_SESSION['user-id'] = $user->id;
+		\Chibi\UrlHelper::forward('/');
 	}
 
 	/**
@@ -80,20 +81,21 @@ class AuthController
 				$validator = new Validator($email, 'e-mail');
 				$validator->checkEmail();
 			}
-
-			$user = new UserEntity();
-			$user->name = $name;
-			$user->passHash = $passHash;
-			$user->email = $email;
-			UserService::saveOrUpdate($user);
-
-			$_SESSION['logged-in'] = true;
-			$_SESSION['user-id'] = $user->id;
-			\Chibi\UrlHelper::forward('/');
 		}
-		catch (ValidationException $e)
+		catch (SimpleException $e)
 		{
 			Messenger::error($e->getMessage());
+			return;
 		}
+
+		$user = new UserEntity();
+		$user->name = $name;
+		$user->passHash = $passHash;
+		$user->email = $email;
+		UserService::saveOrUpdate($user);
+
+		$_SESSION['logged-in'] = true;
+		$_SESSION['user-id'] = $user->id;
+		\Chibi\UrlHelper::forward('/');
 	}
 }
