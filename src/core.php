@@ -1,4 +1,5 @@
 <?php
+$scriptStartTime = microtime(true);
 define('DS', DIRECTORY_SEPARATOR);
 $rootDir = __DIR__ . DS . '..' . DS;
 
@@ -20,5 +21,6 @@ foreach ($configPaths as $path)
 \Chibi\Registry::setConfig($config);
 \Chibi\Facade::init();
 \Chibi\Registry::getContext()->rootDir = $rootDir;
+\Chibi\Registry::getContext()->scriptStartTime = $scriptStartTime;
 
 \Chibi\Database::connect('sqlite', $rootDir . DS . 'data' . DS . 'db.sqlite', null, null);

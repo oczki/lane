@@ -15,6 +15,11 @@ class Bootstrap
 		exit;
 	}
 
+	public static function getUptime()
+	{
+		return microtime(true) - \Chibi\Registry::getContext()->scriptStartTime;
+	}
+
 	public function workWrapper($workCallback)
 	{
 		session_start();

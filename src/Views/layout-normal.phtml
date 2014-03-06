@@ -11,6 +11,9 @@
 <body>
 	<div id="main">
 		<?php $this->renderFile($this->context->subLayoutName) ?>
+		<footer>
+			<p>Load: <?= sprintf('%.07fs', Bootstrap::getUptime()) ?></p>
+		</footer>
 	</div>
 </body>
 </html>

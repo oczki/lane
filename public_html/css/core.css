@@ -87,17 +87,33 @@ input[type=submit] {
 form {
 	display: table;
 }
-form div.input-row {
-	display: table-row;
-}
-form div.input-row label:not(.checkbox) {
-	display: table-cell;
+	form div.input-row {
+		display: table-row;
+	}
+	form div.input-row label:not(.checkbox) {
+		display: table-cell;
+		text-align: right;
+		padding: 0 0.5em;
+	}
+	form label.checkbox {
+		margin-left: 0.5em;
+	}
+
+
+footer {
+	padding: 0.5em 0.2em;
+	border-top: 1px solid #eee;
+	position: relative;
+	color: silver;
+	font-size: 90%;
 	text-align: right;
-	padding: 0 0.5em;
 }
-form label.checkbox {
-	margin-left: 0.5em;
-}
+	footer p {
+		margin: 0 1em;
+	}
+	footer p:first-child {
+		margin-left: 0;
+	}
 
 h1 {
 	font-weight: normal;
