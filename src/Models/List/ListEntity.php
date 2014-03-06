@@ -8,4 +8,5 @@ class ListEntity extends AbstractEntity
 	public $uniqueId;
 	public $visible;
 	public $lastUpdate;
+	public $content;
 }

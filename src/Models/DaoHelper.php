@@ -67,7 +67,7 @@ class DaoHelper
 	{
 		$entities = [];
 		foreach ($rawEntities as $rawEntity)
-			$entities []= self::transformEntity($desiredClassName, $rawEntity);
+			$entities[$rawEntity['id']] = self::transformEntity($desiredClassName, $rawEntity);
 		return $entities;
 	}
 }

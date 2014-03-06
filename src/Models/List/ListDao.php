@@ -31,16 +31,45 @@ class ListDao
 
 		$stmt->setOrderBy('priority', Sql\SelectStatement::ORDER_ASC);
 
-		return DaoHelper::transformEntities('ListEntity', Database::fetchAll($stmt));
+		$rows = Database::fetchAll($stmt);
+		$listEntities = DaoHelper::transformEntities('ListEntity', $rows);
+
+		foreach ($rows as $row)
+		{
+			$listEntity = &$listEntities[$row['id']];
+			$listEntity->content = self::deserializeContent($listEntity->content);
+			unset($listEntity);
+		}
+
+		return $listEntities;
 	}
 
 	public static function saveOrUpdate(ListEntity $listEntity)
 	{
-		return DaoHelper::saveOrUpdate('list', $listEntity);
+		$listEntity->content = self::serializeContent($listEntity->content);
+		try
+		{
+			$ret = DaoHelper::saveOrUpdate('list', $listEntity);
+		}
+		finally
+		{
+			$listEntity->content = self::deserializeContent($listEntity->content);
+		}
+		return $ret;
 	}
 
 	public static function delete(ListEntity $listEntity)
 	{
 		return DaoHelper::delete($listEntity);
+	}
+
+	private static function serializeContent($content)
+	{
+		return gzdeflate(serialize($content));
+	}
+
+	private static function deserializeContent($content)
+	{
+		return unserialize(gzinflate($content));
 	}
 }

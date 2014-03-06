@@ -245,3 +245,7 @@
 .icon-add {
 	background-position: -43px -1px;
 }
+
+#list {
+	width: 100%;
+}

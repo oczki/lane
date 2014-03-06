@@ -1,3 +1,26 @@
 <?php if (!isset($this->context->list)) return ?>
 
 <h1><?= $this->context->list->name ?></h1>
+
+<table id="list">
+	<thead>
+		<tr>
+			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
+				<th class="<?= join(' ', ListService::getColumnModifiers($this->context->list, $columnIndex)) ?>" style="width: <?= $column->width ?>%">
+					<?= $column->name ?>
+				</th>
+			<?php endforeach ?>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach (ListService::getRows($this->context->list) as $rowIndex => $row): ?>
+			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
+				<td class="<?= join(' ', ListService::getColumnModifiers($this->context->list, $columnIndex)) ?>">
+					<?= $row[$columnIndex] ?>
+				</td>
+			<?php endforeach ?>
+		<?php endforeach ?>
+	</tbody>
+</table>
+
+<pre><?= TextHelper::keepWhiteSpace(print_r($this->context->list->content, true)) ?></h1>
