@@ -1,0 +1,91 @@
+#menu {
+	margin: 4px;
+	min-width: 10em;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+	#menu a {
+		display: inline-block;
+		display: block;
+		padding: 0.5em 0.8em;
+		position: relative;
+	}
+	#menu ul {
+		box-shadow: 0 0 4px rgba(0,0,0,0.05);
+		background: white;
+		position: relative;
+		display: none;
+		clear: both;
+		list-style-type: none;
+		border: 1px solid silver;
+		margin: 0;
+		padding: 0;
+		border-top-left-radius: 3px;
+		border-bottom-left-radius: 3px;
+		border-bottom-right-radius: 3px;
+	}
+	#menu.active ul {
+		overflow: hidden;
+		display: block;
+	}
+	#menu li {
+		display: block;
+	}
+	#menu li a:focus,
+	#menu li a:hover {
+		background: #eee;
+		outline: 0;
+	}
+
+	#menu-trigger {
+		text-align: right;
+		float: right;
+		padding: 1px;
+		position: relative;
+		background: white;
+		margin-bottom: -1px;
+		margin: 1px;
+	}
+	#menu.active #menu-trigger {
+		border: 1px solid silver;
+		margin: 0;
+		border-bottom: none;
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
+		box-shadow: 0 0 4px rgba(0,0,0,0.05);
+	}
+	#menu-trigger:after {
+		position: absolute;
+		bottom: -1px;
+		height: 4px;
+		background: white;
+		right: 0;
+		left: 0;
+		pointer-events: none;
+		display: block;
+		content: ' ';
+		z-index: 4;
+	}
+	#menu-trigger .icon {
+		float: right;
+		margin-left: 0.8em;
+		background-color: silver;
+	}
+	#menu-trigger a {
+		color: silver;
+		padding-bottom: 0.2em;
+	}
+	#menu #menu-trigger a:focus,
+	#menu.active #menu-trigger a {
+		color: black;
+		outline: 0;
+	}
+	#menu #menu-trigger a:focus .icon,
+	#menu.active #menu-trigger a .icon {
+		background-color: black;
+	}
+
+.icon-menu {
+	background-position: -1px -1px;
+}
