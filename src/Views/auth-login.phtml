@@ -1,12 +1,12 @@
 <form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
 
-	User name:
-	<?= HtmlHelper::textInputTag('name') ?>
-	<br/>
+	<?= HtmlHelper::labelDecorator('User name',
+		HtmlHelper::textInputTag('name')) ?>
 
-	User password:
-	<?= HtmlHelper::passwordTag('pass') ?>
-	<br/>
+	<?= HtmlHelper::labelDecorator('Password',
+		HtmlHelper::passwordInputTag('pass')) ?>
 
-	<input type="submit" value="Log in"/>
+	<?= HtmlHelper::labelDecorator(false,
+		HtmlHelper::submitInputTag('Log in')) ?>
+
 </form>

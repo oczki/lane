@@ -1,7 +1,12 @@
+body {
+	background: white;
+}
+
 body,
 input {
 	font-size: 11pt;
 	font-family: 'Verdana', sans-serif;
+	color: black;
 }
 
 #main {
@@ -47,4 +52,49 @@ a:focus {
 	background-repeat: no-repeat;
 	background-color: black;
 	transition: background-color 0.25s ease 0s;
+}
+
+input[type=radio],
+input[type=checkbox] {
+	margin: 0.5em 0.2em;
+}
+input[type=text],
+input[type=password] {
+	margin: 0.2em;
+	padding: 3px 6px;
+	border: 1px solid lightgray;
+	border-radius: 3px;
+}
+input[type=button],
+input[type=submit] {
+	margin: 0.2em;
+	padding: 5px 12px;
+	border: 1px solid lightgray;
+	border-radius: 3px;
+	background: linear-gradient(to bottom,
+		#fafafa 25%,
+		#eee 75%);
+	color: black;
+	cursor: pointer;
+}
+	input[type=button]:hover,
+	input[type=submit]:hover,
+	input[type=button]:focus,
+	input[type=submit]:focus {
+		outline: 0;
+	}
+
+form {
+	display: table;
+}
+form div.input-row {
+	display: table-row;
+}
+form div.input-row label:not(.checkbox) {
+	display: table-cell;
+	text-align: right;
+	padding: 0 0.5em;
+}
+form label.checkbox {
+	margin-left: 0.5em;
 }

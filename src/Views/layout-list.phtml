@@ -26,16 +26,13 @@
 			<?php endforeach ?>
 			</ul>
 
+			<hr/>
+
 			<?php if ($this->context->canEdit): ?>
 				<ul id="list-management">
 					<li>
-						<a href="<?= \Chibi\UrlHelper::route('list', 'manage', ['userName' => $this->context->user->name]) ?>">
-							<i class="icon icon-manage"></i> Manage
-						</a>
-					</li>
-					<li>
 						<a href="<?= \Chibi\UrlHelper::route('list', 'add', ['userName' => $this->context->user->name]) ?>">
-							<i class="icon icon-add"></i> Add
+							Add new list&hellip;
 						</a>
 					</li>
 				</ul>

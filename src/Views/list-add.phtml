@@ -1,13 +1,13 @@
 <form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
 
-	List name:
-	<?= HtmlHelper::textInputTag('name') ?>
-	<br/>
+	<?= HtmlHelper::labelDecorator('List name',
+		HtmlHelper::textInputTag('name')) ?>
 
-	Visible to everyone:
-	<?= HtmlHelper::checkboxInputTag('visible', true) ?>
-	<br/>
+	<?= HtmlHelper::labelDecorator('Visible to everyone',
+		HtmlHelper::checkboxInputTag('visible', true)) ?>
 
-	<input type="submit" value="Create new list"/>
+	<?= HtmlHelper::labelDecorator(false,
+		HtmlHelper::submitInputTag('Create new list')) ?>
+
 </form>
 

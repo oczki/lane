@@ -1,7 +1,5 @@
 <?php if (!isset($this->context->list)) return ?>
 
-<h1><?= $this->context->list->name ?></h1>
-
 <table id="list">
 	<thead>
 		<tr>
@@ -12,6 +10,7 @@
 			<?php endforeach ?>
 		</tr>
 	</thead>
+
 	<tbody>
 		<?php foreach (ListService::getRows($this->context->list) as $rowIndex => $row): ?>
 			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
@@ -21,6 +20,21 @@
 			<?php endforeach ?>
 		<?php endforeach ?>
 	</tbody>
+
+	<tfoot>
+		<tr class="row-template">
+			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
+				<td class="<?= join(' ', ListService::getColumnModifiers($this->context->list, $columnIndex)) ?>">
+				</td>
+			<?php endforeach ?>
+		</tr>
+	</tfoot>
 </table>
+
+<?php if ($this->context->canEdit): ?>
+	<div id="add-row">
+		<input type="button" value="Add new row"/>
+	</div>
+<?php endif ?>
 
 <pre><?= TextHelper::keepWhiteSpace(print_r($this->context->list->content, true)) ?></h1>
