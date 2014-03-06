@@ -31,7 +31,9 @@ class AuthController
 
 		$_SESSION['logged-in'] = true;
 		$_SESSION['user-id'] = $user->id;
-		\Chibi\UrlHelper::forward('/');
+
+		Messenger::success('Logged in.');
+		Bootstrap::forward('/');
 	}
 
 	/**
@@ -41,7 +43,9 @@ class AuthController
 	{
 		unset($_SESSION['logged-in']);
 		unset($_SESSION['user-id']);
-		\Chibi\UrlHelper::forward('/');
+
+		Messenger::success('Logged out.');
+		Bootstrap::forward('/');
 	}
 
 	/**
@@ -96,6 +100,8 @@ class AuthController
 
 		$_SESSION['logged-in'] = true;
 		$_SESSION['user-id'] = $user->id;
-		\Chibi\UrlHelper::forward('/');
+
+		Messenger::success('Registration successful');
+		Bootstrap::forward('/');
 	}
 }

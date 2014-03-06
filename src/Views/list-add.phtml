@@ -1,4 +1,6 @@
-<form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
+<h1>Add new list</h1>
+
+<form action="<?= \Chibi\UrlHelper::route('list', 'add') ?>" method="post">
 
 	<?= HtmlHelper::labelDecorator('List name',
 		HtmlHelper::textInputTag('name')) ?>

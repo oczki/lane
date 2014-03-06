@@ -1,6 +1,11 @@
-<?php \Chibi\AssetViewDecorator::addStylesheet('list.css') ?>
-<?php \Chibi\AssetViewDecorator::addStylesheet('menu.css') ?>
-<?php \Chibi\AssetViewDecorator::addScript('menu.js') ?>
+<?php
+\Chibi\AssetViewDecorator::addStylesheet('popups.css');
+\Chibi\AssetViewDecorator::addStylesheet('list.css');
+\Chibi\AssetViewDecorator::addStylesheet('menu.css');
+\Chibi\AssetViewDecorator::addScript('popups.js');
+\Chibi\AssetViewDecorator::addScript('menu.js');
+\Chibi\AssetViewDecorator::addScript('list.js');
+?>
 
 <div id="sidebar">
 	<a href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
@@ -32,7 +37,7 @@
 			<?php if ($this->context->canEdit): ?>
 				<ul id="list-management">
 					<li>
-						<a href="<?= \Chibi\UrlHelper::route('list', 'add', ['userName' => $this->context->user->name]) ?>">
+						<a id="add-new-list" href="<?= \Chibi\UrlHelper::route('list', 'add', ['userName' => $this->context->user->name]) ?>">
 							Add new list&hellip;
 						</a>
 					</li>

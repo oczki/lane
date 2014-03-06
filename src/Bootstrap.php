@@ -9,6 +9,12 @@ class Bootstrap
 			(new \Chibi\View())->renderFile($this->context->layoutName);
 	}
 
+	public static function forward($url)
+	{
+		\Chibi\UrlHelper::forward($url);
+		exit;
+	}
+
 	public function workWrapper($workCallback)
 	{
 		session_start();
@@ -18,7 +24,9 @@ class Bootstrap
 
 		$this->context->viewDecorators []= new \Chibi\AssetViewDecorator();
 		$this->context->viewDecorators []= new \Chibi\PrettyPrintViewDecorator();
-		$this->context->layoutName = 'layout-normal';
+		$this->context->layoutName = isset($_GET['simple'])
+			? 'layout-simple'
+			: 'layout-normal';
 		$this->context->subLayoutName = 'layout-big';
 
 		$this->context->isSubmit = $_SERVER['REQUEST_METHOD'] == 'POST';

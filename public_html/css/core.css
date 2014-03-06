@@ -20,7 +20,7 @@ input {
 	padding: 0.2em 0.5em;
 	border-radius: 3px;
 	background: rgba(0, 0, 0, 0.05);
-	white-space: pre;
+	white-space: pre-wrap;
 }
 .message.error {
 	background: rgba(255, 0, 0, 0.1);
@@ -97,4 +97,10 @@ form div.input-row label:not(.checkbox) {
 }
 form label.checkbox {
 	margin-left: 0.5em;
+}
+
+h1 {
+	font-weight: normal;
+	font-size: 18pt;
+	margin: 0 0 1em 0;
 }

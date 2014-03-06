@@ -4,6 +4,7 @@ $rootDir = __DIR__ . DS . '..' . DS;
 
 //basic include calls, autoloader init
 require_once $rootDir . 'lib' . DS . 'chibi-core' . DS . 'Facade.php';
+require_once $rootDir . 'src' . DS . 'Message.php';
 \Chibi\AutoLoader::init([__DIR__, $rootDir . 'lib' . DS . 'chibi-sql']);
 
 //load config manually

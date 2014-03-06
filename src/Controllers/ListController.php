@@ -3,9 +3,13 @@ use Chibi\Database as Database;
 
 class ListController
 {
-	private function preWork($userName)
+	private function preWork($userName = false)
 	{
-		$user = UserService::getByName($userName);
+		if ($userName)
+			$user = UserService::getByName($userName);
+		elseif ($this->context->isLoggedIn and $this->context->userLogged)
+			$user = $this->context->userLogged;
+
 		if (!$user)
 			throw new SimpleException('User "' . $userName . '" doesn\'t exist.');
 
@@ -64,13 +68,12 @@ class ListController
 	}
 
 	/**
-	* @route /ml/{userName}/add
-	* @route /ml/{userName}/add/
-	* @validate userName [a-zA-Z0-9_-]+
+	* @route /exec/add
+	* @route /exec/add/
 	*/
-	public function addAction($userName)
+	public function addAction()
 	{
-		$this->preWork($userName);
+		$this->preWork();
 
 		if (!$this->context->canEdit)
 			throw new SimpleException('Cannot edit this list.');
@@ -86,6 +89,8 @@ class ListController
 			$validator = new Validator($name, 'list name');
 			$validator->checkMinLength(1);
 			$validator->checkMaxLength(20);
+
+			ListService::createNewList($this->context->userLogged, $name, $visible);
 		}
 		catch (SimpleException $e)
 		{
@@ -93,7 +98,6 @@ class ListController
 			return;
 		}
 
-		ListService::createNewList($this->context->user, $name, $visible);
-		\Chibi\UrlHelper::forward('/');
+		Messenger::success('List added successfully.');
 	}
 }

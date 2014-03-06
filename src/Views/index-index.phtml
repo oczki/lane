@@ -1,14 +1,14 @@
+<?php
+\Chibi\AssetViewDecorator::addStylesheet('popups.css');
+\Chibi\AssetViewDecorator::addScript('popups.js');
+\Chibi\AssetViewDecorator::addScript('index.js');
+?>
+
 <ul>
-	<?php if ($this->context->isLoggedIn): ?>
-		<li>
-			<a href="<?= \Chibi\UrlHelper::route('auth', 'logout') ?>">Log out</a>
-		</li>
-	<?php else: ?>
-		<li>
-			<a href="<?= \Chibi\UrlHelper::route('auth', 'login') ?>">Log in</a>
-		</li>
-		<li>
-			<a href="<?= \Chibi\UrlHelper::route('auth', 'register') ?>">Register</a>
-		</li>
-	<?php endif ?>
+	<li>
+		<a id="login" href="<?= \Chibi\UrlHelper::route('auth', 'login') ?>">Log in</a>
+	</li>
+	<li>
+		<a id="register" href="<?= \Chibi\UrlHelper::route('auth', 'register') ?>">Register</a>
+	</li>
 </ul>
