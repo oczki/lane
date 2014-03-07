@@ -1,3 +1,19 @@
+function enableExitConfirmation(message)
+{
+	if (typeof(message) === 'undefined')
+		message = 'There are unsaved changes.';
+
+	$(window).bind('beforeunload', function(e)
+	{
+		return message;
+	});
+}
+
+function disableExitConfirmation()
+{
+	$(window).unbind('beforeunload');
+}
+
 function appendUrlParameter(url, key, value)
 {
 	var sep = url.indexOf('?') != - 1

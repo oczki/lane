@@ -2,25 +2,12 @@
 class ListAddJob implements IJob
 {
 	private $name;
-	private $user;
 	private $visible;
 
-	public static function getName()
-	{
-		return 'list-add';
-	}
-
-	public static function getArgumentCount()
-	{
-		return 2;
-	}
-
 	public function __construct(
-		UserEntity $user,
 		$name,
 		$visible)
 	{
-		$this->user = $user;
 		$this->name = $name;
 		$this->visible = $visible;
 
@@ -31,10 +18,10 @@ class ListAddJob implements IJob
 		$this->visible = $visible;
 	}
 
-	public function execute()
+	public function execute(UserEntity $user)
 	{
 		$filter = new ListFilter();
-		$filter->userId = $this->user->id;
+		$filter->userId = $user->id;
 		$lists = ListService::getFilteredLists($filter);
 
 		$maxPriority = array_reduce($lists, function($max, $list)
@@ -51,7 +38,7 @@ class ListAddJob implements IJob
 		$listEntity = new ListEntity();
 		$listEntity->uniqueId = TextHelper::randomString($alpha, 32);
 		$listEntity->priority = $maxPriority + 1;
-		$listEntity->userId = $this->user->id;
+		$listEntity->userId = $user->id;
 		$listEntity->name = $this->name;
 		$listEntity->visible = $this->visible;
 		$listEntity->content = new ListContent();

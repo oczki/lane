@@ -47,13 +47,13 @@ class Bootstrap
 		catch (\Chibi\UnhandledRouteException $e)
 		{
 			Messenger::error('Error 404.');
-			$this->context->viewName = null;
+			$this->context->viewName = 'messages';
 			$this->render();
 		}
 		catch (SimpleException $e)
 		{
 			Messenger::error($e->getMessage());
-			$this->context->viewName = null;
+			$this->context->viewName = 'messages';
 			$this->render();
 		}
 		catch (Exception $e)

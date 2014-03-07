@@ -1,5 +1,9 @@
 <?php if (!isset($this->context->list)) return ?>
 
+<?= HtmlHelper::hiddenInputTag('list-unique-id', [
+	'value' => $this->context->list->uniqueId,
+	'id' => 'list-unique-id']) ?>
+
 <table id="list">
 	<thead>
 		<tr>
@@ -13,11 +17,13 @@
 
 	<tbody>
 		<?php foreach (ListService::getRows($this->context->list) as $rowIndex => $row): ?>
-			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
-				<td class="<?= join(' ', ListService::getColumnModifiers($this->context->list, $columnIndex)) ?>">
-					<?= $row[$columnIndex] ?>
-				</td>
-			<?php endforeach ?>
+			<tr>
+				<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
+					<td class="<?= join(' ', ListService::getColumnModifiers($this->context->list, $columnIndex)) ?>">
+						<?= $row[$columnIndex] ?>
+					</td>
+				<?php endforeach ?>
+			</tr>
 		<?php endforeach ?>
 	</tbody>
 

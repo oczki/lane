@@ -15,8 +15,8 @@ class ListService
 			return $lists;
 
 		$user = UserService::getById($userId);
-		$job = new ListAddJob($user, 'New blank list', true);
-		JobExecutor::execute($job);
+		$job = new ListAddJob('New blank list', true);
+		JobExecutor::execute($job, $user);
 
 		$lists = self::getFilteredLists($filter);
 		return $lists;
@@ -57,18 +57,6 @@ class ListService
 		$listEntity->content->columns = array_splice($listEntity->content->columns, $index, 1);
 		foreach ($listEntity->content->rows as $i => $row)
 			$listEntity->content->rows[$i] = array_splice($row, $index, 1);
-	}
-
-	public static function addRow(ListEntity $listEntity, array $newRow = [])
-	{
-		if (empty($newRow))
-			$newRow = array_fill(0, count($listEntity->content->columns), '');
-
-		if (count($newRow) != count($listEntity->content->columns))
-			throw new Exception('Invalid column count.');
-
-		$listEntity->content->rows []= $newRow;
-		return count($listEntity->content->rows) - 1;
 	}
 
 	public static function removeRow(ListEntity $listEntity, $index)

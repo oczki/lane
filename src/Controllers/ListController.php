@@ -61,8 +61,8 @@ class ListController
 			$name = InputHelper::getPost('name');
 			$visible = boolval(InputHelper::getPost('visible'));
 
-			$job = new ListAddJob($this->context->userLogged, $name, $visible);
-			JobExecutor::execute($job);
+			$job = new ListAddJob($name, $visible);
+			JobExecutor::execute($job, $this->context->userLogged);
 		}
 		catch (SimpleException $e)
 		{
@@ -71,5 +71,33 @@ class ListController
 		}
 
 		Messenger::success('List added successfully.');
+	}
+
+	/**
+	* @route /exec
+	* @route /exec/
+	*/
+	public function execAction()
+	{
+		$this->preWork();
+
+		if (!$this->context->canEdit)
+			throw new SimpleException('Cannot edit this list.');
+
+		if (!$this->context->isSubmit)
+			return;
+
+		$jobs = [];
+		$jobTexts = InputHelper::getPost('jobs');
+		foreach ($jobTexts as $jobText)
+		{
+			$job = JobExecutor::parse($jobText);
+			$jobs []= $job;
+		}
+
+		JobExecutor::execute($jobs, $this->context->userLogged);
+
+		$this->context->viewName = 'messages';
+		Messenger::success(count($jobs) . ' jobs executed successfully.');
 	}
 }

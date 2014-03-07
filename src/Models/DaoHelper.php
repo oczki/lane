@@ -12,7 +12,7 @@ class DaoHelper
 			$update = false;
 			if (isset($entity->id))
 			{
-				$stmt = new SqlSelectStatement();
+				$stmt = new Sql\SelectStatement();
 				$stmt->setCriterion(new Sql\EqualsFunctor('id', new Sql\Binding($entity->id)));
 				$stmt->setTable($table);
 				if (Database::fetchOne($stmt))
