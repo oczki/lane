@@ -1,0 +1,47 @@
+<?php
+\Chibi\AssetViewDecorator::addStylesheet('menu.css');
+\Chibi\AssetViewDecorator::addScript('menu.js');
+?>
+
+<div id="search">
+	<?= HtmlHelper::textInputTag('search', ['placeholder' => 'Search on this list&hellip;']) ?>
+	<p><?= $this->context->user->name ?>&rsquo;s lane</p>
+</div>
+
+<div id="menu">
+	<div id="menu-trigger">
+		<a href="#"><i class="icon icon-menu"></i> Menu</a>
+	</div>
+	<ul>
+		<?php
+			$links = [];
+			if ($this->context->isLoggedIn)
+			{
+				$links []= ['#', 'Account settings'];
+				$links []= ['#', 'Import'];
+				$links []= ['#', 'Export'];
+			}
+
+			$links []= ['#', 'Help'];
+			$links []= ['#', 'About'];
+
+			if ($this->context->isLoggedIn)
+			{
+				$links []= [\Chibi\UrlHelper::route('auth', 'logout'), 'Log out'];
+			}
+			else
+			{
+				$links []= [\Chibi\UrlHelper::route('auth', 'login'), 'Log in'];
+				$links []= [\Chibi\UrlHelper::route('auth', 'register'), 'Register'];
+			}
+		?>
+		<?php foreach ($links as $link): ?>
+			<?php list ($url, $text) = $link ?>
+			<li>
+				<a href="<?= $url ?>">
+					<?= $text ?>
+				</a>
+			</li>
+		<?php endforeach ?>
+	</ul>
+</div>

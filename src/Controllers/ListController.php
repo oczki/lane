@@ -13,7 +13,6 @@ class ListController
 		if (!$user)
 			throw new SimpleException('User "' . $userName . '" doesn\'t exist.');
 
-		$this->context->subLayoutName = 'layout-list';
 		$this->context->user = $user;
 		$this->context->lists = ListService::getByUserId($user->id);
 		$this->context->canEdit =

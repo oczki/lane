@@ -1,40 +1,19 @@
-<?php if (!isset($this->context->list)) return ?>
+<?php
+\Chibi\AssetViewDecorator::addStylesheet('popups.css');
+\Chibi\AssetViewDecorator::addStylesheet('list.css');
+\Chibi\AssetViewDecorator::addScript('popups.js');
+\Chibi\AssetViewDecorator::addScript('list.js');
+?>
 
-<table id="list">
-	<thead>
-		<tr>
-			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
-				<th class="<?= join(' ', ListService::getColumnModifiers($this->context->list, $columnIndex)) ?>" style="width: <?= $column->width ?>%">
-					<?= $column->name ?>
-				</th>
-			<?php endforeach ?>
-		</tr>
-	</thead>
+<?= $this->renderFile('list-sidebar') ?>
 
-	<tbody>
-		<?php foreach (ListService::getRows($this->context->list) as $rowIndex => $row): ?>
-			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
-				<td class="<?= join(' ', ListService::getColumnModifiers($this->context->list, $columnIndex)) ?>">
-					<?= $row[$columnIndex] ?>
-				</td>
-			<?php endforeach ?>
-		<?php endforeach ?>
-	</tbody>
-
-	<tfoot>
-		<tr class="row-template">
-			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
-				<td class="<?= join(' ', ListService::getColumnModifiers($this->context->list, $columnIndex)) ?>">
-				</td>
-			<?php endforeach ?>
-		</tr>
-	</tfoot>
-</table>
-
-<?php if ($this->context->canEdit): ?>
-	<div id="add-row">
-		<input type="button" value="Add new row"/>
+<div id="outer-content">
+	<div id="inner-header">
+		<?= $this->renderFile('list-header') ?>
 	</div>
-<?php endif ?>
 
-<pre><?= TextHelper::keepWhiteSpace(print_r($this->context->list->content, true)) ?></h1>
+	<div id="inner-content">
+		<?php $this->renderFile('messages') ?>
+		<?php $this->renderFile('list-content') ?>
+	</div>
+</div>

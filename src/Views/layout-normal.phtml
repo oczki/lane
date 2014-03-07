@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div id="main">
-		<?php $this->renderFile($this->context->subLayoutName) ?>
+		<?php $this->renderView() ?>
 		<div class="clear"></div>
 		<footer>
 			<p>Load: <?= sprintf('%.07fs', Bootstrap::getUptime()) ?></p>

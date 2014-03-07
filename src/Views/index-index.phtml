@@ -4,6 +4,13 @@
 \Chibi\AssetViewDecorator::addScript('index.js');
 ?>
 
+<a href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
+	<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo.png') ?>" alt=""/>
+</a>
+<br/>
+
+<?php $this->renderFile('messages') ?>
+
 <ul>
 	<li>
 		<a id="login" href="<?= \Chibi\UrlHelper::route('auth', 'login') ?>">Log in</a>

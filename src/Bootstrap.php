@@ -32,7 +32,6 @@ class Bootstrap
 		$this->context->layoutName = isset($_GET['simple'])
 			? 'layout-simple'
 			: 'layout-normal';
-		$this->context->subLayoutName = 'layout-big';
 
 		$this->context->isSubmit = $_SERVER['REQUEST_METHOD'] == 'POST';
 		$this->context->isLoggedIn = isset($_SESSION['logged-in']);
