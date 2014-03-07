@@ -104,25 +104,6 @@ class ListService
 		return $listEntity->content->columns;
 	}
 
-	public static function getColumnModifiers(ListEntity $listEntity, $columnIndex)
-	{
-		self::checkColumnIndex($listEntity, $columnIndex);
-
-		$listColumn = $listEntity->content->columns[$columnIndex];
-		$modifiers = [];
-
-		if ($listColumn->align == ListColumn::ALIGN_LEFT)
-			$modifiers []= 'col-left';
-
-		elseif ($listColumn->align == ListColumn::ALIGN_CENTER)
-			$modifiers []= 'col-center';
-
-		elseif ($listColumn->align == ListColumn::ALIGH_RIGHT)
-			$modifiers []= 'col-right';
-
-		return $modifiers;
-	}
-
 	private static function checkColumnIndex(ListEntity $listEntity, &$index)
 	{
 		$index = intval($index);

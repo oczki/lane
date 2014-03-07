@@ -4,13 +4,38 @@
 	'value' => $this->context->list->uniqueId,
 	'id' => 'list-unique-id']) ?>
 
+<?php
+$alignments = [];
+$alignments[ListColumn::ALIGN_LEFT] = 'col-left';
+$alignments[ListColumn::ALIGN_CENTER] = 'col-center';
+$alignments[ListColumn::ALIGN_RIGHT] = 'col-right';
+
+$showCell = function($text)
+{
+?>
+	<td>
+		<span class="content"><?= $text ?></span>
+		<?php if ($this->context->canEdit): ?>
+			<input type="text"/>
+			<a href="#" class="edit-content">
+				<i class="icon-edit"></i>
+			</a>
+		<?php endif ?>
+	</td>
+<?php
+}
+?>
+
 <table id="list">
 	<thead>
 		<tr>
 			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
-				<th class="<?= join(' ', ListService::getColumnModifiers($this->context->list, $columnIndex)) ?>" style="width: <?= $column->width ?>%">
+				<?= HtmlHelper::tag('th', [
+					'class' => $alignments[$column->align],
+					'style' => 'width: ' . $column->width . '%'
+				], false) ?>
 					<?= $column->name ?>
-				</th>
+				<?= HtmlHelper::tagClose('th') ?>
 			<?php endforeach ?>
 		</tr>
 	</thead>
@@ -19,9 +44,7 @@
 		<?php foreach (ListService::getRows($this->context->list) as $rowIndex => $row): ?>
 			<tr>
 				<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
-					<td class="<?= join(' ', ListService::getColumnModifiers($this->context->list, $columnIndex)) ?>">
-						<?= $row[$columnIndex] ?>
-					</td>
+					<?= $showCell($row[$columnIndex]) ?>
 				<?php endforeach ?>
 			</tr>
 		<?php endforeach ?>
@@ -30,8 +53,7 @@
 	<tfoot>
 		<tr class="row-template">
 			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
-				<td class="<?= join(' ', ListService::getColumnModifiers($this->context->list, $columnIndex)) ?>">
-				</td>
+				<? $showCell('') ?>
 			<?php endforeach ?>
 		</tr>
 	</tfoot>
@@ -42,5 +64,3 @@
 		<input type="button" value="Add new row"/>
 	</div>
 <?php endif ?>
-
-<pre><?= TextHelper::keepWhiteSpace(print_r($this->context->list->content, true)) ?></h1>

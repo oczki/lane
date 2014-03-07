@@ -158,7 +158,20 @@
 
 #list {
 	width: 100%;
+	empty-cells: show;
+	margin-bottom: 1em;
 }
+	#list tr:hover td {
+		background: #eee;
+	}
+	#list input {
+		display: none;
+	}
+	#list span:before {
+		display: block;
+		content: '\a0';
+		cursor: default;
+	}
 #add-row {
 	text-align: center;
 }
