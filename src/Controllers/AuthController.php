@@ -41,6 +41,11 @@ class AuthController
 	*/
 	public function logoutAction()
 	{
+		$this->context->viewName = null;
+
+		if (!$this->context->isSubmit)
+			return;
+
 		unset($_SESSION['logged-in']);
 		unset($_SESSION['user-id']);
 

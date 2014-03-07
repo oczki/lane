@@ -17,28 +17,28 @@
 			$links = [];
 			if ($this->context->isLoggedIn)
 			{
-				$links []= ['#', 'Account settings'];
-				$links []= ['#', 'Import'];
-				$links []= ['#', 'Export'];
+				$links []= ['account settings', '#', 'Account settings'];
+				$links []= ['import', '#', 'Import'];
+				$links []= ['export', '#', 'Export'];
 			}
 
-			$links []= ['#', 'Help'];
-			$links []= ['#', 'About'];
+			$links []= ['help', '#', 'Help'];
+			$links []= ['about', '#', 'About'];
 
 			if ($this->context->isLoggedIn)
 			{
-				$links []= [\Chibi\UrlHelper::route('auth', 'logout'), 'Log out'];
+				$links []= ['logout', \Chibi\UrlHelper::route('auth', 'logout'), 'Log out'];
 			}
 			else
 			{
-				$links []= [\Chibi\UrlHelper::route('auth', 'login'), 'Log in'];
-				$links []= [\Chibi\UrlHelper::route('auth', 'register'), 'Register'];
+				$links []= ['login', \Chibi\UrlHelper::route('auth', 'login'), 'Log in'];
+				$links []= ['register', \Chibi\UrlHelper::route('auth', 'register'), 'Register'];
 			}
 		?>
 		<?php foreach ($links as $link): ?>
-			<?php list ($url, $text) = $link ?>
+			<?php list ($class, $url, $text) = $link ?>
 			<li>
-				<a href="<?= $url ?>">
+				<a href="<?= $url ?>" id="menu-<?= $class ?>">
 					<?= $text ?>
 				</a>
 			</li>
