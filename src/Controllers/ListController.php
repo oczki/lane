@@ -43,30 +43,6 @@ class ListController
 	}
 
 	/**
-	* @route /ml/{userName}
-	* @route /ml/{userName}/
-	* @validate userName [a-zA-Z0-9_-]+
-	*/
-	public function manageAction($userName = null)
-	{
-		$this->preWork($userName);
-
-		if (!$this->context->canEdit)
-			throw new SimpleException('Cannot edit this list.');
-
-		if (!$this->context->isSubmit)
-			return;
-
-		Database::transaction(function()
-		{
-			Messenger::info(TextHelper::keepWhiteSpace(print_r($_POST, true)));
-			throw new NotImplementedException();
-		});
-
-		$this->context->lists = ListService::getByUserId($this->context->user->id);
-	}
-
-	/**
 	* @route /exec/add
 	* @route /exec/add/
 	*/
