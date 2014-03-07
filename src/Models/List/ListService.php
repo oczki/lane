@@ -15,8 +15,11 @@ class ListService
 			return $lists;
 
 		$user = UserService::getById($userId);
-		$list = self::createNewList($user, 'New blank list', true);
-		return [$list];
+		$job = new ListAddJob($user, 'New blank list', true);
+		JobExecutor::execute($job);
+
+		$lists = self::getFilteredLists($filter);
+		return $lists;
 	}
 
 	public static function getByUniqueId($uniqueId)
@@ -39,47 +42,6 @@ class ListService
 	public static function delete(ListEntity $listEntity)
 	{
 		return ListDao::delete($listEntity);
-	}
-
-	public static function createNewList(UserEntity $owner, $title, $visible)
-	{
-		$filter = new ListFilter();
-		$filter->userId = $owner->id;
-		$lists = self::getFilteredLists($filter);
-
-		$maxPriority = array_reduce($lists, function($max, $list)
-		{
-			if ($list->priority > $max)
-				$max = $list->priority;
-		}, 0);
-
-		$alpha =
-			'0123456789_-' .
-			'abcdefghijklmnopqrstuvwxyz' .
-			'ABCDEFGHJIKLMNOPQRSTUVWXYZ';
-
-		$listEntity = new ListEntity();
-		$listEntity->userId = $owner->id;
-		$listEntity->name = $title;
-		$listEntity->priority = $maxPriority + 1;
-		$listEntity->uniqueId = TextHelper::randomString($alpha, 32);
-		$listEntity->visible = true;
-		$listEntity->content = new ListContent();
-
-		$column1 = new ListColumn();
-		$column1->name = 'Example column 1';
-		$column1->width = 70;
-		$column1->align = ListColumn::ALIGN_LEFT;
-
-		$column2 = new ListColumn();
-		$column2->name = 'Example column 2';
-		$column2->width = 30;
-		$column2->align = ListColumn::ALIGN_LEFT;
-
-		self::addColumn($listEntity, $column1);
-		self::addColumn($listEntity, $column2);
-
-		return self::saveOrUpdate($listEntity);
 	}
 
 	public static function addColumn(ListEntity $listEntity, ListColumn $listColumn)

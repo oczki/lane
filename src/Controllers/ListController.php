@@ -61,11 +61,8 @@ class ListController
 			$name = InputHelper::getPost('name');
 			$visible = boolval(InputHelper::getPost('visible'));
 
-			$validator = new Validator($name, 'list name');
-			$validator->checkMinLength(1);
-			$validator->checkMaxLength(20);
-
-			ListService::createNewList($this->context->userLogged, $name, $visible);
+			$job = new ListAddJob($this->context->userLogged, $name, $visible);
+			JobExecutor::execute($job);
 		}
 		catch (SimpleException $e)
 		{
