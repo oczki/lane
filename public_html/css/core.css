@@ -54,6 +54,18 @@ a:focus {
 	transition: background-color 0.25s ease 0s;
 }
 
+.icon-menu         { background-position: -1px -1px; }
+.icon-manage       { background-position: -22px -1px; }
+.icon-add          { background-position: -43px -1px; }
+.icon-up           { background-position: -64px -1px; }
+.icon-down         { background-position: -85px -1px; }
+.icon-drag         { background-position: -106px -1px; }
+.icon-align-left   { background-position: -127px -1px; }
+.icon-align-center { background-position: -148px -1px; }
+.icon-align-right  { background-position: -169px -1px; }
+.icon-delete       { background-position: -190px -1px; }
+.icon-edit         { background-position: -211px -1px; }
+
 input[type=radio],
 input[type=checkbox] {
 	margin: 0.5em 0.2em;

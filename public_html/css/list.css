@@ -149,13 +149,6 @@
 				margin: 0;
 			}
 
-.icon-manage {
-	background-position: -22px -1px;
-}
-.icon-add {
-	background-position: -43px -1px;
-}
-
 #list {
 	width: 100%;
 	empty-cells: show;
