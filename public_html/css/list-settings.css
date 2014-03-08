@@ -1,0 +1,61 @@
+#list-settings form {
+	width: 35em;
+}
+#list-settings .basic-settings {
+	float: left;
+}
+#list-settings .ops {
+	float: left;
+	list-style-type: none;
+	margin: 0 0 0 1em;
+	padding: 0;
+}
+
+#list-settings table {
+	margin: 2em auto;
+}
+	#list-settings table input[type=radio] {
+		display: none;
+	}
+	#list-settings table input[type=radio]+label {
+		background-color: lightgray;
+	}
+	#list-settings table input[type=radio]:checked+label,
+	#list-settings table input[type=radio]+label:focus,
+	#list-settings table input[type=radio]+label:hover {
+		background-color: black;
+	}
+	#list-settings table label.icon:not(:last-of-type) {
+		margin-right: 0.5em;
+	}
+
+	#list-settings table input[type=text],
+	#list-settings table input[type=submit],
+	#list-settings table input[type=button] {
+		margin-left: 0;
+	}
+	#list-settings table th,
+	#list-settings table td {
+		padding: 0 0.5em;
+	}
+		#list-settings table th.align,
+		#list-settings table td.align,
+		#list-settings table th.delete,
+		#list-settings table td.delete {
+			text-align: center;
+		}
+
+#list-settings .custom-css-edit {
+	display: none;
+}
+	#list-settings .custom-css-edit p {
+		margin-top: 0;
+	}
+	#list-settings .custom-css-edit textarea {
+		width: 100%;
+		height: 10em;
+	}
+
+#list-settings .submit {
+	text-align: center;
+}

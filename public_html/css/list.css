@@ -165,9 +165,10 @@
 		content: '\a0';
 		cursor: default;
 	}
+
 #add-row {
 	text-align: center;
 }
-#add-row input {
-	margin: 0 auto;
-}
+	#add-row input {
+		margin: 0 auto;
+	}

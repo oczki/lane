@@ -32,6 +32,12 @@
 							Add new list…
 						</a>
 					</li>
+
+					<li>
+						<a class="settings" href="<?= \Chibi\UrlHelper::route('list', 'settings', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]) ?>">
+							List settings…
+						</a>
+					</li>
 				</ul>
 			<?php endif ?>
 		</div>

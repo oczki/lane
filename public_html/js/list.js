@@ -9,7 +9,7 @@ $(function()
 		queue.delayedFlush();
 	});
 
-	$('#list-management .add-list, #menu .login, #menu .register').click(function(e)
+	$('#list-management .add-list, #list-management .settings, #menu .login, #menu .register').click(function(e)
 	{
 		e.preventDefault();
 		showPopup($(this).attr('href'));

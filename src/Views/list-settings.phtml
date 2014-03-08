@@ -1,0 +1,84 @@
+<h1>Edit list <em><?= $this->context->list->name ?></em></h1>
+
+<?php
+\Chibi\AssetViewDecorator::addStylesheet('list-settings.css');
+\Chibi\AssetViewDecorator::addScript('list-settings.js');
+\Chibi\AssetViewDecorator::addScript('queue.js');
+
+$alignments = [
+	ListColumn::ALIGN_LEFT => 'left',
+	ListColumn::ALIGN_CENTER => 'center',
+	ListColumn::ALIGN_RIGHT => 'right',
+];
+?>
+
+<?= HtmlHelper::tag('form', [
+	'action' => \Chibi\UrlHelper::route('list', 'exec'),
+	'method' => 'post',
+	'id' => 'list-settings',
+	'data-list-columns' => json_encode($this->context->list->content->columns),
+	'data-last-content-id' => $this->context->list->content->lastContentId,
+	], false) ?>
+
+	<div class="basic-settings">
+		<?= HtmlHelper::labelDecorator('List name',
+			HtmlHelper::textInputTag('name', ['placeholder' => 'Some name…', 'value' => $this->context->list->name])) ?>
+
+		<?= HtmlHelper::labelDecorator('Visibility',
+			HtmlHelper::checkboxInputTag('visibility', $this->context->list->visible),
+			'visible to everyone') ?>
+
+		<?= HtmlHelper::labelDecorator('Row IDs',
+			HtmlHelper::checkboxInputTag('row-ids', $this->context->list->content->showRowIds),
+			'show row numbers') ?>
+
+		<?= HtmlHelper::labelDecorator('User CSS',
+			HtmlHelper::checkboxInputTag('custom-css', $this->context->list->content->css != '', ['class' => 'custom-css']),
+			'enable custom CSS') ?>
+	</div>
+
+	<ul class="ops">
+		<li>
+			<input type="button" class="delete" value="Delete this list"/>
+		</li>
+		<li>
+			<input type="button" class="save-sort" value="Save current sort"/>
+		</li>
+	</ul>
+
+	<div class="clear"></div>
+
+	<table class="column-manager">
+		<thead>
+			<tr>
+				<th class="drag"></th>
+				<th class="text">Column header</th>
+				<th class="align">Text align</th>
+				<th class="delete">Delete</th>
+			</tr>
+		</thead>
+
+		<tbody>
+		</tbody>
+
+		<tfoot>
+			<tr>
+				<td></td>
+				<td colspan="3">
+					<input type="button" class="add-column" value="Add new column"/>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+
+	<div class="custom-css-edit">
+		<p>Custom CSS</p>
+		<textarea name="custom-css"><?= $this->context->list->content->css ?></textarea>
+	</div>
+
+	<div class="submit">
+		<input type="submit" value="Save changes"/>
+		<input type="button" value="Cancel" class="cancel"/>
+	</div>
+
+<?= HtmlHelper::tagClose('form') ?>

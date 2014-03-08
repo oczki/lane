@@ -120,6 +120,10 @@ form {
 		margin-left: 0.5em;
 	}
 
+th {
+	font-weight: normal;
+	text-align: left;
+}
 
 footer {
 	margin-top: 2em;
@@ -145,4 +149,14 @@ h1 {
 
 div.clear {
 	clear: both;
+}
+
+body.dragging * {
+	cursor: move;
+}
+.dragger {
+	cursor: move;
+}
+body .dragging .dragger .icon {
+	background-color: red;
 }

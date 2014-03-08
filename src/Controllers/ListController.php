@@ -53,6 +53,30 @@ class ListController
 	}
 
 	/**
+	* @route /a/{userName}/{id}/settings
+	* @route /a/{userName}/{id}/settings/
+	* @validate userName [a-zA-Z0-9_-]+
+	* @validate id [^\/]+
+	*/
+	public function settingsAction($userName, $id)
+	{
+		$this->preWork($userName);
+
+		$list = ListService::getByUrlName($this->context->user, $id);
+		if (empty($list))
+			throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
+		$this->context->list = $list;
+
+		if (!$this->context->canEdit)
+			throw new SimpleException('Cannot edit this list.');
+
+		if (!$this->context->isSubmit)
+			return;
+
+		throw new NotImplementedException();
+	}
+
+	/**
 	* @route /u/{userName}
 	* @route /u/{userName}/
 	* @route /u/{userName}/{id}
