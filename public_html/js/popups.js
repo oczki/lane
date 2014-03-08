@@ -4,51 +4,65 @@ function showPopup(url, cb)
 	$.get(url, function(rawContent)
 	{
 		var content = $(rawContent);
-		$('head').append(content.filter('link'));
 
-		var elementsToAdd = content.filter('.ajax-wrapper');
-		var popupDiv = $('<div class="popup"></div>');
-		var coverDiv = $('<div class="cover"></div>');
-		popupDiv.append(elementsToAdd);
-		var popupWrapperDiv = popupDiv.wrap('<div class="popup-wrapper"></div>').parent();
-
-		var elementsToAdd = [];
-		elementsToAdd.push(coverDiv);
-		elementsToAdd.push(popupWrapperDiv);
-
-		$.each(elementsToAdd, function(i, el)
+		var showFunc = function()
 		{
-			el.hide();
-			$('body').append(el);
-			el.fadeIn();
-		});
+			var elementsToAdd = content.filter('.ajax-wrapper');
+			var popupDiv = $('<div class="popup"></div>');
+			var coverDiv = $('<div class="cover"></div>');
+			popupDiv.append(elementsToAdd);
 
-		popupDiv.css('width', popupDiv.width() + 'px');
+			$('body').append(coverDiv);
+			$('body').append(popupDiv);
 
-		popupDiv.find('a, input').eq(0).focus();
+			coverDiv.hide();
+			popupDiv.hide();
 
-		popupWrapperDiv.bind('keydown', function(e)
+			popupDiv.position({
+				collision: 'fit',
+				of: $('body'),
+				my: 'center center+15%',
+				at: 'center center'});
+
+			coverDiv.fadeIn();
+			popupDiv.fadeIn();
+
+			popupDiv.find('a, input').eq(0).focus();
+
+			popupDiv.bind('keydown', function(e)
+			{
+				if (e.keyCode == 27)
+					closePopup(popupDiv);
+			});
+
+			$('*').bind('focusin', popupTabFix);
+
+			if (typeof(cb) !== 'undefined')
+			{
+				cb(popupDiv);
+			}
+		};
+
+		var stylesheets =  content.filter('link');
+		if (stylesheets.length > 0)
 		{
-			if (e.keyCode == 27)
-				closePopup(popupDiv);
-		});
-
-		$('*').bind('focusin', popupTabFix);
-
-		if (typeof(cb) !== 'undefined')
+			stylesheets.load(showFunc);
+			$('head').append(stylesheets);
+		}
+		else
 		{
-			cb(popupDiv);
+			showFunc();
 		}
 	});
 }
 
 function closePopup()
 {
-	$('.popup-wrapper:last').prevAll('.cover:first').fadeOut(function()
+	$('.popup:last').prevAll('.cover:first').fadeOut(function()
 	{
 		$(this).remove();
 	});
-	$('.popup-wrapper:last').fadeOut(function()
+	$('.popup:last').fadeOut(function()
 	{
 		$(this).remove();
 	});
