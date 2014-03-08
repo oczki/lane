@@ -5,8 +5,9 @@
 	<?= HtmlHelper::labelDecorator('List name',
 		HtmlHelper::textInputTag('name')) ?>
 
-	<?= HtmlHelper::labelDecorator('Visible to everyone',
-		HtmlHelper::checkboxInputTag('visible', true)) ?>
+	<?= HtmlHelper::labelDecorator('Visibility',
+		HtmlHelper::checkboxInputTag('visible', true),
+		'visible to everyone') ?>
 
 	<?= HtmlHelper::labelDecorator(false,
 		HtmlHelper::submitInputTag('Create new list')) ?>

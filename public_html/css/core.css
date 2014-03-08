@@ -113,6 +113,9 @@ form {
 		text-align: right;
 		padding: 0 0.5em;
 	}
+	form label[for] {
+		cursor: pointer;
+	}
 	form label.checkbox {
 		margin-left: 0.5em;
 	}
