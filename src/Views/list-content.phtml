@@ -44,7 +44,7 @@ $showCell = function($text)
 		<?php foreach (ListService::getRows($this->context->list) as $rowIndex => $row): ?>
 			<tr>
 				<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
-					<?= $showCell($row[$columnIndex]) ?>
+					<?= $showCell($row->content[$columnIndex]) ?>
 				<?php endforeach ?>
 			</tr>
 		<?php endforeach ?>
