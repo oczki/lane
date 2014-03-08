@@ -51,8 +51,12 @@ a:focus {
 	display: inline-block;
 	background-image: url('/img/icons.png');
 	background-repeat: no-repeat;
-	background-color: black;
+	background-color: lightgray;
 	transition: background-color 0.25s ease 0s;
+}
+a:focus .icon,
+a:hover .icon {
+	background-color: black;
 }
 
 .icon-menu         { background-position: -1px -1px; }
@@ -66,6 +70,7 @@ a:focus {
 .icon-align-right  { background-position: -169px -1px; }
 .icon-delete       { background-position: -190px -1px; }
 .icon-edit         { background-position: -211px -1px; }
+.icon-close        { background-position: -232px -1px; }
 
 input[type=radio],
 input[type=checkbox] {

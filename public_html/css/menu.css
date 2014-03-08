@@ -70,10 +70,10 @@
 	#menu-trigger .icon {
 		float: right;
 		margin-left: 0.8em;
-		background-color: silver;
+		background-color: lightgray;
 	}
 	#menu-trigger a {
-		color: silver;
+		color: lightgray;
 		padding-bottom: 0.2em;
 	}
 	#menu #menu-trigger a:focus,

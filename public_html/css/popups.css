@@ -29,3 +29,7 @@
 .popup p.message {
 	margin-top: 0;
 }
+
+.popup-close {
+	float: right;
+}

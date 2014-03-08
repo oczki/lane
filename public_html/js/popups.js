@@ -10,8 +10,17 @@ function showPopup(url, cb)
 			var elementsToAdd = content.filter('.ajax-wrapper');
 			var popupDiv = $('<div class="popup"></div>');
 			var coverDiv = $('<div class="cover"></div>');
+			var closeLink = $('<a class="popup-close" href="#"><i class="icon icon-close"></i></a>');
 			popupDiv.append(elementsToAdd);
+			popupDiv.prepend(closeLink);
 
+			closeLink.click(function(e)
+			{
+				e.preventDefault();
+				closePopup(popupDiv);
+			});
+
+			//get stuff into dom
 			$('body').append(coverDiv);
 			$('body').append(popupDiv);
 
@@ -27,8 +36,10 @@ function showPopup(url, cb)
 			coverDiv.fadeIn();
 			popupDiv.fadeIn();
 
-			popupDiv.find('a, input').eq(0).focus();
+			//focus first input or link
+			popupDiv.find('a:not(.popup-close), input').eq(0).focus();
 
+			//bind escape key
 			popupDiv.bind('keydown', function(e)
 			{
 				if (e.keyCode == 27)
@@ -43,7 +54,7 @@ function showPopup(url, cb)
 			}
 		};
 
-		var stylesheets =  content.filter('link');
+		var stylesheets = content.filter('link');
 		if (stylesheets.length > 0)
 		{
 			stylesheets.load(showFunc);
