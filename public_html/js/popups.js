@@ -4,6 +4,8 @@ function showPopup(url, cb)
 	$.get(url, function(rawContent)
 	{
 		var content = $(rawContent);
+		var stylesheets = content.filter('link');
+		var scripts = content.filter('script[src]');
 
 		var showFunc = function()
 		{
@@ -24,15 +26,24 @@ function showPopup(url, cb)
 			$('body').append(coverDiv);
 			$('body').append(popupDiv);
 
+			//download the scripts
+			$.each(scripts, function(i, script)
+			{
+				$.getScript($(script).attr('src'));
+			});
+
+			//hide stuff
 			coverDiv.hide();
 			popupDiv.hide();
 
+			//position the popup
 			popupDiv.position({
 				collision: 'fit',
 				of: $('body'),
 				my: 'center center+15%',
 				at: 'center center'});
 
+			//show stuff
 			coverDiv.fadeIn();
 			popupDiv.fadeIn();
 
@@ -46,15 +57,16 @@ function showPopup(url, cb)
 					closePopup(popupDiv);
 			});
 
+			//trap [tab] into popup
 			$('*').bind('focusin', popupTabFix);
 
+			//execute custom callback
 			if (typeof(cb) !== 'undefined')
 			{
 				cb(popupDiv);
 			}
 		};
 
-		var stylesheets = content.filter('link');
 		if (stylesheets.length > 0)
 		{
 			stylesheets.load(showFunc);
