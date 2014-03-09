@@ -56,9 +56,7 @@ $(function()
 					}
 					else
 					{
-						var source = content.filter('.ajax-wrapper');
-						target.replaceWith(source);
-						source.find('.message').hide().slideDown();
+						alert(content.find('.message').text());
 					}
 					e.preventDefault();
 				},
