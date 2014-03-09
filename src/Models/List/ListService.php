@@ -22,10 +22,11 @@ class ListService
 		return $lists;
 	}
 
-	public static function getByUniqueId($uniqueId)
+	public static function getByUrlName(UserEntity $owner, $urlName)
 	{
 		$filter = new ListFilter();
-		$filter->uniqueId = $uniqueId;
+		$filter->userId = $owner->id;
+		$filter->urlName = $urlName;
 		$lists = self::getFilteredLists($filter);
 		if (empty($lists))
 			return null;

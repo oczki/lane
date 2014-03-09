@@ -2,14 +2,17 @@
 abstract class ListInnerJob implements IJob
 {
 	protected $listEntity;
+	private $listUrlName;
 
-	public function __construct($listUniqueId)
+	public function __construct($listUrlName)
 	{
-		$this->listEntity = ListService::getByUniqueId($listUniqueId);
+		$this->listUrlName = $listUrlName;
 	}
 
 	public function execute(UserEntity $user)
 	{
+		$this->listEntity = ListService::getByUrlName($user, $this->listUrlName);
+
 		if (empty($this->listEntity))
 			throw new SimpleException('List with this ID wasn\'t found.');
 

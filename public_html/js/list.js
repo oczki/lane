@@ -1,11 +1,11 @@
 $(function()
 {
 	var queue = new Queue();
-	var listUniqueId = $('#list-unique-id').val();
+	var listId = $('#list-id').val();
 
 	$('#add-row').click(function()
 	{
-		queue.push(new Job('list-add-row', [listUniqueId]));
+		queue.push(new Job('list-add-row', [listId]));
 		queue.delayedFlush();
 	});
 

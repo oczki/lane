@@ -21,30 +21,9 @@ class ListController
 	}
 
 	/**
-	* @route /u/{userName}
-	* @route /u/{userName}/
-	* @route /u/{userName}/{id}
-	* @route /u/{userName}/{id}/
+	* @route /a/{userName}/add
+	* @route /a/{userName}/add/
 	* @validate userName [a-zA-Z0-9_-]+
-	* @validate id [a-zA-Z0-9_-]+
-	*/
-	public function viewAction($userName, $id = null)
-	{
-		$this->preWork($userName);
-
-		if ($id === null)
-			$id = reset($this->context->lists)->uniqueId;
-
-		$list = ListService::getByUniqueId($id);
-		if (empty($list))
-			throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
-
-		$this->context->list = $list;
-	}
-
-	/**
-	* @route /exec/add
-	* @route /exec/add/
 	*/
 	public function addAction()
 	{
@@ -71,6 +50,27 @@ class ListController
 		}
 
 		Messenger::success('List added successfully.');
+	}
+
+	/**
+	* @route /u/{userName}
+	* @route /u/{userName}/
+	* @route /u/{userName}/{id}
+	* @route /u/{userName}/{id}/
+	* @validate userName [a-zA-Z0-9_-]+
+	* @validate id [^\/]+
+	*/
+	public function viewAction($userName, $id = null)
+	{
+		$this->preWork($userName);
+
+		if ($id === null)
+			$id = reset($this->context->lists)->urlName;
+
+		$list = ListService::getByUrlName($this->context->user, $id);
+		if (empty($list))
+			throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
+		$this->context->list = $list;
 	}
 
 	/**

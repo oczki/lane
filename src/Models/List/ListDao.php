@@ -23,10 +23,10 @@ class ListDao
 				new Sql\EqualsFunctor('user_id', new Sql\Binding($listFilter->userId)));
 		}
 
-		if ($listFilter->uniqueId !== null)
+		if ($listFilter->urlName !== null)
 		{
 			$stmt->getCriterion()->add(
-				new Sql\EqualsFunctor('unique_id', new Sql\Binding($listFilter->uniqueId)));
+				new Sql\EqualsFunctor('url_name', new Sql\Binding($listFilter->urlName)));
 		}
 
 		$stmt->setOrderBy('priority', Sql\SelectStatement::ORDER_ASC);

@@ -15,8 +15,8 @@
 		<div id="sidebar-nav">
 			<ul id="lists">
 			<?php foreach ($this->context->lists as $list): ?>
-				<?= HtmlHelper::tag('li', (isset($this->context->list) and $list->uniqueId == $this->context->list->uniqueId) ? ['class' => 'active'] : []) ?>
-					<a title="<?= $list->name ?>" href="<?= \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $list->uniqueId]) ?>">
+				<?= HtmlHelper::tag('li', (isset($this->context->list) and $list->urlName == $this->context->list->urlName) ? ['class' => 'active'] : []) ?>
+					<a title="<?= $list->name ?>" href="<?= \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $list->urlName]) ?>">
 						<?= $list->name ?>
 					</a>
 				<?= HtmlHelper::tagClose('li') ?>

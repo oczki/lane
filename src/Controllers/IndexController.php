@@ -12,7 +12,7 @@ class IndexController
 
 			$url = \Chibi\UrlHelper::route('list', 'view', [
 				'userName' => $this->context->userLogged->name,
-				'id' => reset($lists)->uniqueId]);
+				'id' => reset($lists)->urlName]);
 
 			Bootstrap::forward($url);
 		}

@@ -1,8 +1,8 @@
 <?php if (!isset($this->context->list)) return ?>
 
-<?= HtmlHelper::hiddenInputTag('list-unique-id', [
-	'value' => $this->context->list->uniqueId,
-	'id' => 'list-unique-id']) ?>
+<?= HtmlHelper::hiddenInputTag('list-url-name', [
+	'value' => $this->context->list->urlName,
+	'id' => 'list-id']) ?>
 
 <?php
 $alignments = [];

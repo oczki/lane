@@ -3,9 +3,9 @@ class ListAddRowJob extends ListInnerJob implements IJob
 {
 	private $row;
 
-	public function __construct($listUniqueId, array $row = [])
+	public function __construct($listUrlName, array $row = [])
 	{
-		parent::__construct($listUniqueId);
+		parent::__construct($listUrlName);
 		$this->row = $row;
 	}
 

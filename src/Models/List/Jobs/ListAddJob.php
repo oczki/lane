@@ -10,16 +10,14 @@ class ListAddJob implements IJob
 	{
 		$this->name = $name;
 		$this->visible = $visible;
-
-		$validator = new Validator($this->name, 'list name');
-		$validator->checkMinLength(1);
-		$validator->checkMaxLength(20);
-
-		$this->visible = $visible;
 	}
 
 	public function execute(UserEntity $user)
 	{
+		$validator = new Validator($this->name, 'list name');
+		$validator->checkMinLength(1);
+		$validator->checkMaxLength(20);
+
 		$filter = new ListFilter();
 		$filter->userId = $user->id;
 		$lists = ListService::getFilteredLists($filter);
@@ -30,13 +28,7 @@ class ListAddJob implements IJob
 				$max = $list->priority;
 		}, 0);
 
-		$alpha =
-			'0123456789_-' .
-			'abcdefghijklmnopqrstuvwxyz' .
-			'ABCDEFGHJIKLMNOPQRSTUVWXYZ';
-
 		$listEntity = new ListEntity();
-		$listEntity->uniqueId = TextHelper::randomString($alpha, 32);
 		$listEntity->priority = $maxPriority + 1;
 		$listEntity->userId = $user->id;
 		$listEntity->name = $this->name;
@@ -56,6 +48,41 @@ class ListAddJob implements IJob
 		$listEntity->content->columns []= $column1;
 		$listEntity->content->columns []= $column2;
 
+		$baseUrlName = TextHelper::convertCase($listEntity->name,
+			TextHelper::BLANK_CASE,
+			TextHelper::SNAKE_CASE);
+		self::forgeUrlName($user, $listEntity, $baseUrlName);
+
 		return ListService::saveOrUpdate($listEntity);
+	}
+
+	public static function forgeUrlName(
+		UserEntity $owner,
+		ListEntity $listEntity,
+		$baseUrlName)
+	{
+		$filter = new ListFilter();
+		$filter->userId = $owner->id;
+		$lists = ListService::getFilteredLists($filter);
+
+		//very important - strip all insecure characters
+		$baseUrlName = preg_replace('/\W/u', '_', $baseUrlName);
+
+		$listEntity->urlName = $baseUrlName;
+		do
+		{
+			$index = 1;
+			$found = true;
+			foreach ($lists as $otherList)
+			{
+				if ($otherList->urlName == $listEntity->urlName)
+				{
+					$listEntity->urlName = $baseUrlName . $index;
+					++ $index;
+					$found = false;
+				}
+			}
+		}
+		while (!$found);
 	}
 }
