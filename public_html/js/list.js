@@ -9,6 +9,8 @@ function Queue()
 
 	q.push = function(job)
 	{
+		$('#save-info').text('Saving...');
+		enableExitConfirmation('Changes were not saved!');
 		q.jobs.push(job);
 	}
 
@@ -26,8 +28,6 @@ function Queue()
 		}
 
 		q.flushing = true;
-		enableExitConfirmation('Changes were not saved!');
-		$('#save-info').text('Saving...');
 
 		var url = '/exec';
 		var data = {jobs: q.jobs};
