@@ -1,6 +1,9 @@
 <?php if (!isset($this->context->list)) return ?>
 
 <?php
+if ($this->context->list->content->css != '')
+	\Chibi\AssetViewDecorator::addStylesheet(\Chibi\UrlHelper::route('list', 'custom-css', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]));
+
 $alignments = [];
 $alignments[ListColumn::ALIGN_LEFT] = 'col-left';
 $alignments[ListColumn::ALIGN_CENTER] = 'col-center';

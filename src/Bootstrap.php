@@ -27,6 +27,8 @@ class Bootstrap
 		\Chibi\AssetViewDecorator::setStylesheetsFolder('/css');
 		\Chibi\AssetViewDecorator::setScriptsFolder('/js');
 
+		$this->config->chibi->baseUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/';
+
 		$this->context->viewDecorators []= new \Chibi\AssetViewDecorator();
 		$this->context->viewDecorators []= new \Chibi\PrettyPrintViewDecorator();
 		$this->context->layoutName = isset($_GET['simple'])

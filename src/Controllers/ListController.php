@@ -77,6 +77,31 @@ class ListController
 	}
 
 	/**
+	* @route /a/{userName}/{id}/css
+	* @route /a/{userName}/{id}/css/
+	*/
+	public function customCssAction($userName, $id = null)
+	{
+		\Chibi\HeadersHelper::set('Content-Type', 'text/css');
+
+		try
+		{
+			$this->preWork($userName);
+
+			$list = ListService::getByUrlName($this->context->user, $id);
+			if (empty($list))
+				throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
+
+			echo $list->content->css;
+		}
+		catch (Exception $e)
+		{
+		}
+
+		exit;
+	}
+
+	/**
 	* @route /u/{userName}
 	* @route /u/{userName}/
 	* @route /u/{userName}/{id}
