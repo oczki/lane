@@ -26,6 +26,35 @@ function appendUrlParameter(url, key, value)
 	return url;
 }
 
+function sendAjax(url, data, successFunc, errorFunc)
+{
+	$.ajax(
+	{
+		type: 'POST',
+		url: url,
+		data: data,
+		success: function(rawContent)
+		{
+			var content = $(rawContent);
+			if (content.find('.success').length > 0)
+			{
+				if (typeof(successFunc) !== 'undefined')
+					successFunc(content);
+				else
+					window.location.reload();
+			}
+			else
+			{
+				if (typeof(errorFunc) !== 'undefined')
+					errorFunc(content);
+				else
+					alert(content.find('.message').text());
+			}
+			e.preventDefault();
+		},
+	});
+}
+
 $(function()
 {
 	$('body').on('submit', 'form', function(e)
@@ -42,25 +71,7 @@ $(function()
 
 		var send = function()
 		{
-			$.ajax(
-			{
-				type: 'POST',
-				url: url,
-				data: data,
-				success: function(rawContent)
-				{
-					var content = $(rawContent);
-					if (content.find('.success').length > 0)
-					{
-						window.location.reload();
-					}
-					else
-					{
-						alert(content.find('.message').text());
-					}
-					e.preventDefault();
-				},
-			});
+			sendAjax(url, data);
 		}
 
 		var messages = target.find('.message');
