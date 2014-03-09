@@ -2,10 +2,11 @@ $(function()
 {
 	var queue = new Queue();
 	var listId = $('#list').attr('data-list-id');
+	var lastContentId = $('#list').attr('data-last-content-id');
 
 	$('#add-row').click(function()
 	{
-		queue.push(new Job('list-add-row', [listId]));
+		queue.push(new Job('list-add-row', [listId, ++ lastContentId]));
 		queue.delayedFlush();
 	});
 

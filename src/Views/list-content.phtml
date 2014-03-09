@@ -22,7 +22,11 @@ $showCell = function($text)
 }
 ?>
 
-<table id="list" data-list-id="<?= $this->context->list->urlName ?>">
+<?= HtmlHelper::tag('table', [
+	'id' => 'list',
+	'data-list-id' => $this->context->list->urlName,
+	'data-last-content-id' => $this->context->list->content->lastContentId], false) ?>
+
 	<thead>
 		<tr>
 			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
@@ -53,7 +57,8 @@ $showCell = function($text)
 			<?php endforeach ?>
 		</tr>
 	</tfoot>
-</table>
+
+<?= HtmlHelper::tagClose('table') ?>
 
 <?php if ($this->context->canEdit): ?>
 	<div id="add-row">
