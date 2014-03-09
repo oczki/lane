@@ -41,6 +41,17 @@ class DaoHelper
 		});
 	}
 
+	public static function delete($table, AbstractEntity $entity)
+	{
+		return Database::transaction(function() use ($table, $entity)
+		{
+			$stmt = new Sql\DeleteStatement();
+			$stmt->setTable($table);
+			$stmt->setCriterion(new Sql\EqualsFunctor('id', new Sql\Binding($entity->id)));
+			Database::exec($stmt);
+		});
+	}
+
 	protected static function untransformEntity(AbstractEntity $entity)
 	{
 		$rawEntity = [];

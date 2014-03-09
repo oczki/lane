@@ -33,6 +33,6 @@ class UserDao
 
 	public static function delete(UserEntity $userEntity)
 	{
-		return DaoHelper::delete($userEntity);
+		return DaoHelper::delete('user', $userEntity);
 	}
 }

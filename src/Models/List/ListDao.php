@@ -60,7 +60,7 @@ class ListDao
 
 	public static function delete(ListEntity $listEntity)
 	{
-		return DaoHelper::delete($listEntity);
+		return DaoHelper::delete('list', $listEntity);
 	}
 
 	private static function serializeContent($content)
