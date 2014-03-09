@@ -21,6 +21,7 @@ class ListAddRowJob extends ListInnerJob implements IJob
 
 		$row = new ListRow();
 		$row->content = $this->rowContent;
+		$row->id = ++$this->listEntity->content->lastContentId;
 
 		$this->listEntity->content->rows []= $row;
 		ListService::saveOrUpdate($this->listEntity);

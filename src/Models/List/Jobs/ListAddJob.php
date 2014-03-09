@@ -39,11 +39,13 @@ class ListAddJob implements IJob
 		$column1->name = 'Example column 1';
 		$column1->width = 70;
 		$column1->align = ListColumn::ALIGN_LEFT;
+		$column1->id = ++$listEntity->content->lastContentId;
 
 		$column2 = new ListColumn();
 		$column2->name = 'Example column 2';
 		$column2->width = 30;
 		$column2->align = ListColumn::ALIGN_LEFT;
+		$column2->id = ++$listEntity->content->lastContentId;
 
 		$listEntity->content->columns []= $column1;
 		$listEntity->content->columns []= $column2;

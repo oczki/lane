@@ -1,6 +1,7 @@
 <?php
 class ListColumn extends StrictPropertyObject
 {
+	public $id;
 	public $name;
 	public $width;
 	public $align;
