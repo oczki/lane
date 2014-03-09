@@ -113,6 +113,8 @@ class ListController
 
 		$jobs = [];
 		$jobTexts = InputHelper::getPost('jobs');
+		if ($jobTexts === null)
+			$jobTexts = [];
 		foreach ($jobTexts as $jobText)
 		{
 			$job = JobExecutor::parse($jobText);

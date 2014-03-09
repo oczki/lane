@@ -45,21 +45,6 @@ class ListService
 		return ListDao::delete($listEntity);
 	}
 
-	public static function addColumn(ListEntity $listEntity, ListColumn $listColumn)
-	{
-		$listEntity->content->columns []= $listColumn;
-		return count($listEntity->content->columns) - 1;
-	}
-
-	public static function removeColumn(ListEntity $listEntity, $index)
-	{
-		self::checkColumnIndex($listEntity, $index);
-
-		$listEntity->content->columns = array_splice($listEntity->content->columns, $index, 1);
-		foreach ($listEntity->content->rows as $i => $row)
-			$listEntity->content->rows[$i] = array_splice($row, $index, 1);
-	}
-
 	public static function removeRow(ListEntity $listEntity, $index)
 	{
 		self::checkRowIndex($listEntity, $index);
@@ -74,27 +59,6 @@ class ListService
 		$listEntity->content->rows[$rowIndex][$columnIndex] = $content;
 	}
 
-	public static function swapColumns(ListEntity $listEntity, $columnIndex1, $columnIndex2)
-	{
-		self::checkColumnIndex($listEntity, $columnIndex1);
-		self::checkColumnIndex($listEntity, $columnIndex2);
-
-		$listEntity->content->columns = array_splice(
-			$listEntity->content->columns,
-			$columnIndex1,
-			1,
-			[$listEntity->content->columns[$columnIndex2]]);
-
-		foreach ($listEntity->content->rows as $i => $row)
-		{
-			$listEntity->content->rows[$i] = array_splice(
-				$row,
-				$columnIndex1,
-				1,
-				[$row[$columnIndex2]]);
-		}
-	}
-
 	public static function getRows(ListEntity $listEntity)
 	{
 		return $listEntity->content->rows;
@@ -103,6 +67,16 @@ class ListService
 	public static function getColumns(ListEntity $listEntity)
 	{
 		return $listEntity->content->columns;
+	}
+
+	public static function getPossibleColumnAlign()
+	{
+		return
+		[
+			ListColumn::ALIGN_LEFT,
+			ListColumn::ALIGN_CENTER,
+			ListColumn::ALIGN_RIGHT,
+		];
 	}
 
 	private static function checkColumnIndex(ListEntity $listEntity, &$index)

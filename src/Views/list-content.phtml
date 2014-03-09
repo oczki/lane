@@ -1,9 +1,5 @@
 <?php if (!isset($this->context->list)) return ?>
 
-<?= HtmlHelper::hiddenInputTag('list-url-name', [
-	'value' => $this->context->list->urlName,
-	'id' => 'list-id']) ?>
-
 <?php
 $alignments = [];
 $alignments[ListColumn::ALIGN_LEFT] = 'col-left';
@@ -26,13 +22,13 @@ $showCell = function($text)
 }
 ?>
 
-<table id="list">
+<table id="list" data-list-id="<?= $this->context->list->urlName ?>">
 	<thead>
 		<tr>
 			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
 				<?= HtmlHelper::tag('th', [
 					'class' => $alignments[$column->align],
-					'style' => 'width: ' . $column->width . '%'
+					'style' => sprintf('width: %.02f%%', $column->width),
 				], false) ?>
 					<?= $column->name ?>
 				<?= HtmlHelper::tagClose('th') ?>

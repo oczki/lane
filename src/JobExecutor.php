@@ -40,7 +40,7 @@ class JobExecutor
 		}
 		catch (Exception $e)
 		{
-			throw new SimpleException('Invalid job name.');
+			throw new SimpleException('Invalid job name: ' . $jobName . '.');
 		}
 
 		if (count($jobArgs) < $expectedArgumentCount)

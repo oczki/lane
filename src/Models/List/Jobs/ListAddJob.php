@@ -14,9 +14,7 @@ class ListAddJob implements IJob
 
 	public function execute(UserEntity $user)
 	{
-		$validator = new Validator($this->name, 'list name');
-		$validator->checkMinLength(1);
-		$validator->checkMaxLength(20);
+		ListJobHelper::validateListName($this->name);
 
 		$filter = new ListFilter();
 		$filter->userId = $user->id;

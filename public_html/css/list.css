@@ -166,6 +166,15 @@
 		cursor: default;
 	}
 
+	#list th.col-center,
+	#list td.col-center {
+		text-align: center;
+	}
+	#list th.col-right,
+	#list td.col-right {
+		text-align: right;
+	}
+
 #add-row {
 	text-align: center;
 }

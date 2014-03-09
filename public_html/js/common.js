@@ -64,6 +64,9 @@ $(function()
 		var form = $(this);
 		var url = appendUrlParameter(form.attr('action'), 'simple');
 		var data = form.serialize();
+		var additionalData = form.data('additional-data');
+		if (typeof(additionalData) !== 'undefined')
+			data += '&' + $.param(additionalData);
 
 		var target = form.closest('.ajax-wrapper');
 		if (target.length == 0)

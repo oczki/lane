@@ -1,7 +1,7 @@
 $(function()
 {
 	var queue = new Queue();
-	var listId = $('#list-id').val();
+	var listId = $('#list').attr('data-list-id');
 
 	$('#add-row').click(function()
 	{

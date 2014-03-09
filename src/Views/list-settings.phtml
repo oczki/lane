@@ -16,6 +16,7 @@ $alignments = [
 	'action' => \Chibi\UrlHelper::route('list', 'exec'),
 	'method' => 'post',
 	'id' => 'list-settings',
+	'data-list-id' => $this->context->list->urlName,
 	'data-list-columns' => json_encode($this->context->list->content->columns),
 	'data-last-content-id' => $this->context->list->content->lastContentId,
 	], false) ?>
