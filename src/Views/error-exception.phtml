@@ -1,12 +1,12 @@
 <?php
 echo '<h1>Unhandled exception</h1>';
-echo '<p>';
+echo '<div class="message error">';
 printf('%s &bdquo;%s&rdquo; thrown at %s:%d',
 	get_class($this->context->exception),
 	$this->context->exception->getMessage(),
 	$this->context->exception->getFile(),
 	$this->context->exception->getLine());
-echo '</p>';
+echo '</div>';
 
 echo '<ul>';
 $count = 0;
