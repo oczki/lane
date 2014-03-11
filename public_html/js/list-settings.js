@@ -131,15 +131,15 @@ $(function()
 	//adding new column
 	$('#list-settings .add-column').click(function(e)
 	{
-		newColumn = {
+		var newColumn = {
 			align: 'left',
 			id: ++ lastContentId
 		};
-		var row = createColumnTableRow(newColumn);
-		$('#list-settings table tbody').append(row);
-		row.find('div.animate-me').hide().slideDown('fast', function()
+		var tableRow = createColumnTableRow(newColumn);
+		$('#list-settings table tbody').append(tableRow);
+		tableRow.find('div.animate-me').hide().slideDown('fast', function()
 		{
-			row.find('input:first').focus();
+			tableRow.find('input:first').focus();
 		});
 	});
 

@@ -8,26 +8,14 @@ $alignments = [];
 $alignments[ListColumn::ALIGN_LEFT] = 'col-left';
 $alignments[ListColumn::ALIGN_CENTER] = 'col-center';
 $alignments[ListColumn::ALIGN_RIGHT] = 'col-right';
-
-$showCell = function($text)
-{
-?>
-	<td>
-		<span class="content"><?= $text ?></span>
-		<?php if ($this->context->canEdit): ?>
-			<input type="text"/>
-			<a href="#" class="edit-content">
-				<i class="icon-edit"></i>
-			</a>
-		<?php endif ?>
-	</td>
-<?php
-}
 ?>
 
 <?= HtmlHelper::tag('table', [
 	'id' => 'list',
+	'data-can-edit' => $this->context->canEdit ? '1' : '0',
 	'data-list-id' => $this->context->list->urlName,
+	'data-list-rows' => json_encode($this->context->list->content->rows),
+	'data-list-columns' => json_encode($this->context->list->content->columns),
 	'data-last-content-id' => $this->context->list->content->lastContentId], false) ?>
 
 	<thead>
@@ -44,22 +32,7 @@ $showCell = function($text)
 	</thead>
 
 	<tbody>
-		<?php foreach (ListService::getRows($this->context->list) as $rowIndex => $row): ?>
-			<tr>
-				<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
-					<?= $showCell($row->content[$columnIndex]) ?>
-				<?php endforeach ?>
-			</tr>
-		<?php endforeach ?>
 	</tbody>
-
-	<tfoot>
-		<tr class="row-template">
-			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
-				<? $showCell('') ?>
-			<?php endforeach ?>
-		</tr>
-	</tfoot>
 
 <?= HtmlHelper::tagClose('table') ?>
 
