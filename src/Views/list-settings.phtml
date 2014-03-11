@@ -1,4 +1,4 @@
-<h1>Edit list <em><?= $this->context->list->name ?></em></h1>
+<h1>Edit list <em><?= htmlspecialchars($this->context->list->name) ?></em></h1>
 
 <?php
 \Chibi\AssetViewDecorator::addStylesheet('list-settings.css');
@@ -74,7 +74,7 @@ $alignments = [
 
 	<div class="custom-css-edit">
 		<p>Custom CSS</p>
-		<textarea name="custom-css"><?= $this->context->list->content->css ?></textarea>
+		<textarea name="custom-css"><?= TextHelper::keepWhitespace($this->context->list->content->css) ?></textarea>
 	</div>
 
 	<div class="submit">

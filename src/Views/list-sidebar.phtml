@@ -17,7 +17,7 @@
 			<?php foreach ($this->context->lists as $list): ?>
 				<?= HtmlHelper::tag('li', (isset($this->context->list) and $list->urlName == $this->context->list->urlName) ? ['class' => 'active'] : []) ?>
 					<a title="<?= $list->name ?>" href="<?= \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $list->urlName]) ?>">
-						<?= $list->name ?>
+						<?= htmlspecialchars($list->name) ?>
 					</a>
 				<?= HtmlHelper::tagClose('li') ?>
 			<?php endforeach ?>

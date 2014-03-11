@@ -37,7 +37,7 @@ $showCell = function($text)
 					'class' => $alignments[$column->align],
 					'style' => sprintf('width: %.02f%%', $column->width),
 				], false) ?>
-					<?= $column->name ?>
+					<?= htmlspecialchars($column->name) ?>
 				<?= HtmlHelper::tagClose('th') ?>
 			<?php endforeach ?>
 		</tr>
