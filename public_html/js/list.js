@@ -65,7 +65,7 @@ $(function()
 		$('#list tbody').append(tableRow);
 	}
 
-	$('#add-row').click(function()
+	$('#add-row input').click(function()
 	{
 		var newRow = {
 			id: ++ lastContentId,

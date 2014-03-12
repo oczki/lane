@@ -40,10 +40,9 @@ function createColumnTableRow(data)
 	row.append(cell);
 
 	var cell = $('<td>');
-	cell.addClass('delete');
+	cell.addClass('delete-column');
 	var deleteLink = $('<a>');
 	deleteLink.attr('href', '#');
-	deleteLink.addClass('delete-column');
 	deleteLink.append('<i class="icon icon-delete">');
 	cell.append(deleteLink);
 	row.append(cell);

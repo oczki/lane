@@ -40,8 +40,8 @@
 	}
 		#list-settings table th.align,
 		#list-settings table td.align,
-		#list-settings table th.delete,
-		#list-settings table td.delete {
+		#list-settings table th.delete-column,
+		#list-settings table td.delete-column {
 			text-align: center;
 		}
 
