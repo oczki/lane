@@ -15,10 +15,12 @@ class ListDeleteColumnJob implements IJob
 		$listEntity = ListJobHelper::getList($this->listId, $owner);
 		$pos = ListJobHelper::getColumnPos($listEntity, $this->columnId);
 
-		$mul = count($listEntity->content->columns);
-		$mul /= ($mul - 1);
-
 		self::delete($listEntity->content->columns, $pos);
+
+		$sum = 0;
+		foreach ($listEntity->content->columns as $i => $column)
+			$sum += $column->width;
+		$mul = 100 / max(0, $sum);
 
 		foreach ($listEntity->content->columns as $i => $column)
 			$column->width *= $mul;
