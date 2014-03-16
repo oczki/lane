@@ -59,18 +59,18 @@ a:hover .icon {
 	background-color: black;
 }
 
-.icon-menu         { background-position: -1px -1px; }
-.icon-manage       { background-position: -22px -1px; }
-.icon-add          { background-position: -43px -1px; }
-.icon-up           { background-position: -64px -1px; }
-.icon-down         { background-position: -85px -1px; }
-.icon-drag         { background-position: -106px -1px; }
-.icon-align-left   { background-position: -127px -1px; }
-.icon-align-center { background-position: -148px -1px; }
-.icon-align-right  { background-position: -169px -1px; }
-.icon-delete       { background-position: -190px -1px; }
-.icon-edit         { background-position: -211px -1px; }
-.icon-close        { background-position: -232px -1px; }
+.icon-menu         { background-position: -0px 0; }
+.icon-manage       { background-position: -20px 0; }
+.icon-add          { background-position: -40px 0; }
+.icon-up           { background-position: -60px 0; }
+.icon-down         { background-position: -80px 0; }
+.icon-drag         { background-position: -100px 0; }
+.icon-align-left   { background-position: -120px 0; }
+.icon-align-center { background-position: -140px 0; }
+.icon-align-right  { background-position: -160px 0; }
+.icon-delete       { background-position: -180px 0; }
+.icon-edit         { background-position: -200px 0; }
+.icon-close        { background-position: -220px 0; }
 
 input[type=radio],
 input[type=checkbox] {

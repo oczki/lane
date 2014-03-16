@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg
+	version="1.1"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xml:space="preserve"
+	width="240"
+	height="40">
+
+	<defs>
+		<filter id="MaskFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
+			<feColorMatrix type="matrix" values="-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0" color-interpolation-filters="sRGB" result="source"/>
+			<feFlood style="flood-color: white; flood-opacity: 1" result="back"/>
+			<feBlend in="source" in2="back" mode="normal"/>
+		</filter>
+	</defs>
+
+	<script type="text/javascript">
+		document.addEventListener('click', function(e)
+		{
+			document.getElementById('background').style.display = 'inline';
+		});
+	</script>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_menu">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<rect x="0" y="2" fill="white" width="20" height="4"/>
+			<rect x="0" y="8" fill="white" width="20" height="4"/>
+			<rect x="0" y="14" fill="white" width="20" height="4"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_gear">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<path fill="white" d="
+				M18.49463,10.11182
+				c-1.28613-0.43359-1.19238-0.28369-1.45508-1.45313
+				l0,0
+				c-0.25977-1.1709-0.28125-0.99414,0.69434-1.95166
+				c0.86035-0.84473,1.49316-1.13672,0.17188-2.82617
+				c-1.32031-1.68994-1.74219-1.12744-2.74316-0.46338
+				c-1.13574,0.75342-0.96191,0.77197-2.02344,0.25098
+				l0,0
+				c-0.00293-0.00098-0.00391-0.00195-0.00586-0.00293
+				l0,0
+				c-0.00098,0-0.00195-0.00049-0.00195-0.00049
+				c-0.00098-0.00098-0.00195-0.00146-0.00391-0.00195
+				c-1.05566-0.51855-0.93359-0.39453-1.0625-1.76611
+				C11.95264,0.68604,12.12158,0,10.00049,0
+				c-2.12012,0-1.95117,0.68604-2.06445,1.89697
+				c-0.12793,1.37158-0.00586,1.24756-1.0625,1.76611
+				c-0.00098,0.00049-0.00195,0.00098-0.00293,0.00146
+				l-0.00098,0.00049
+				l0,0
+				c-1.0625,0.52002-0.88867,0.50146-2.02344-0.25293
+				c-1-0.66553-1.4209-1.22803-2.74414,0.45996
+				c-1.32227,1.68848-0.69043,1.98145,0.16895,2.82666
+				c0.97461,0.9585,0.9541,0.78223,0.69238,1.95166
+				l0,0
+				c-0.2627,1.16992-0.16895,1.02002-1.45605,1.45264
+				c-1.13477,0.38135-1.8291,0.36572-1.35742,2.47119
+				c0.4707,2.10547,1.08984,1.78467,2.27539,1.62793
+				c1.34277-0.17773,1.19531-0.27148,1.92969,0.66602
+				l0,0
+				c0.73438,0.93945,0.67773,0.771,0.20703,2.06494
+				c-0.41406,1.14111-0.85938,1.68408,1.05078,2.62158
+				c1.91016,0.93799,2.05078,0.24512,2.66895-0.7959
+				c0.70117-1.17969,0.53711-1.12061,1.71484-1.12061
+				l0,0
+				c1.17871,0.00146,1.01465-0.05859,1.71484,1.12256
+				c0.61719,1.04199,0.75586,1.73486,2.66797,0.79883
+				c1.91113-0.93555,1.4668-1.479,1.05273-2.62061
+				c-0.46875-1.29395-0.52539-1.12646,0.20898-2.06396
+				l0,0
+				c0.73633-0.9375,0.58789-0.84424,1.93164-0.66455
+				c1.18457,0.15771,1.80371,0.479,2.27637-1.62549
+				C20.32275,10.47949,19.62842,10.49463,18.49463,10.11182
+				z
+
+				M12.93311,10.28809
+				c0,1.18457-0.67871,2.2085-1.66113,2.69043
+				H11.271
+				V12.979
+				c-0.38379,0.18848-0.81543,0.29395-1.27051,0.29395
+				c-0.45605,0-0.8877-0.10596-1.27246-0.29541
+				l-0.00098-0.00049
+				l0,0
+				c-0.98145-0.48242-1.6582-1.50537-1.6582-2.68896
+				c0-1.64893,1.3125-2.98535,2.93164-2.98535
+				S12.93311,8.63916,12.93311,10.28809
+				z"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_plus">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<rect x="8" y="2" fill="white" width="4" height="16"/>
+			<rect x="2" y="8" fill="white" width="16" height="4"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_up">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<polygon fill="white" points="18,14 10,6 2,14"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_down">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<polygon fill="white" points="2,6 10,14 18,6"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_dots">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<rect x="11" y="3" fill="white" width="2" height="2"/>
+			<rect x="7" y="7" fill="white" width="2" height="2"/>
+			<rect x="11" y="11" fill="white" width="2" height="2"/>
+			<rect x="7" y="15" fill="white" width="2" height="2"/>
+			<rect x="7" y="11" fill="white" width="2" height="2"/>
+			<rect x="11" y="15" fill="white" width="2" height="2"/>
+			<rect x="11" y="7" fill="white" width="2" height="2"/>
+			<rect x="7" y="3" fill="white" width="2" height="2"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_align_left">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<rect x="0" y="0" fill="white" width="17" height="2"/>
+			<rect x="0" y="3" fill="white" width="13" height="2"/>
+			<rect x="0" y="6" fill="white" width="20" height="2"/>
+			<rect x="0" y="9" fill="white" width="18" height="2"/>
+			<rect x="0" y="12" fill="white" width="12" height="2"/>
+			<rect x="0" y="15" fill="white" width="17" height="2"/>
+			<rect x="0" y="18" fill="white" width="14" height="2"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_align_center">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<rect x="1" y="0" fill="white" width="18" height="2"/>
+			<rect x="4" y="3" fill="white" width="12" height="2"/>
+			<rect x="0" y="6" fill="white" width="20" height="2"/>
+			<rect x="1" y="9" fill="white" width="18" height="2"/>
+			<rect x="4" y="12" fill="white" width="12" height="2"/>
+			<rect x="1" y="15" fill="white" width="18" height="2"/>
+			<rect x="3" y="18" fill="white" width="14" height="2"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_align_right">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<rect x="3" y="0" fill="white" width="17" height="2"/>
+			<rect x="7" y="3" fill="white" width="13" height="2"/>
+			<rect x="0" y="6" fill="white" width="20" height="2"/>
+			<rect x="2" y="9" fill="white" width="18" height="2"/>
+			<rect x="8" y="12" fill="white" width="12" height="2"/>
+			<rect x="3" y="15" fill="white" width="17" height="2"/>
+			<rect x="6" y="18" fill="white" width="14" height="2"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_recycle_bin">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<path fill="white" d="
+				M14,4 V1 h-7 v3 h-4 v2 h15 V4 H14 z
+				M9,3 h3 v1 h-3 z
+				M5,7 v12 h11 V7 H5 z
+				M11,9 v8 h-1 v-8 z
+				M7,9 h1 v8 h-1 z
+				M13,9 h1 v8 h-1 z"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_form">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<path fill="white" d="
+				M14,3 h-6.82861 L4,6.17139 V16 v2 h2 h8 h2 v-2 V5 V3 H14 z
+				M14,16 h-8 V7 l2-2 h6 V16 z"/>
+			<path transform="translate(18 3) rotate(45 0 0) translate(-1.5 0)" fill="white" d="M0,0 h2.5 v10 l-1.25 1.25 l-1.25 -1.25 z"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_x">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<rect x="0" y="0" transform="translate(10, 10) rotate(45 0 0) translate(-1.06065 -8)" fill="white" width="2.1213" height="16"/>
+			<rect x="0" y="0" transform="translate(10, 10) rotate(-45 0 0) translate(-1.06065 -8)" fill="white" width="2.1213" height="16"/>
+		</g>
+	</mask>
+
+	<defs>
+		<g id="icons">
+			<rect width="20" height="20" x="0" y="0" id="icon_menu" mask="url(#mask_menu)"/>
+			<rect width="20" height="20" x="20" y="0" id="icon_gear" mask="url(#mask_gear)"/>
+			<rect width="20" height="20" x="40" y="0" id="icon_plus" mask="url(#mask_plus)"/>
+			<rect width="20" height="20" x="60" y="0" id="icon_up" mask="url(#mask_up)"/>
+			<rect width="20" height="20" x="80" y="0" id="icon_down" mask="url(#mask_down)"/>
+			<rect width="20" height="20" x="100" y="0" id="icon_dots" mask="url(#mask_dots)"/>
+			<rect width="20" height="20" x="120" y="0" id="icon_align_left" mask="url(#mask_align_left)"/>
+			<rect width="20" height="20" x="140" y="0" id="icon_align_center" mask="url(#mask_align_center)"/>
+			<rect width="20" height="20" x="160" y="0" id="icon_align_right" mask="url(#mask_align_right)"/>
+			<rect width="20" height="20" x="180" y="0" id="icon_recycle_bin" mask="url(#mask_recycle_bin)"/>
+			<rect width="20" height="20" x="200" y="0" id="icon_form" mask="url(#mask_form)"/>
+			<rect width="20" height="20" x="220" y="0" id="icon_x" mask="url(#mask_x)"/>
+		</g>
+	</defs>
+	<rect id="background" fill="black" width="100%" height="100%" style="display: none"/>
+	<use x="0" y="0" fill="#fff" xlink:href="#icons"/>
+	<use x="0" y="20" fill="#f5f5f5" xlink:href="#icons"/>
+
+</svg>
