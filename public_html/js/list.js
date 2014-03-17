@@ -1,54 +1,59 @@
 function createRowTableRow(data, canEdit)
 {
-	var row = $('<tr>');
-	row.data('content-id', data.id);
+	var tableRow = $('<tr>');
+	tableRow.data('content-id', data.id);
+
+	tableRow.bind('mouseenter', function()
+	{
+		tableRow.addClass('active');
+	});
+
+	tableRow.bind('mouseleave', function()
+	{
+		if (!tableRow.hasClass('edit'))
+			tableRow.removeClass('active');
+	});
 
 	$.each(data.content, function(i, cellText)
 	{
-		var cell = $('<td>');
-
-		var span = $('<span>');
-		span.addClass('content');
-		span.text(cellText);
-
-		cell.append(span);
+		var tableCell = $('<td>');
 
 		if (canEdit)
 		{
-			var input = $('<input>');
-			input.attr('type', 'text');
-			input.val(cellText);
-
 			var editLink = $('<a>');
 			editLink.attr('href', '#');
 			editLink.addClass('edit-content');
 			editLink.append('<i class="icon icon-edit">');
-
-			cell.append(input);
-			cell.append(editLink);
+			tableCell.append(editLink);
 		}
 
-		row.append(cell);
+		var span = $('<span>');
+		span.addClass('content');
+		span.text(cellText);
+		span.attr('title', cellText);
+		tableCell.append(span);
+
+		tableRow.append(tableCell);
 	});
 
 	if (canEdit)
 	{
-		var cell = $('<td>');
-		cell.addClass('row-ops');
+		var tableCell = $('<td>');
+		tableCell.addClass('row-ops');
 
 		var deleteLink = $('<a>');
 		deleteLink.attr('href', '#');
 		deleteLink.addClass('delete-row');
 		deleteLink.append('<i class="icon icon-delete">');
 
-		cell.append(deleteLink);
+		tableCell.append(deleteLink);
 
-		row.append(cell);
+		tableRow.append(tableCell);
 	}
 
-	row.find('td').wrapInner('<div class="animate-me">');
+	tableRow.find('td').wrapInner('<div class="animate-me">');
 
-	return row;
+	return tableRow;
 }
 
 $(function()
@@ -65,11 +70,64 @@ $(function()
 		$('#list tbody').append(tableRow);
 	}
 
-	$('#main').on('click', '.delete-row', function()
+	$('#main').on('click', '#list .edit-content', function()
+	{
+		var tableCell = $(this).parents('td');
+		var tableRow = tableCell.parents('tr');
+		if (tableRow.data('working'))
+			return;
+		if (tableRow.find('input:visible').length > 0)
+			return;
+		tableRow.addClass('active edit');
+		tableCell.find('span').hide();
+
+		var input = $('<input>');
+		input.attr('type', 'text');
+		input.val(tableCell.find('span').text());
+		tableCell.find('.animate-me').append(input.wrap('<div class="input-wrapper">').parent());
+		input.hide().fadeIn('fast').focus();
+	});
+
+	var editCellContent = function(e)
+	{
+		var editLink = $(e.target);
+		var tableCell = $(e.target).parents('td');
+		var tableRow = tableCell.parents('tr');
+		var text = tableCell.find('input').val();
+		var rowId = tableRow.data('content-id');
+		var columnId = listColumns[tableCell.index()].id;
+		if (tableRow.data('working'))
+			return;
+		tableRow.data('working', true);
+
+		queue.push(new Job('list-edit-cell', [listId, rowId, columnId, text]));
+		queue.delayedFlush();
+		tableCell.find('.input-wrapper').fadeOut('fast', function()
+		{
+			tableCell.find('span').text(text);
+			tableCell.find('span').fadeIn();
+			tableCell.find('.input-wrapper').remove();
+			tableRow.removeClass('edit');
+			if (!tableRow.is(':hover') && tableRow.find(':focus').length == 0)
+				tableRow.removeClass('active');
+			tableRow.data('working', false);
+		});
+	};
+	$('#list').on('blur', 'input', editCellContent);
+	$('#list').on('keypress', 'input', function(e)
+	{
+		if (e.keyCode == 13)
+			editCellContent(e);
+	});
+
+	$('#list').on('click', '.delete-row', function()
 	{
 		var tableRow = $(this).parents('tr');
-		var contentId = tableRow.data('content-id');
-		queue.push(new Job('list-delete-row', [listId, contentId]));
+		var rowId = tableRow.data('content-id');
+		if (tableRow.data('working'))
+			return;
+		tableRow.data('working', true);
+		queue.push(new Job('list-delete-row', [listId, rowId]));
 		queue.delayedFlush();
 		tableRow.find('div.animate-me').slideUp('fast', function()
 		{
@@ -77,7 +135,7 @@ $(function()
 		});
 	});
 
-	$('#main').on('click', '#add-row input', function()
+	$('#add-row input').click(function()
 	{
 		var newRow = {
 			id: ++ lastContentId,
@@ -89,7 +147,7 @@ $(function()
 		$('#list tbody').append(tableRow);
 		tableRow.find('div.animate-me').hide().slideDown('fast', function()
 		{
-			//todo: show input and focus it
+			tableRow.find('.edit-content:eq(0)').click();
 		});
 	});
 
