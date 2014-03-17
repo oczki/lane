@@ -27,9 +27,11 @@ function Queue()
 		}
 
 		q.flushing = true;
+		$('#save-info').text('Saving...');
 
 		var url = '/exec';
 		var data = {jobs: q.jobs};
+		q.jobs = [];
 		$.post(url, data, function(rawContent)
 		{
 			var content = $(rawContent);
@@ -50,7 +52,6 @@ function Queue()
 			$('#save-info').text('Saved');
 
 			q.flushing = false;
-			q.jobs = [];
 		});
 	}
 
