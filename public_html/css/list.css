@@ -200,7 +200,7 @@
 	}
 	#list a.edit-content,
 	#list a.delete-row {
-		display: none;
+		opacity: 0; /* thanks to using opacity for invisibility, focus can be obtained */
 		float: right;
 	}
 	#list a .icon {
@@ -222,7 +222,7 @@
 		#list tr.active td .icon-delete { background-position: -180px -20px; }
 		#list tr.active a.edit-content,
 		#list tr.active a.delete-row {
-			display: block;
+			opacity: 1;
 		}
 
 	#list th.col-center,

@@ -3,15 +3,17 @@ function createRowTableRow(data, canEdit)
 	var tableRow = $('<tr>');
 	tableRow.data('content-id', data.id);
 
-	tableRow.bind('mouseenter', function()
+	tableRow.bind('mouseenter focusin', function(e)
 	{
 		tableRow.addClass('active');
 	});
 
-	tableRow.bind('mouseleave', function()
+	tableRow.bind('mouseleave focusout', function(e)
 	{
 		if (!tableRow.hasClass('edit'))
 			tableRow.removeClass('active');
+		if (e.type == 'focusout')
+			$('#list').data('last-focused-row', tableRow);
 	});
 
 	$.each(data.content, function(i, cellText)
