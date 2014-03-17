@@ -76,11 +76,13 @@
 		padding-bottom: 0.2em;
 		display: inline-block;
 	}
+	#menu #menu-trigger a:hover,
 	#menu #menu-trigger a:focus,
 	#menu.active #menu-trigger a {
 		color: black;
 		outline: 0;
 	}
+	#menu #menu-trigger a:hover .icon,
 	#menu #menu-trigger a:focus .icon,
 	#menu.active #menu-trigger a .icon {
 		background-color: black;
