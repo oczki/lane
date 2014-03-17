@@ -1,9 +1,9 @@
 #menu {
-	margin: 4px;
-	min-width: 10em;
+	margin: 4px -0.5em 0 4px;
 	position: absolute;
 	right: 0;
 	top: 0;
+	z-index: 90;
 }
 	#menu a {
 		display: block;
@@ -11,8 +11,8 @@
 		position: relative;
 	}
 	#menu ul {
-		box-shadow: 0 0 4px rgba(0,0,0,0.05);
 		background: white;
+		box-shadow: 0 0 4px rgba(0,0,0,0.05);
 		position: relative;
 		display: none;
 		clear: both;

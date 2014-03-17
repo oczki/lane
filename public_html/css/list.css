@@ -1,6 +1,6 @@
 #outer-content {
-	overflow: hidden;
 	min-height: 20em;
+	display: table;
 }
 #inner-content {
 	margin-top: 1em;
