@@ -9,7 +9,6 @@ function Queue()
 
 	q.push = function(job)
 	{
-		$('#save-info').text('Saving...');
 		enableExitConfirmation('Changes were not saved!');
 		q.jobs.push(job);
 	}
@@ -57,6 +56,8 @@ function Queue()
 
 	q.delayedFlush = function()
 	{
+		$('#save-info').text('Saving...');
+
 		if (q.interval)
 			window.clearTimeout(q.interval);
 
