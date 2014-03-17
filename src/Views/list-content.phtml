@@ -28,6 +28,9 @@ $alignments[ListColumn::ALIGN_RIGHT] = 'col-right';
 					<?= htmlspecialchars($column->name) ?>
 				<?= HtmlHelper::tagClose('th') ?>
 			<?php endforeach ?>
+			<?php if ($this->context->canEdit): ?>
+				<th class="row-ops"></th>
+			<?php endif ?>
 		</tr>
 	</thead>
 

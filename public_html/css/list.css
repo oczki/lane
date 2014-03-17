@@ -152,19 +152,39 @@
 #list {
 	width: 100%;
 	empty-cells: show;
+	border-collapse: collapse;
 	margin-bottom: 1em;
 }
-	#list tr:hover td {
-		background: #eee;
+	#list td,
+	#list th {
+		height: 30px; /* ensure row has enough height to show the icon */
 	}
 	#list input {
 		display: none;
 	}
 	#list span:before {
-		display: block;
+		display: inline-block;
 		content: '\a0';
 		cursor: default;
 	}
+	#list a {
+		display: none;
+		float: right;
+	}
+	#list .row-ops div.animate-me {
+		width: 40px;
+	}
+
+	#list tr:hover td {
+		background: #f5f5f5;
+	}
+		#list tr:hover td .icon   { margin: 5px; }
+		/* because why bother standarizing background-position-y, for crying out loud! */
+		#list tr:hover td .icon-edit   { background-position: -200px -20px; }
+		#list tr:hover td .icon-delete { background-position: -180px -20px; }
+		#list tr:hover a {
+			display: block;
+		}
 
 	#list th.col-center,
 	#list td.col-center {

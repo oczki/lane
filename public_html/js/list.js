@@ -65,7 +65,19 @@ $(function()
 		$('#list tbody').append(tableRow);
 	}
 
-	$('#add-row input').click(function()
+	$('#main').on('click', '.delete-row', function()
+	{
+		var tableRow = $(this).parents('tr');
+		var contentId = tableRow.data('content-id');
+		queue.push(new Job('list-delete-row', [listId, contentId]));
+		queue.delayedFlush();
+		tableRow.find('div.animate-me').slideUp('fast', function()
+		{
+			tableRow.remove();
+		});
+	});
+
+	$('#main').on('click', '#add-row input', function()
 	{
 		var newRow = {
 			id: ++ lastContentId,

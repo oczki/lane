@@ -23,6 +23,15 @@ abstract class ListJobHelper
 		throw new SimpleException('Invalid column ID: ' . $columnId . '.');
 	}
 
+	public static function getRowPos(ListEntity $listEntity, $rowId)
+	{
+		foreach ($listEntity->content->rows as $i => $row)
+			if ($row->id == $rowId)
+				return $i;
+
+		throw new SimpleException('Invalid row ID: ' . $rowId . '.');
+	}
+
 	public static function validateListName($name)
 	{
 		$validator = new Validator($name, 'list name');
