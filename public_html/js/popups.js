@@ -39,8 +39,8 @@ function showPopup(url, cb)
 			//position the popup
 			popupDiv.position({
 				collision: 'fit',
-				of: $('body'),
-				my: 'center center+15%',
+				of: $(window),
+				my: 'center center-10%',
 				at: 'center center'});
 
 			//show stuff
