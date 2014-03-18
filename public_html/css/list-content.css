@@ -63,7 +63,8 @@
 		width: 40px;
 	}
 
-	#list tr.active td {
+	#list tr.active td /* normal cells */,
+	#list tr.active:before /* row-ids */ {
 		background: #f5f5f5;
 	}
 		/* because why bother standarizing background-position-y, for crying out loud! */
@@ -89,3 +90,23 @@
 	#add-row input {
 		margin: 0 auto;
 	}
+
+#list {
+	counter-reset: row;
+}
+#list tbody tr {
+	counter-increment: row;
+}
+#list[data-show-row-ids="1"] tbody tr:before {
+	display: table-cell;
+	width: 2.5em;
+	content: counter(row);
+	vertical-align: middle;
+	text-align: right;
+	font-size: 95%;
+}
+#list[data-show-row-ids="1"] thead tr:before {
+	display: table-cell;
+	width: 2.5em;
+	content: ' ';
+}
