@@ -1,6 +1,11 @@
 <?php
 abstract class ListJobHelper
 {
+	public static function getLists(UserEntity $owner)
+	{
+		return ListService::getByUserId($owner->id);
+	}
+
 	public static function getList($listId, UserEntity $owner)
 	{
 		$listEntity = ListService::getByUrlName($owner, $listId);

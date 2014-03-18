@@ -12,23 +12,22 @@ class ListAddJob implements IJob
 		$this->visible = $visible;
 	}
 
-	public function execute(UserEntity $user)
+	public function execute(UserEntity $owner)
 	{
 		ListJobHelper::validateListName($this->name);
 
-		$filter = new ListFilter();
-		$filter->userId = $user->id;
-		$lists = ListService::getFilteredLists($filter);
+		$allListEntities = array_values(ListJobHelper::getLists($owner));
 
-		$maxPriority = array_reduce($lists, function($max, $list)
+		$maxPriority = array_reduce($allListEntities, function($max, $listEntity)
 		{
-			if ($list->priority > $max)
-				$max = $list->priority;
+			return $listEntity->priority > $max
+				? $listEntity->priority
+				: $max;
 		}, 0);
 
 		$listEntity = new ListEntity();
 		$listEntity->priority = $maxPriority + 1;
-		$listEntity->userId = $user->id;
+		$listEntity->userId = $owner->id;
 		$listEntity->name = $this->name;
 		$listEntity->visible = $this->visible;
 		$listEntity->content = new ListContent();
@@ -51,7 +50,7 @@ class ListAddJob implements IJob
 		$baseUrlName = TextHelper::convertCase($listEntity->name,
 			TextHelper::BLANK_CASE,
 			TextHelper::SNAKE_CASE);
-		self::forgeUrlName($user, $listEntity, $baseUrlName);
+		self::forgeUrlName($owner, $listEntity, $baseUrlName);
 
 		return ListService::saveOrUpdate($listEntity);
 	}
