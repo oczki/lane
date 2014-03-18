@@ -3,7 +3,7 @@
 \Chibi\AssetViewDecorator::addScript('list-sidebar.js');
 ?>
 
-<div id="sidebar">
+<div id="sidebar" data-can-edit="<?= intval($this->context->canEdit) ?>">
 	<a href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
 		<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo-small.png') ?>" alt=""/>
 	</a>
@@ -21,12 +21,15 @@
 			<ul id="lists">
 				<?php foreach ($this->context->lists as $list): ?>
 					<?php
-						echo HtmlHelper::tag('li',
-							(isset($this->context->list) and $list->urlName == $this->context->list->urlName)
-								? ['class' => 'active']
-								: []);
+						$active = (isset($this->context->list) and
+							$list->urlName == $this->context->list->urlName);
+
+						echo HtmlHelper::tag('li', [
+							'data-list-id' => $list->urlName,
+							'class' => $active ? 'active' : '']);
 
 						echo HtmlHelper::tag('a', [
+							'class' => 'list',
 							'href' => \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $list->urlName]),
 							'title' => $list->name]);
 

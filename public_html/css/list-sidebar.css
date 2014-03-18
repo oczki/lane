@@ -72,13 +72,14 @@
 			rgba(255,255,255,1) 100%);
 	}
 
-#sidebar li a {
+#sidebar li a:not(.dragger) {
 	display: block;
 	margin: 0;
-	padding: 0.6em 0.5em 0.6em 1em;
+	padding: 0 0.5em 0 1em;
+	line-height: 35px;
 	color: gray;
 }
-	#sidebar li:not(.active) a:hover {
+	#sidebar li:not(.active) a:not(.dragger):hover {
 		border-right: 4px solid lightgray;
 	}
 
@@ -89,14 +90,14 @@
 
 
 
-#lists a {
+#lists a.list {
 	overflow: hidden;
 	white-space: pre;
 	text-overflow: ellipsis;
 	/* outline consistency with li.active a */
 	box-shadow: -1px 1px 3px transparent;
 }
-	#lists li.active a {
+	#lists li.active a.list {
 		box-shadow: -1px 1px 3px rgba(0,0,0,0.05);
 		position: relative;
 		z-index: 2;
@@ -112,6 +113,17 @@
 			#8fb 4px,
 			rgba(255,255,255,0) 4px);
 	}
+#lists a.dragger {
+	vertical-align: middle;
+	line-height: 35px;
+	margin-left: -20px;
+	width: 20px;
+	opacity: 0; /* allow to focus etc */
+}
+body #lists .dragging a.dragger,
+#lists li:hover a.dragger {
+	opacity: 1;
+}
 
 #list-management:after {
 	clear: both;

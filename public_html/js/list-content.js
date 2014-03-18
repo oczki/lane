@@ -60,7 +60,7 @@ function createRowTableRow(data, canEdit)
 
 $(function()
 {
-	var queue = new Queue();
+	var queue = QueueFactory();
 	var canEdit = $('#list').attr('data-can-edit') == '1';
 	var listId = $('#list').attr('data-list-id');
 	var listRows = $.parseJSON($('#list').attr('data-list-rows'));

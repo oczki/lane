@@ -84,3 +84,46 @@ $(function()
 			send();
 	});
 });
+
+//dragging
+function dragHandler(e)
+{
+	var target = e.data;
+	while (e.pageY < target.offset().top && target.prev().length > 0)
+	{
+		target.data('changed', true);
+		target.insertBefore(target.prev());
+	}
+	while (e.pageY > target.offset().top + target.height() && target.next().length > 0)
+	{
+		target.data('changed', true);
+		target.insertAfter(target.next());
+	}
+}
+
+function initDragger(dragger, parentElement, dragFinishCallback)
+{
+	$(dragger).mousedown(function(e)
+	{
+		e.preventDefault();
+		var target = $(e.target).parents(parentElement);
+		target.addClass('dragging');
+		target.data('changed', false);
+
+		$('body')
+			.addClass('dragging')
+			.on('mousemove', target, dragHandler)
+			.one('mouseup', function(e)
+		{
+			e.preventDefault();
+			target.removeClass('dragging');
+			$('body').removeClass('dragging')
+			$('body').off('mousemove', dragHandler);
+			if (typeof(dragFinishCallback) !== 'undefined')
+				dragFinishCallback(dragger, target.data('changed'));
+		});
+	}).click(function(e)
+	{
+		e.preventDefault();
+	});
+}

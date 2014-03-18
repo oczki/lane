@@ -8,6 +8,7 @@ function createColumnTableRow(data)
 	dragger.attr('href', '#');
 	dragger.addClass('dragger');
 	dragger.append('<i class="icon icon-drag">');
+	initDragger(dragger, 'tr');
 	cell.append(dragger);
 	row.append(cell);
 
@@ -78,34 +79,6 @@ $(function()
 	{
 		e.preventDefault();
 		closePopup($(e.target).parents('.popup'));
-	});
-
-
-	//dragging
-	function listColumnDragger(e)
-	{
-		var target = e.data;
-		while (e.pageY < target.offset().top && target.prev('tr').length > 0)
-			target.insertBefore(target.prev('tr'));
-		while (e.pageY > target.offset().top + target.height() && target.next('tr').length > 0)
-			target.insertAfter(target.next('tr'));
-	}
-	$('#list-settings').on('mousedown', '.dragger', function(e)
-	{
-		e.preventDefault();
-		var target = $(e.target).parents('tr');
-		target.addClass('dragging');
-
-		$('body')
-			.addClass('dragging')
-			.on('mousemove', target, listColumnDragger)
-			.one('mouseup', function(e)
-		{
-			$('body').removeClass('dragging')
-			target.removeClass('dragging');
-			e.preventDefault();
-			$('body').off('mousemove', listColumnDragger);
-		});
 	});
 
 

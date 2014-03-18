@@ -71,3 +71,9 @@ function Job(name, args)
 	this.name = name;
 	this.args = args;
 }
+
+var queue = new Queue();
+function QueueFactory()
+{
+	return queue;
+}

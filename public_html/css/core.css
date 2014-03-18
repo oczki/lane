@@ -156,6 +156,8 @@ body.dragging * {
 	cursor: move;
 }
 .dragger {
+	display: block;
+	float: left;
 	cursor: move;
 }
 body .dragging .dragger .icon {
