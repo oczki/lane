@@ -1,5 +1,6 @@
 <?php
 \Chibi\AssetViewDecorator::addStylesheet('list-sidebar.css');
+\Chibi\AssetViewDecorator::addScript('list-sidebar.js');
 ?>
 
 <div id="sidebar">
@@ -18,13 +19,23 @@
 	<?php if (!empty($this->context->lists)): ?>
 		<div id="sidebar-nav">
 			<ul id="lists">
-			<?php foreach ($this->context->lists as $list): ?>
-				<?= HtmlHelper::tag('li', (isset($this->context->list) and $list->urlName == $this->context->list->urlName) ? ['class' => 'active'] : []) ?>
-					<a title="<?= $list->name ?>" href="<?= \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $list->urlName]) ?>">
-						<?= htmlspecialchars($list->name) ?>
-					</a>
-				<?= HtmlHelper::tagClose('li') ?>
-			<?php endforeach ?>
+				<?php foreach ($this->context->lists as $list): ?>
+					<?php
+						echo HtmlHelper::tag('li',
+							(isset($this->context->list) and $list->urlName == $this->context->list->urlName)
+								? ['class' => 'active']
+								: []);
+
+						echo HtmlHelper::tag('a', [
+							'href' => \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $list->urlName]),
+							'title' => $list->name]);
+
+						echo htmlspecialchars($list->name);
+
+						echo HtmlHelper::tagClose('a');
+						echo HtmlHelper::tagClose('li');
+					?>
+				<?php endforeach ?>
 			</ul>
 
 			<hr/>

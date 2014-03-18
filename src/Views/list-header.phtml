@@ -1,48 +1,8 @@
 <?php
 \Chibi\AssetViewDecorator::addStylesheet('list-header.css');
-\Chibi\AssetViewDecorator::addStylesheet('menu.css');
-\Chibi\AssetViewDecorator::addScript('menu.js');
 ?>
 
 <div id="search">
 	<?= HtmlHelper::textInputTag('search', ['placeholder' => 'Search on this list…']) ?>
 	<p><?= $this->context->user->name ?>&rsquo;s lane</p>
-</div>
-
-<div id="menu">
-	<div id="menu-trigger">
-		<a href="#"><i class="icon icon-menu"></i> Menu</a>
-	</div>
-	<ul>
-		<?php
-			$links = [];
-			if ($this->context->isLoggedIn)
-			{
-				$links []= ['account settings', '#', 'Account settings'];
-				$links []= ['import', '#', 'Import'];
-				$links []= ['export', '#', 'Export'];
-			}
-
-			$links []= ['help', '#', 'Help'];
-			$links []= ['about', '#', 'About'];
-
-			if ($this->context->isLoggedIn)
-			{
-				$links []= ['logout', \Chibi\UrlHelper::route('auth', 'logout'), 'Log out'];
-			}
-			else
-			{
-				$links []= ['login', \Chibi\UrlHelper::route('auth', 'login'), 'Log in'];
-				$links []= ['register', \Chibi\UrlHelper::route('auth', 'register'), 'Register'];
-			}
-		?>
-		<?php foreach ($links as $link): ?>
-			<?php list ($class, $url, $text) = $link ?>
-			<li>
-				<a href="<?= $url ?>" class="<?= $class ?>">
-					<?= $text ?>
-				</a>
-			</li>
-		<?php endforeach ?>
-	</ul>
 </div>

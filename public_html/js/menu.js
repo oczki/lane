@@ -25,13 +25,32 @@ $(function()
 				showMenu();
 		})
 		.mousedown(function(e)
-			{
-				e.preventDefault();
-				toggleMenu();
-			});
+		{
+			e.preventDefault();
+			toggleMenu();
+		})
+		.click(function(e)
+		{
+			e.preventDefault();
+		});
 
 	$.getScript('/js/jquery.focuslost.js', function()
 	{
 		$('#menu').focuslost(hideMenu);
+	});
+
+	$('#menu .login, #menu .register').click(function(e)
+	{
+		e.preventDefault();
+		showPopup($(this).attr('href'));
+	});
+
+	$('#menu .logout').click(function(e)
+	{
+		e.preventDefault();
+		$.post($(this).attr('href'), function()
+		{
+			window.location.reload();
+		});
 	});
 });
