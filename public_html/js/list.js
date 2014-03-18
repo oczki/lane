@@ -72,8 +72,9 @@ $(function()
 		$('#list tbody').append(tableRow);
 	}
 
-	$('#main').on('click', '#list .edit-content', function()
+	$('#main').on('click', '#list .edit-content', function(e)
 	{
+		e.preventDefault();
 		var tableCell = $(this).parents('td');
 		var tableRow = tableCell.parents('tr');
 		if (tableRow.data('working'))
@@ -122,8 +123,9 @@ $(function()
 			editCellContent(e);
 	});
 
-	$('#list').on('click', '.delete-row', function()
+	$('#list').on('click', '.delete-row', function(e)
 	{
+		e.preventDefault();
 		var tableRow = $(this).parents('tr');
 		var rowId = tableRow.data('content-id');
 		if (tableRow.data('working'))
@@ -137,8 +139,9 @@ $(function()
 		});
 	});
 
-	$('#add-row input').click(function()
+	$('#add-row input').click(function(e)
 	{
+		e.preventDefault();
 		var newRow = {
 			id: ++ lastContentId,
 			content: new Array(listColumns.length).map(String.prototype.valueOf, '')
