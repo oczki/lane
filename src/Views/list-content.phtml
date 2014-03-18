@@ -1,6 +1,7 @@
 <?php if (!isset($this->context->list)) return ?>
 
 <?php
+\Chibi\AssetViewDecorator::addStylesheet('list-content.css');
 if ($this->context->list->content->css != '')
 	\Chibi\AssetViewDecorator::addStylesheet(\Chibi\UrlHelper::route('list', 'custom-css', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]));
 
