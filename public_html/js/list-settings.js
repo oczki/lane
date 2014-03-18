@@ -83,7 +83,7 @@ $(function()
 
 
 	//deleting the column
-	$('#list-settings').on('click', '.delete-column', function(e)
+	$('#list-settings').on('click', '.delete-column a', function(e)
 	{
 		e.preventDefault();
 
