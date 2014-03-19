@@ -5,16 +5,18 @@
 \Chibi\AssetViewDecorator::addScript('queue.js');
 ?>
 
-<?= $this->renderFile('list-sidebar') ?>
+<div id="outer-wrapper">
+	<?= $this->renderFile('list-sidebar') ?>
 
-<div id="outer-content">
-	<div id="inner-header">
-		<?= $this->renderFile('list-header') ?>
-		<?= $this->renderFile('menu') ?>
-	</div>
+	<div id="outer-content">
+		<div id="inner-header">
+			<?= $this->renderFile('list-header') ?>
+			<?= $this->renderFile('menu') ?>
+		</div>
 
-	<div id="inner-content">
-		<?php $this->renderFile('messages') ?>
-		<?php $this->renderFile('list-content') ?>
+		<div id="inner-content">
+			<?php $this->renderFile('messages') ?>
+			<?php $this->renderFile('list-content') ?>
+		</div>
 	</div>
 </div>

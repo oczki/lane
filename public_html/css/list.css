@@ -1,8 +1,16 @@
+#outer-wrapper {
+	display: table;
+	width: 100%;
+}
+#sidebar { display: table-cell; }
 #outer-content {
 	min-height: 20em;
-	display: table;
+	width: 100%;
+	vertical-align: top;
+	display: table-cell;
 }
 #inner-content {
+	min-height: 20em;
 	margin-top: 1em;
 	clear: both;
 }

@@ -125,15 +125,24 @@ class ListController
 				}
 			}
 			if (empty($id))
-				throw new SimpleException('Looks like all of user\'s lists are private.');
+			{
+				Messenger::error('Looks like all of user\'s lists are private.');
+				return;
+			}
 		}
 
 		$list = ListService::getByUrlName($this->context->user, $id);
 		if (empty($list))
-			throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
+		{
+			Messenger::error('List with id = ' . $id . ' wasn\'t found.');
+			return;
+		}
 
 		if (!ListService::canShow($list))
-			throw new SimpleException('List with id = ' . $id . ' is not available for public.');
+		{
+			Messenger::error('List with id = ' . $id . ' is not available for public.');
+			return;
+		}
 
 		$this->context->list = $list;
 	}

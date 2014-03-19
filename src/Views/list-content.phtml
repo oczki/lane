@@ -1,16 +1,18 @@
-<?php if (!isset($this->context->list)) return ?>
-
 <?php
-\Chibi\AssetViewDecorator::setTitle($this->context->user->name . '&rsquo;s lane&nbsp;&ndash; ' . $this->context->list->name);
 \Chibi\AssetViewDecorator::addStylesheet('list-content.css');
 \Chibi\AssetViewDecorator::addScript('list-content.js');
-if ($this->context->list->content->css != '')
-	\Chibi\AssetViewDecorator::addStylesheet(\Chibi\UrlHelper::route('list', 'custom-css', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]));
 
 $alignments = [];
 $alignments[ListColumn::ALIGN_LEFT] = 'col-left';
 $alignments[ListColumn::ALIGN_CENTER] = 'col-center';
 $alignments[ListColumn::ALIGN_RIGHT] = 'col-right';
+
+if (!isset($this->context->list))
+	return;
+
+\Chibi\AssetViewDecorator::setTitle($this->context->user->name . '&rsquo;s lane&nbsp;&ndash; ' . $this->context->list->name);
+if ($this->context->list->content->css != '')
+	\Chibi\AssetViewDecorator::addStylesheet(\Chibi\UrlHelper::route('list', 'custom-css', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]));
 ?>
 
 <?= HtmlHelper::tag('table', [

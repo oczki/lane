@@ -3,6 +3,8 @@
 ?>
 
 <div id="search">
-	<?= HtmlHelper::textInputTag('search', ['placeholder' => 'Search on this list…']) ?>
+	<?php if (isset($this->context->list)): ?>
+		<?= HtmlHelper::textInputTag('search', ['placeholder' => 'Search on this list…']) ?>
+	<?php endif ?>
 	<p><?= $this->context->user->name ?>&rsquo;s lane</p>
 </div>
