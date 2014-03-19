@@ -14,6 +14,12 @@ class AuthController
 
 		$passHash = UserService::hashPassword($pass);
 
+		if (InputHelper::getPost('remember'))
+		{
+			setcookie('auth-name', $name, time() + 60 * 60 * 24 * 30, '/');
+			setcookie('auth-pass-hash', $passHash, time() + 60 * 60 * 24 * 30, '/');
+		}
+
 		try
 		{
 			$user = UserService::getByName($name);
@@ -48,6 +54,9 @@ class AuthController
 
 		unset($_SESSION['logged-in']);
 		unset($_SESSION['user-id']);
+
+		setcookie('auth-name', '', 0, '/');
+		setcookie('auth-pass-hash', '', 0, '/');
 
 		Messenger::success('Logged out.');
 		Bootstrap::forward('/');
@@ -108,5 +117,36 @@ class AuthController
 
 		Messenger::success('Registration successful');
 		Bootstrap::forward('/');
+	}
+
+	public static function isLoggedIn()
+	{
+		return isset($_SESSION['logged-in']);
+	}
+
+	public static function tryAutoLogin()
+	{
+		if (self::isLoggedIn())
+			return true;
+
+		if (!isset($_COOKIE['auth-name']))
+			return false;
+		$name = $_COOKIE['auth-name'];
+
+		if (!isset($_COOKIE['auth-pass-hash']))
+			return false;
+		$passHash = $_COOKIE['auth-pass-hash'];
+
+		$user = UserService::getByName($name);
+		if (empty($user))
+			return false;
+
+		if ($passHash != $user->passHash)
+			return false;
+
+		$_SESSION['logged-in'] = true;
+		$_SESSION['user-id'] = $user->id;
+
+		return self::isLoggedIn();
 	}
 }

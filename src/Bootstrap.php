@@ -11,6 +11,7 @@ class Bootstrap
 
 	public static function forward($url)
 	{
+		\Chibi\HeadersHelper::setCode(303);
 		\Chibi\UrlHelper::forward($url);
 		exit;
 	}
@@ -36,7 +37,9 @@ class Bootstrap
 			: 'layout-normal';
 
 		$this->context->isSubmit = $_SERVER['REQUEST_METHOD'] == 'POST';
-		$this->context->isLoggedIn = isset($_SESSION['logged-in']);
+		$this->context->isLoggedIn = AuthController::isLoggedIn();
+		if (!$this->context->isLoggedIn)
+			$this->context->isLoggedIn = AuthController::tryAutoLogin();
 		if ($this->context->isLoggedIn)
 			$this->context->userLogged = UserService::getById($_SESSION['user-id']);
 		else

@@ -8,6 +8,10 @@
 	<?= HtmlHelper::labelDecorator('Password',
 		HtmlHelper::passwordInputTag('pass')) ?>
 
+	<?= HtmlHelper::labelDecorator('',
+		HtmlHelper::checkboxInputTag('remember', true),
+		'remember me') ?>
+
 	<?= HtmlHelper::labelDecorator(false,
 		HtmlHelper::submitInputTag('Log in')) ?>
 
