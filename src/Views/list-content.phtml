@@ -46,7 +46,8 @@ if ($this->context->list->content->css != '')
 <?= HtmlHelper::tagClose('table') ?>
 
 <?php if ($this->context->canEdit): ?>
-	<div id="add-row">
-		<input type="button" value="Add new row"/>
+	<div id="table-ops">
+		<input type="button" id="add-row" value="Add new row"/>
+		<input type="button" id="delete-rows" value="Delete selected"/>
 	</div>
 <?php endif ?>

@@ -43,12 +43,11 @@ function createRowTableRow(data, canEdit)
 		var tableCell = $('<td>');
 		tableCell.addClass('row-ops');
 
-		var deleteLink = $('<a>');
-		deleteLink.attr('href', '#');
-		deleteLink.addClass('delete-row');
-		deleteLink.append('<i class="icon icon-delete">');
+		var checkbox = $('<input>');
+		checkbox.attr('type', 'checkbox');
+		checkbox.data('content-id', data.id);
 
-		tableCell.append(deleteLink);
+		tableCell.append(checkbox);
 
 		tableRow.append(tableCell);
 	}
@@ -96,7 +95,7 @@ $(function()
 		var editLink = $(e.target);
 		var tableCell = $(e.target).parents('td');
 		var tableRow = tableCell.parents('tr');
-		var text = tableCell.find('input').val();
+		var text = tableCell.find('input[type=text]').val();
 		var rowId = tableRow.data('content-id');
 		var columnId = listColumns[tableCell.index()].id;
 		if (tableRow.data('working'))
@@ -116,30 +115,44 @@ $(function()
 			tableRow.data('working', false);
 		});
 	};
-	$('#list').on('blur', 'input', editCellContent);
-	$('#list').on('keypress', 'input', function(e)
+	$('#list').on('blur', 'input[type=text]', editCellContent);
+	$('#list').on('keypress', 'input[type=text]', function(e)
 	{
 		if (e.keyCode == 13)
 			editCellContent(e);
 	});
 
-	$('#list').on('click', '.delete-row', function(e)
+	var refreshDeleteRowsButton = function(e)
 	{
-		e.preventDefault();
-		var tableRow = $(this).parents('tr');
-		var rowId = tableRow.data('content-id');
-		if (tableRow.data('working'))
-			return;
-		tableRow.data('working', true);
-		queue.push(new Job('list-delete-row', [listId, rowId]));
-		queue.delayedFlush();
-		tableRow.find('div.animate-me').slideUp('fast', function()
+		$('#delete-rows').prop('disabled', $('#list input[type=checkbox]:checked').length == 0);
+	};
+	$('#list').on('click', 'input[type=checkbox]', function(e)
+	{
+		refreshDeleteRowsButton(e);
+	});
+	refreshDeleteRowsButton();
+
+	$('#delete-rows').click(function(e)
+	{
+		var tableRows = $('#list input[type=checkbox]:checked').parents('tr');
+		tableRows.each(function(i, tableRowNode)
 		{
-			tableRow.remove();
+			e.preventDefault();
+			var tableRow = $(tableRowNode);
+			var rowId = tableRow.data('content-id');
+			if (tableRow.data('working'))
+				return;
+			tableRow.data('working', true);
+			queue.push(new Job('list-delete-row', [listId, rowId]));
+			tableRow.find('div.animate-me').slideUp('fast', function()
+			{
+				tableRow.remove();
+			});
 		});
+		queue.delayedFlush();
 	});
 
-	$('#add-row input').click(function(e)
+	$('#add-row').click(function(e)
 	{
 		e.preventDefault();
 		var newRow = {

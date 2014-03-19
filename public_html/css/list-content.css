@@ -19,7 +19,7 @@
 		white-space: nowrap;
 		padding: 0 3px;
 	}
-	#list input {
+	#list input[type=text] {
 		border: 0;
 		width: 100%;
 		box-sizing: border-box;
@@ -54,8 +54,7 @@
 		cursor: default;
 		width: 0;
 	}
-	#list a.edit-content,
-	#list a.delete-row {
+	#list a.edit-content {
 		opacity: 0; /* thanks to using opacity for invisibility, focus can be obtained */
 		float: right;
 	}
@@ -64,10 +63,10 @@
 		margin: 5px;
 	}
 	#list .row-ops {
-		width: 40px;
+		width: 20px;
 	}
 	#list .row-ops div.animate-me {
-		width: 40px;
+		width: 20px;
 	}
 
 	#list tr.active td /* normal cells */,
@@ -78,7 +77,7 @@
 		#list tr.active td .icon-edit   { background-position: -200px -20px; }
 		#list tr.active td .icon-delete { background-position: -180px -20px; }
 		#list tr.active a.edit-content,
-		#list tr.active a.delete-row {
+		#list tr.active input[type=checkbox] {
 			opacity: 1;
 		}
 
@@ -91,11 +90,11 @@
 		text-align: right;
 	}
 
-#add-row {
+#table-ops {
 	text-align: center;
 }
-	#add-row input {
-		margin: 0 auto;
+	#table-ops input {
+		margin: 0 0.5em;
 	}
 
 #list {
