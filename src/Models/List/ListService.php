@@ -45,18 +45,15 @@ class ListService
 		return ListDao::delete($listEntity);
 	}
 
-	public static function removeRow(ListEntity $listEntity, $index)
+	public static function canShow(ListEntity $listEntity)
 	{
-		self::checkRowIndex($listEntity, $index);
+		$context = \Chibi\Registry::getContext();
+		if ($listEntity->visible)
+			return true;
 
-		$listEntity->content->rows = array_splice($listEntity->content->rows, $i, 1);
-	}
-
-	public static function setCell(ListEntity $listEntity, $rowIndex, $columnIndex, $content)
-	{
-		self::checkRowIndex($listEntity, $rowIndex);
-		self::checkColumnIndex($listEntity, $columnIndex);
-		$listEntity->content->rows[$rowIndex][$columnIndex] = $content;
+		return
+			$context->isLoggedIn and
+			$listEntity->userId == $context->userLogged->id;
 	}
 
 	public static function getRows(ListEntity $listEntity)

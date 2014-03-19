@@ -114,11 +114,27 @@ class ListController
 		$this->preWork($userName);
 
 		if ($id === null)
-			$id = reset($this->context->lists)->urlName;
+		{
+			$id = null;
+			foreach ($this->context->lists as $list)
+			{
+				if (ListService::canShow($list))
+				{
+					$id = $list->urlName;
+					break;
+				}
+			}
+			if (empty($id))
+				throw new SimpleException('Looks like all of user\'s lists are private.');
+		}
 
 		$list = ListService::getByUrlName($this->context->user, $id);
 		if (empty($list))
 			throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
+
+		if (!ListService::canShow($list))
+			throw new SimpleException('List with id = ' . $id . ' is not available for public.');
+
 		$this->context->list = $list;
 	}
 

@@ -10,9 +10,7 @@ class IndexController
 		{
 			$lists = ListService::getByUserId($this->context->userLogged->id);
 
-			$url = \Chibi\UrlHelper::route('list', 'view', [
-				'userName' => $this->context->userLogged->name,
-				'id' => reset($lists)->urlName]);
+			$url = \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->userLogged->name]);
 
 			Bootstrap::forward($url);
 		}

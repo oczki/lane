@@ -21,6 +21,9 @@
 			<ul id="lists">
 				<?php foreach ($this->context->lists as $list): ?>
 					<?php
+						if (!ListService::canShow($list))
+							continue;
+
 						$active = (isset($this->context->list) and
 							$list->urlName == $this->context->list->urlName);
 
