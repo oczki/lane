@@ -30,4 +30,3 @@ class ListEditCellJob implements IJob
 		array_splice($subject, $pos, 1);
 	}
 }
-

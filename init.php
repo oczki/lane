@@ -22,8 +22,10 @@ function download($source, $destination = null)
 }
 
 //jQuery resizableColumns
-download('https://raw.githubusercontent.com/dobtco/jquery-resizable-columns/gh-pages/dist/jquery.resizableColumns.min.js',
+download(
+	'https://raw.githubusercontent.com/dobtco/jquery-resizable-columns/gh-pages/dist/jquery.resizableColumns.min.js',
 	'public_html' . DS . 'js' . DS . 'jquery.resizableColumns.min.js');
 
-download('https://raw.githubusercontent.com/dobtco/jquery-resizable-columns/gh-pages/css/jquery.resizableColumns.css',
+download(
+	'https://raw.githubusercontent.com/dobtco/jquery-resizable-columns/gh-pages/css/jquery.resizableColumns.css',
 	'public_html' . DS . 'css' . DS . 'jquery.resizableColumns.css');

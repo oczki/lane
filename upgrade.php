@@ -27,4 +27,3 @@ foreach ($upgradeClasses as $upgradeClass)
 		UpgradeService::markAsExecuted($upgradeNumber, true);
 	}
 }
-

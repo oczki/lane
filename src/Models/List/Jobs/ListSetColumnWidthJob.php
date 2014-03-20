@@ -29,4 +29,3 @@ class ListSetColumnWidthJob implements IJob
 		ListService::saveOrUpdate($listEntity);
 	}
 }
-

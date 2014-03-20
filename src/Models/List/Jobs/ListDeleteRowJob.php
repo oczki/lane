@@ -25,4 +25,3 @@ class ListDeleteRowJob implements IJob
 		array_splice($subject, $pos, 1);
 	}
 }
-
