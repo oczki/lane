@@ -71,7 +71,31 @@ $(function()
 		$('#list tbody').append(tableRow);
 	}
 
-	$('#main').on('click', '#list .edit-content', function(e)
+	if (canEdit)
+	{
+		$('#list').resizableColumns({
+			resizeFromBody: false,
+			store: {
+				convert: function(elementId)
+				{
+					return elementId.substring(elementId.indexOf('-') + 1);
+				},
+				get: function(elementId)
+				{
+					return null;
+				},
+				set: function(elementId, newWidth)
+				{
+					var columnId = this.convert(elementId);
+					queue.push(new Job('list-set-column-width', [listId, columnId, newWidth]));
+					queue.delayedFlush();
+				}
+			}
+		});
+		$('.rc-handle').append('<i class="icon icon-drag"/></i>');
+	}
+
+	$('#list').on('click', '.edit-content', function(e)
 	{
 		e.preventDefault();
 		var tableCell = $(this).parents('td');

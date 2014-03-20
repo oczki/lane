@@ -116,3 +116,9 @@
 	width: 2.5em;
 	content: ' ';
 }
+
+#inner-content .rc-handle {
+	width: 20px;
+	margin-left: -20px;
+	line-height: 30px;
+}
