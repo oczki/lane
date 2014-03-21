@@ -52,11 +52,13 @@
 						</a>
 					</li>
 
-					<li>
-						<a class="settings" href="<?= \Chibi\UrlHelper::route('list', 'settings', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]) ?>">
-							List settings…
-						</a>
-					</li>
+					<?php if (isset($this->context->list)): ?>
+						<li>
+							<a class="settings" href="<?= \Chibi\UrlHelper::route('list', 'settings', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]) ?>">
+								List settings…
+							</a>
+						</li>
+					<?php endif ?>
 				</ul>
 			<?php endif ?>
 		</div>
