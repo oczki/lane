@@ -109,12 +109,19 @@ $(function()
 
 
 	//saving current sort
-	$('#list-settings .save-sort').click(function(e)
+	if ($('#list').length > 0)
 	{
-		e.preventDefault();
-
-		alert('Not implemented yet.');
-	});
+		$('#list-settings .save-sort')
+			.show()
+			.click(function(e)
+				{
+					e.preventDefault();
+					var sortStyle = $('#list').attr('data-sort-style');
+					var url = $('#list-settings').attr('action');
+					var data = {jobs: [new Job('list-set-sort-style', [listId, sortStyle])]};
+					sendAjax(url, data);
+				});
+	}
 
 
 	//deleting list

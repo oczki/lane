@@ -29,3 +29,8 @@ download(
 download(
 	'https://raw.githubusercontent.com/dobtco/jquery-resizable-columns/gh-pages/css/jquery.resizableColumns.css',
 	'public_html' . DS . 'css' . DS . 'jquery.resizableColumns.css');
+
+//jQuery Tablesorter
+download(
+	'https://raw.githubusercontent.com/Mottie/tablesorter/master/js/jquery.tablesorter.min.js',
+	'public_html' . DS . 'js' . DS . 'jquery.tablesorter.min.js');

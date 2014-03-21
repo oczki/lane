@@ -3,6 +3,8 @@
 \Chibi\AssetViewDecorator::addScript('list-content.js');
 \Chibi\AssetViewDecorator::addStylesheet('jquery.resizableColumns.css');
 \Chibi\AssetViewDecorator::addScript('jquery.resizableColumns.min.js');
+\Chibi\AssetViewDecorator::addStylesheet('jquery.tablesorter.custom.css');
+\Chibi\AssetViewDecorator::addScript('jquery.tablesorter.min.js');
 
 $alignments = [];
 $alignments[ListColumn::ALIGN_LEFT] = 'col-left';
@@ -22,6 +24,7 @@ if ($this->context->list->content->css != '')
 	'data-resizable-columns-id' => $this->context->list->urlName,
 	'data-can-edit' => $this->context->canEdit ? '1' : '0',
 	'data-show-row-ids' => $this->context->list->content->showRowIds,
+	'data-sort-style' => $this->context->list->content->sortStyle,
 	'data-list-id' => $this->context->list->urlName,
 	'data-list-rows' => json_encode($this->context->list->content->rows),
 	'data-list-columns' => json_encode($this->context->list->content->columns),

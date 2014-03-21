@@ -19,7 +19,14 @@ function createRowTableRow(data, canEdit)
 	$.each(data.content, function(i, cellText)
 	{
 		var tableCell = $('<td>');
-		tableCell.attr('class', $('#list thead th').eq(i).attr('class'));
+
+		//add classes from header, but only these starting with col-
+		var tableHeaderClasses = $('#list thead th').eq(i).attr('class').split(/\s+/);
+		$.each(tableHeaderClasses, function(i, className)
+		{
+			if (className.substring(0, 4) == 'col-')
+				tableCell.addClass(className);
+		});
 
 		if (canEdit)
 		{
@@ -69,6 +76,22 @@ $(function()
 		var tableRow = createRowTableRow(listRows[i], canEdit);
 		$('#list tbody').append(tableRow);
 	}
+
+	var sortStyle;
+	try
+	{
+		sortStyle = JSON.parse($('#list').attr('data-sort-style'));
+	}
+	catch (err)
+	{
+		sortStyle = null;
+	}
+	$('#list')
+		.tablesorter({sortList: sortStyle})
+		.bind('sortEnd', function(sorter)
+			{
+				$('#list').attr('data-sort-style', JSON.stringify(sorter.target.config.sortList));
+			});
 
 	if (canEdit)
 	{
@@ -136,6 +159,7 @@ $(function()
 			if (!tableRow.is(':hover') && tableRow.find(':focus').length == 0)
 				tableRow.removeClass('active');
 			tableRow.data('working', false);
+			$('#list').trigger('updateCell', [tableCell, false]);
 		});
 	};
 	$('#list').on('blur', 'input[type=text]', editCellContent);
@@ -183,6 +207,7 @@ $(function()
 		queue.delayedFlush();
 		var tableRow = createRowTableRow(newRow, canEdit);
 		$('#list tbody').append(tableRow);
+		$('#list').trigger('addRows', [tableRow, false]);
 		tableRow.find('.edit-content:eq(0)').click();
 	});
 });
