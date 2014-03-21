@@ -50,7 +50,6 @@ function sendAjax(url, data, successFunc, errorFunc)
 				else
 					alert(content.find('.message').text());
 			}
-			e.preventDefault();
 		},
 	});
 }
