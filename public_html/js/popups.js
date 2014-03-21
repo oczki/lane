@@ -29,7 +29,10 @@ function showPopup(url, cb)
 			//download the scripts
 			$.each(scripts, function(i, script)
 			{
-				$.getScript($(script).attr('src'));
+				var location = $(script).attr('src');
+				if ($('script[src=\'' + location + '\']').length > 0)
+					return;
+				$.getScript(location);
 			});
 
 			//hide stuff
@@ -67,9 +70,13 @@ function showPopup(url, cb)
 			}
 		};
 
+		stylesheets = stylesheets.filter(function(i, stylesheet)
+		{
+			return $('link[href=\'' + $(stylesheet).attr('href') + '\']').length == 0;
+		});
 		if (stylesheets.length > 0)
 		{
-			stylesheets.load(showFunc);
+			stylesheets.last().load(showFunc);
 			$('head').append(stylesheets);
 		}
 		else
