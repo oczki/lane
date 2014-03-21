@@ -102,7 +102,7 @@ $(function()
 		var tableRow = tableCell.parents('tr');
 		if (tableRow.data('working'))
 			return;
-		if (tableRow.find('input:visible').length > 0)
+		if (tableRow.find('input[type=edit]:visible').length > 0)
 			return;
 		tableRow.addClass('active edit');
 		tableCell.find('span').hide();
