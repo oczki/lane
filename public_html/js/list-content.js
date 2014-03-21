@@ -87,7 +87,7 @@ $(function()
 		sortStyle = null;
 	}
 	$('#list')
-		.tablesorter({sortList: sortStyle})
+		.tablesorter(sortStyle != null ? {sortList: sortStyle} : {})
 		.bind('sortEnd', function(sorter)
 			{
 				$('#list').attr('data-sort-style', JSON.stringify(sorter.target.config.sortList));
