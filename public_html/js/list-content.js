@@ -19,6 +19,7 @@ function createRowTableRow(data, canEdit)
 	$.each(data.content, function(i, cellText)
 	{
 		var tableCell = $('<td>');
+		tableCell.attr('class', $('#list thead th').eq(i).attr('class'));
 
 		if (canEdit)
 		{
