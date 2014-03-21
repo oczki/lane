@@ -13,7 +13,7 @@ $alignments = [
 ?>
 
 <?= HtmlHelper::tag('form', [
-	'action' => \Chibi\UrlHelper::route('list', 'exec'),
+	'action' => \Chibi\UrlHelper::currentUrl(),
 	'method' => 'post',
 	'id' => 'list-settings',
 	'data-list-id' => $this->context->list->urlName,

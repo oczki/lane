@@ -41,7 +41,7 @@ function sendAjax(url, data, successFunc, errorFunc)
 				if (typeof(successFunc) !== 'undefined')
 					successFunc(content);
 				else
-					window.location.reload();
+					window.location = content.filter('meta[data-permalink]').attr('data-permalink');
 			}
 			else
 			{
@@ -73,7 +73,7 @@ $(function()
 
 		var send = function()
 		{
-			sendAjax(url, data);
+			sendAjax(url, data, form.data('success-callback'), form.data('error-callback'));
 		}
 
 		var messages = target.find('.message');

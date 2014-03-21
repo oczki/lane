@@ -10,6 +10,10 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
+	<?= HtmlHelper::tag('meta', [
+		'name' => 'application-name',
+		'content' => 'lane - list and nothing else',
+		'data-permalink' => \Chibi\UrlHelper::currentUrl()], true) ?>
 </head>
 <body>
 	<div id="main">

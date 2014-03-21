@@ -43,6 +43,9 @@ class ListController
 
 			$job = new ListAddJob($name, $visible);
 			JobExecutor::execute($job, $this->context->userLogged);
+
+			$lists = ListService::getByUserId($this->context->userLogged->id);
+			$newList = array_pop($lists);
 		}
 		catch (SimpleException $e)
 		{
@@ -51,6 +54,9 @@ class ListController
 		}
 
 		Messenger::success('List added successfully.');
+		Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
+			'userName' => $this->context->userLogged->name,
+			'id' => $newList->urlName]));
 	}
 
 	/**
@@ -74,7 +80,10 @@ class ListController
 		if (!$this->context->isSubmit)
 			return;
 
-		throw new NotImplementedException();
+		$this->execAction();
+		Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
+			'userName' => $this->context->userLogged->name,
+			'id' => $id]));
 	}
 
 	/**
