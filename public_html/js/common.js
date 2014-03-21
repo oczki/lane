@@ -67,7 +67,7 @@ $(function()
 		if (typeof(additionalData) !== 'undefined')
 			data += '&' + $.param(additionalData);
 
-		var target = form.closest('.ajax-wrapper');
+		var target = form.closest('.content-wrapper');
 		if (target.length == 0)
 			target = form;
 

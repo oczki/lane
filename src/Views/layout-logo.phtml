@@ -1,0 +1,39 @@
+<?php
+\Chibi\AssetViewDecorator::setTitle('lane&nbsp;&ndash; list and nothing else');
+\Chibi\AssetViewDecorator::addStylesheet('core.css');
+\Chibi\AssetViewDecorator::addScript('http://code.jquery.com/jquery-1.11.0.min.js');
+\Chibi\AssetViewDecorator::addScript('http://code.jquery.com/ui/1.10.4/jquery-ui.min.js');
+\Chibi\AssetViewDecorator::addScript('common.js');
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+</head>
+<body>
+	<div id="main" class="logo">
+		<a href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
+			<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo.png') ?>" alt=""/>
+		</a>
+		<br/>
+
+		<div class="content-wrapper">
+			<?php $this->renderFile('messages') ?>
+			<?php $this->renderView() ?>
+			<div class="clear"></div>
+
+			<?php if (isset($this->context->returnLink)): ?>
+				<?= HtmlHelper::tag('a', ['href' => $this->context->returnLink]); ?>
+					<?= $this->context->returnLinkText ?>
+				<?= HtmlHelper::tagClose('a'); ?>
+			<?php endif ?>
+		</div>
+
+		<div class="clear"></div>
+		<footer>
+			<p>Load: <?= sprintf('%.07fs', Bootstrap::getUptime()) ?></p>
+		</footer>
+	</div>
+</body>
+</html>

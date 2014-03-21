@@ -21,6 +21,15 @@ class Bootstrap
 		return microtime(true) - \Chibi\Registry::getContext()->scriptStartTime;
 	}
 
+	public static function markReturn($linkText = null, $link = null)
+	{
+		$context = \Chibi\Registry::getContext();
+		if (isset($context->returnLinkText))
+			return;
+		$context->returnLinkText = $linkText ?: 'Return to lane';
+		$context->returnLink = $link ?: \Chibi\UrlHelper::route('index', 'index');
+	}
+
 	public function workWrapper($workCallback)
 	{
 		session_start();
@@ -33,8 +42,8 @@ class Bootstrap
 		$this->context->viewDecorators []= new \Chibi\AssetViewDecorator();
 		$this->context->viewDecorators []= new \Chibi\PrettyPrintViewDecorator();
 		$this->context->layoutName = isset($_GET['simple'])
-			? 'layout-simple'
-			: 'layout-normal';
+			? 'layout-bare'
+			: 'layout-logo';
 
 		$this->context->isSubmit = $_SERVER['REQUEST_METHOD'] == 'POST';
 		$this->context->isLoggedIn = AuthController::isLoggedIn();
@@ -47,23 +56,28 @@ class Bootstrap
 
 		try
 		{
-			$this->render($workCallback);
-		}
-		catch (\Chibi\UnhandledRouteException $e)
-		{
-			Messenger::error('Error 404.');
-			$this->context->viewName = 'messages';
-			$this->render();
+			try
+			{
+				$this->render($workCallback);
+			}
+			catch (\Chibi\UnhandledRouteException $e)
+			{
+				self::markReturn();
+				throw new SimpleException('Page not found.');
+			}
 		}
 		catch (SimpleException $e)
 		{
+			self::markReturn();
 			Messenger::error($e->getMessage());
-			$this->context->viewName = 'messages';
+			$this->context->layoutName = 'layout-logo';
+			$this->context->viewName = null;
 			$this->render();
 		}
 		catch (Exception $e)
 		{
 			$this->context->exception = $e;
+			$this->context->layoutName = 'layout-logo';
 			$this->context->viewName = 'error-exception';
 			$this->render();
 		}

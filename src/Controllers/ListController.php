@@ -13,6 +13,7 @@ class ListController
 		if (!$user)
 			throw new SimpleException('User "' . $userName . '" doesn\'t exist.');
 
+		$this->context->layoutName = 'layout-bare';
 		$this->context->user = $user;
 		$this->context->lists = ListService::getByUserId($user->id);
 		$this->context->canEdit =
@@ -30,7 +31,7 @@ class ListController
 		$this->preWork();
 
 		if (!$this->context->canEdit)
-			throw new SimpleException('Cannot edit this list.');
+			throw new SimpleException('Cannot add new list.');
 
 		if (!$this->context->isSubmit)
 			return;
@@ -125,23 +126,26 @@ class ListController
 				}
 			}
 			if (empty($id))
-			{
-				Messenger::error('Looks like all of user\'s lists are private.');
-				return;
-			}
+				throw new SimpleException('Looks like all of user\'s lists are private.');
 		}
 
 		$list = ListService::getByUrlName($this->context->user, $id);
 		if (empty($list))
 		{
-			Messenger::error('List with id = ' . $id . ' wasn\'t found.');
-			return;
+			Bootstrap::markReturn(
+				'Return to ' . $userName . '\'s lane',
+				\Chibi\UrlHelper::route('list', 'view', ['userName' => $userName]));
+
+			throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
 		}
 
 		if (!ListService::canShow($list))
 		{
-			Messenger::error('List with id = ' . $id . ' is not available for public.');
-			return;
+			Bootstrap::markReturn(
+				'Return to ' . $userName . '\'s lane',
+				\Chibi\UrlHelper::route('list', 'view', ['userName' => $userName]));
+
+			throw new SimpleException('List with id = ' . $id . ' is not available for public.');
 		}
 
 		$this->context->list = $list;

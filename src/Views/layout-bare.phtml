@@ -5,6 +5,7 @@
 \Chibi\AssetViewDecorator::addScript('http://code.jquery.com/ui/1.10.4/jquery-ui.min.js');
 \Chibi\AssetViewDecorator::addScript('common.js');
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,11 @@
 </head>
 <body>
 	<div id="main">
-		<?php $this->renderView() ?>
+		<div class="content-wrapper">
+			<?php $this->renderFile('messages') ?>
+			<?php $this->renderView() ?>
+		</div>
+
 		<div class="clear"></div>
 		<footer>
 			<p>Load: <?= sprintf('%.07fs', Bootstrap::getUptime()) ?></p>

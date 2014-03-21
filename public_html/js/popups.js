@@ -9,7 +9,7 @@ function showPopup(url, cb)
 
 		var showFunc = function()
 		{
-			var elementsToAdd = content.filter('.ajax-wrapper');
+			var elementsToAdd = content.find('.content-wrapper');
 			var popupDiv = $('<div class="popup"></div>');
 			var coverDiv = $('<div class="cover"></div>');
 			var closeLink = $('<a class="popup-close" href="#"><i class="icon icon-close"></i></a>');
