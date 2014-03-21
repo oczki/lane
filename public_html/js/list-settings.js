@@ -48,8 +48,6 @@ function createColumnTableRow(data)
 	cell.append(deleteLink);
 	row.append(cell);
 
-	row.find('td').wrapInner('<div class="animate-me">');
-
 	return row;
 }
 
@@ -93,10 +91,7 @@ $(function()
 			return;
 		}
 
-		$(e.target).parents('tr').find('div.animate-me').slideUp(function()
-		{
-			$(this).parents('tr').remove();
-		});
+		$(this).parents('tr').remove();
 	});
 
 
@@ -109,10 +104,7 @@ $(function()
 		};
 		var tableRow = createColumnTableRow(newColumn);
 		$('#list-settings table tbody').append(tableRow);
-		tableRow.find('div.animate-me').hide().slideDown('fast', function()
-		{
-			tableRow.find('input:first').focus();
-		});
+		tableRow.find('input:first').focus();
 	});
 
 

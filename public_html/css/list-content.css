@@ -65,9 +65,6 @@
 	#list .row-ops {
 		width: 20px;
 	}
-	#list .row-ops div.animate-me {
-		width: 20px;
-	}
 
 	#list tr.active td /* normal cells */,
 	#list tr.active:before /* row-ids */ {

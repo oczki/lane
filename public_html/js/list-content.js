@@ -53,8 +53,6 @@ function createRowTableRow(data, canEdit)
 		tableRow.append(tableCell);
 	}
 
-	tableRow.find('td').wrapInner('<div class="animate-me">');
-
 	return tableRow;
 }
 
@@ -111,7 +109,7 @@ $(function()
 		var input = $('<input>');
 		input.attr('type', 'text');
 		input.val(tableCell.find('span').text());
-		tableCell.find('.animate-me').append(input.wrap('<div class="input-wrapper">').parent());
+		tableCell.append(input.wrap('<div class="input-wrapper">').parent());
 		input.hide().fadeIn('fast').focus();
 	});
 
@@ -169,10 +167,7 @@ $(function()
 				return;
 			tableRow.data('working', true);
 			queue.push(new Job('list-delete-row', [listId, rowId]));
-			tableRow.find('div.animate-me').slideUp('fast', function()
-			{
-				tableRow.remove();
-			});
+			tableRow.remove();
 		});
 		queue.delayedFlush();
 	});
@@ -188,9 +183,6 @@ $(function()
 		queue.delayedFlush();
 		var tableRow = createRowTableRow(newRow, canEdit);
 		$('#list tbody').append(tableRow);
-		tableRow.find('div.animate-me').hide().slideDown('fast', function()
-		{
-			tableRow.find('.edit-content:eq(0)').click();
-		});
+		tableRow.find('.edit-content:eq(0)').click();
 	});
 });
