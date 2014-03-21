@@ -89,7 +89,6 @@
 	}
 
 
-
 #lists a.list {
 	overflow: hidden;
 	white-space: pre;
@@ -113,17 +112,25 @@
 			#8fb 4px,
 			rgba(255,255,255,0) 4px);
 	}
-#lists a.dragger {
-	vertical-align: middle;
-	line-height: 35px;
+
+#sidebar #lists {
 	margin-left: -20px;
-	width: 20px;
-	opacity: 0; /* allow to focus etc */
 }
-body #lists .dragging a.dragger,
-#lists li:hover a.dragger {
-	opacity: 1;
-}
+	#sidebar #lists a.list {
+		margin-left: 20px;
+	}
+	#lists a.dragger {
+		vertical-align: middle;
+		line-height: 35px;
+		margin-left: 0;
+		width: 20px;
+		position: absolute;
+		visibility: hidden; /* disallow focus */
+	}
+	body #lists .dragging a.dragger,
+	#lists li:hover a.dragger {
+		visibility: visible;
+	}
 
 #list-management:after {
 	clear: both;
