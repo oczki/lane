@@ -43,7 +43,7 @@ function createRowTableRow(data, canEdit)
 		span.attr('title', cellText);
 		tableCell.append(span);
 
-		tableRow.append(tableCell);
+		tableRow.append(tableCell.wrapInner('<div>'));
 	});
 
 	if (canEdit)

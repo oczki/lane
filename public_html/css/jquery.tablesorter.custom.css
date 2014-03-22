@@ -4,20 +4,24 @@
 }
 .tablesorter-default .header span:after,
 .tablesorter-default .tablesorter-header span:after {
-background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
-content: ' ';
-background-position: center right;
-background-repeat: no-repeat;
-white-space: normal;
-padding: 4px 20px 4px 4px;
+	background-color: black;
+	background-image: url(data:image/gif;base64,R0lGODlhBwAJAIABAP///////yH5BAEAAAEALAAAAAAHAAkAAAINhGMZq8sOk4QO0IZmKgA7);
+	content: ' ';
+	background-position: center right;
+	background-repeat: no-repeat;
+	white-space: normal;
+	margin-left: 6px;
+	width: 7px;
+	height: 9px;
+	display: inline-block;
 }
 .tablesorter-default thead .headerSortUp span:after,
 .tablesorter-default thead .tablesorter-headerSortUp span:after,
 .tablesorter-default thead .tablesorter-headerAsc span:after {
-background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+	background-image: url(data:image/gif;base64,R0lGODlhBwAJAIABAP///////yH5BAEAAAEALAAAAAAHAAkAAAIMhI9pkeHnIohU2VsAADs=);
 }
 .tablesorter-default thead .headerSortDown span:after,
 .tablesorter-default thead .tablesorter-headerSortDown span:after,
 .tablesorter-default thead .tablesorter-headerDesc span:after {
-background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+	background-image: url(data:image/gif;base64,R0lGODlhBwAJAIABAP///////yH5BAEAAAEALAAAAAAHAAkAAAIMhI+pwR3gnmlJqmsKADs=);
 }

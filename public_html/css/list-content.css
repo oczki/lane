@@ -38,15 +38,20 @@
 		background: white;
 		height: 24px;
 	}
+	#list div {
+		position: relative;
+	}
 	#list span {
-		margin-left: 6px;
 		vertical-align: middle;
 		line-height: 30px;
 		display: block;
 		max-width: 100%;
-		margin-right: 30px;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		margin-right: 26px;
+	}
+	#list:not([data-can-edit='1']) span {
+		margin-right: 6px;
 	}
 	#list span:before {
 		display: inline-block;
@@ -56,11 +61,12 @@
 	}
 	#list a.edit-content {
 		opacity: 0; /* thanks to using opacity for invisibility, focus can be obtained */
-		float: right;
+		position: absolute;
+		right: 0;
 	}
 	#list a .icon {
 		display: block;
-		margin: 5px;
+		margin: 5px 0;
 	}
 	#list .row-ops {
 		width: 20px;
@@ -116,6 +122,6 @@
 
 #inner-content .rc-handle {
 	width: 20px;
-	margin-left: -20px;
+	margin-left: -23px;
 	line-height: 30px;
 }
