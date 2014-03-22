@@ -176,6 +176,7 @@ body.dragging * {
 	float: left;
 	cursor: move;
 }
+.rc-table-resizing .rc-handle .icon,
 body .dragging .dragger .icon {
-	background-color: red;
+	background-color: #4d8;
 }
