@@ -13,6 +13,7 @@ class ListController
 		if (!$user)
 			throw new SimpleException('User "' . $userName . '" doesn\'t exist.');
 
+		$this->context->allowIndexing = false;
 		$this->context->layoutName = 'layout-bare';
 		$this->context->user = $user;
 		$this->context->lists = ListService::getByUserId($user->id);

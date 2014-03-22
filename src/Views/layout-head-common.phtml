@@ -1,0 +1,22 @@
+<?php
+\Chibi\AssetViewDecorator::setTitle('lane&nbsp;&ndash; list and nothing else');
+\Chibi\AssetViewDecorator::addStylesheet('core.css');
+\Chibi\AssetViewDecorator::addScript('http://code.jquery.com/jquery-1.11.0.min.js');
+\Chibi\AssetViewDecorator::addScript('http://code.jquery.com/ui/1.10.4/jquery-ui.min.js');
+\Chibi\AssetViewDecorator::addScript('common.js');
+?>
+
+<head>
+	<meta charset="utf-8"/>
+
+	<?= HtmlHelper::tag('meta', [
+		'name' => 'robots',
+		'content' => $this->context->allowIndexing
+			? 'index, nofollow'
+			: 'noindex, nofollow']) ?>
+
+	<?= HtmlHelper::tag('meta', [
+		'name' => 'application-name',
+		'content' => 'lane - list and nothing else',
+		'data-permalink' => \Chibi\UrlHelper::currentUrl()], true) ?>
+</head>
