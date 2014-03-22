@@ -20,7 +20,7 @@ class ListAddRowJob implements IJob
 			$this->rowContent = array_fill(0, count($listEntity->content->columns), '');
 
 		if ($this->rowId <= $listEntity->content->lastContentId)
-			throw new SimpleException('Row ID already exists: ' . $this->columnId . '.');
+			throw new SimpleException('Row ID already exists: ' . $this->rowId . '.');
 
 		if (count($this->rowContent) != count($listEntity->content->columns))
 			throw new SimpleException('Invalid column count.');
