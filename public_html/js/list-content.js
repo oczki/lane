@@ -122,12 +122,10 @@ $(function()
 		e.preventDefault();
 		var tableCell = $(this).parents('td');
 		var tableRow = tableCell.parents('tr');
-		if (tableRow.data('working'))
-			return;
-		if (tableRow.find('input[type=edit]:visible').length > 0)
-			return;
 		tableRow.addClass('active edit');
 		tableCell.find('span').hide();
+		if (tableCell.find('input:visible').length > 0)
+			return;
 
 		var input = $('<input>');
 		input.attr('type', 'text');
@@ -136,37 +134,79 @@ $(function()
 		input.hide().fadeIn('fast').focus();
 	});
 
-	var editCellContent = function(e)
+	var cancelEdit = function(tableCell)
 	{
-		var editLink = $(e.target);
-		var tableCell = $(e.target).parents('td');
+		var tableRow = tableCell.parents('tr');
+		tableRow.removeClass('edit');
+		tableCell.find('.input-wrapper').fadeOut('fast', function()
+		{
+			tableCell.find('span').fadeIn();
+			tableCell.find('.input-wrapper').remove();
+			if (!tableRow.is(':hover') && tableRow.find(':focus').length == 0)
+				tableRow.removeClass('active');
+			$('#list').trigger('updateCell', [tableCell, false]);
+			tableCell.removeClass('working');
+		});
+	}
+	var editCellContent = function(tableCell)
+	{
+		if (tableCell.hasClass('working'))
+			return;
+		tableCell.addClass('working');
+		var editLink = tableCell.find('.edit-link');
 		var tableRow = tableCell.parents('tr');
 		var text = tableCell.find('input[type=text]').val();
 		var rowId = tableRow.data('content-id');
 		var columnId = listColumns[tableCell.index()].id;
-		if (tableRow.data('working'))
-			return;
-		tableRow.data('working', true);
 
 		queue.push(new Job('list-edit-cell', [listId, rowId, columnId, text]));
 		queue.delayedFlush();
-		tableCell.find('.input-wrapper').fadeOut('fast', function()
-		{
-			tableCell.find('span').text(text);
-			tableCell.find('span').fadeIn();
-			tableCell.find('.input-wrapper').remove();
-			tableRow.removeClass('edit');
-			if (!tableRow.is(':hover') && tableRow.find(':focus').length == 0)
-				tableRow.removeClass('active');
-			tableRow.data('working', false);
-			$('#list').trigger('updateCell', [tableCell, false]);
-		});
+		tableCell.find('span').text(text);
+		cancelEdit(tableCell);
 	};
-	$('#list').on('blur', 'input[type=text]', editCellContent);
-	$('#list').on('keypress', 'input[type=text]', function(e)
+	$('#list').on('blur', 'input[type=text]', function(e)
 	{
-		if (e.keyCode == 13)
-			editCellContent(e);
+		var tableCell = $(this).parents('td');
+		e.preventDefault();
+		editCellContent(tableCell);
+
+	});
+	$('#list').on('keydown', 'input[type=text]', function(e)
+	{
+		var tableCell = $(this).parents('td');
+		var tableRow = tableCell.parents('tr');
+
+		if (e.keyCode == 9 || e.keyCode == 13)
+		{
+			e.preventDefault();
+			editCellContent(tableCell);
+
+			var target;
+			if (!e.shiftKey)
+			{
+				target = (tableCell.next('td').find('.edit-content').length > 0)
+					? tableCell.next('td')
+					: tableRow.next('tr');
+
+				target.find('.edit-content').first().click();
+				if (target.length == 0)
+					$('.add-row').click();
+			}
+			else
+			{
+				target = (tableCell.prev('td').find('.edit-content').length > 0)
+					? tableCell.prev('td')
+					: tableRow.prev('tr');
+
+				target.find('.edit-content').last().click();
+			}
+		}
+
+		if (e.keyCode == 27)
+		{
+			e.preventDefault();
+			cancelEdit(tableCell);
+		}
 	});
 
 	var refreshDeleteRowsButton = function(e)
@@ -187,9 +227,6 @@ $(function()
 			e.preventDefault();
 			var tableRow = $(tableRowNode);
 			var rowId = tableRow.data('content-id');
-			if (tableRow.data('working'))
-				return;
-			tableRow.data('working', true);
 			queue.push(new Job('list-delete-row', [listId, rowId]));
 			tableRow.remove();
 		});
