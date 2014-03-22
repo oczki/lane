@@ -131,7 +131,25 @@ $(function()
 		input.attr('type', 'text');
 		input.val(tableCell.find('span').text());
 		tableCell.append(input.wrap('<div class="input-wrapper">').parent());
-		input.hide().fadeIn('fast').focus();
+		input.hide().fadeIn('fast', function()
+		{
+			$(this).focus();
+			var inputNode = $(this).get(0);
+			if (inputNode.createTextRange)
+			{
+				var NodeRange = inputNode.createTextRange();
+				NodeRange.moveStart('character',inputNode.value.length);
+				NodeRange.collapse();
+				NodeRange.select();
+			}
+			else if (inputNode.selectionStart || inputNode.selectionStart == '0')
+			{
+				var elemLen = inputNode.value.length;
+				inputNode.selectionStart = elemLen;
+				inputNode.selectionEnd = elemLen;
+				inputNode.focus();
+			}
+		});
 	});
 
 	var cancelEdit = function(tableCell)
