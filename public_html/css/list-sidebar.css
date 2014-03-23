@@ -100,7 +100,7 @@
 		box-shadow: -1px 1px 3px rgba(0,0,0,0.05);
 		position: relative;
 		z-index: 2;
-		margin: -1px 0 -1px -1px;
+		margin: -1px;
 		border-top-left-radius: 3px;
 		border-bottom-left-radius: 3px;
 		border-top: 1px solid lightgray;
