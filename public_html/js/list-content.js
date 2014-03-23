@@ -170,12 +170,16 @@ $(function()
 		tableCell.addClass('working');
 		var editLink = tableCell.find('.edit-link');
 		var tableRow = tableCell.parents('tr');
+		var oldText = tableCell.find('span').text();
 		var text = tableCell.find('input[type=text]').val();
 		var rowId = tableRow.data('content-id');
 		var columnId = listColumns[tableCell.index()].id;
 
-		queue.push(new Job('list-edit-cell', [listId, rowId, columnId, text]));
-		queue.delayedFlush();
+		if (text != oldText)
+		{
+			queue.push(new Job('list-edit-cell', [listId, rowId, columnId, text]));
+			queue.delayedFlush();
+		}
 		tableCell.find('span').text(text);
 		cancelEdit(tableCell);
 	};
