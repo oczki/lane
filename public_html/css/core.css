@@ -58,7 +58,7 @@ a {
 	transition: color 0.25s ease 0s;
 }
 a:focus {
-	outline: 1px dashed #8a8;
+	outline: 1px dashed hsl(215,80%,75%);
 }
 
 .icon {
@@ -114,16 +114,19 @@ input[type=password] {
 	border-color: #eee;
 	background: #eee;
 }
+.btn::-moz-focus-inner {
+	border: 0;
+}
 	.btn:hover,
 	.btn:focus {
-		border-color: #8fb;
-		background: #bfd;
+		border-color: hsl(215,100%,85%);
+		background: hsl(215,100%,90%);
 		outline: 0;
 	}
 	.btn.hl:hover,
 	.btn.hl:focus {
-		border-color: #8fb;
-		background: #8fb;
+		border-color: hsl(215,97%,80%);
+		background: hsl(215,97%,80%);
 		outline: 0;
 	}
 
@@ -187,5 +190,5 @@ body.dragging * {
 }
 .rc-table-resizing .rc-handle .icon,
 body .dragging .dragger .icon {
-	background-color: #4d8;
+	background-color: hsl(215,100%,75%);
 }

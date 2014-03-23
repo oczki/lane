@@ -65,7 +65,7 @@
 		right: 0;
 	}
 	#list td:hover .icon-edit {
-		background-color: #4d8;
+		background-color: hsl(215,100%,65%);
 	}
 	#list a .icon {
 		display: block;
