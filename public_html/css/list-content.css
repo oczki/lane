@@ -75,15 +75,22 @@
 		width: 20px;
 	}
 
-	#list tr.active td /* normal cells */,
-	#list tr.active:before /* row-ids */ {
+	/* normal cells */
+	#list tbody tr:hover td,
+	#list tbody tr.edit td,
+	/* row-ids */
+	#list tbody tr:hover:before,
+	#list tbody tr.edit:before {
 		background: #f5f5f5;
 	}
 		/* because why bother standarizing background-position-y, for crying out loud! */
-		#list tr.active td .icon-edit   { background-position: -200px -20px; }
-		#list tr.active td .icon-delete { background-position: -180px -20px; }
-		#list tr.active a.edit-content,
-		#list tr.active input[type=checkbox] {
+		#list tbody tr:hover td .icon-edit,
+		#list tbody tr.edit td .icon-edit { background-position: -200px -20px; }
+		#list tbody tr:hover td .icon-delete,
+		#list tbody tr.edit td .icon-delete { background-position: -180px -20px; }
+
+		#list tbody tr:hover a.edit-content,
+		#list tbody tr.edit a.edit-content {
 			opacity: 1;
 		}
 

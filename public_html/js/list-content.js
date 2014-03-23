@@ -46,28 +46,12 @@ $(function()
 		$('.rc-handle').append('<i class="icon icon-drag"/></i>');
 	}
 
-	$('#list tbody').on('mouseenter focusin', 'tr', function(e)
-	{
-		var tableRow = $(this);;
-		tableRow.addClass('active');
-	});
-
-	$('#list tbody').on('mouseleave focusout', 'tr', function(e)
-	{
-		var tableRow = $(this);;
-		if (!tableRow.hasClass('edit'))
-			tableRow.removeClass('active');
-		if (e.type == 'focusout')
-			$('#list').data('last-focused-row', tableRow);
-	});
-
-
 	$('#list tbody').on('click', '.edit-content', function(e)
 	{
 		e.preventDefault();
 		var tableCell = $(this).parents('td');
 		var tableRow = tableCell.parents('tr');
-		tableRow.addClass('active edit');
+		tableRow.addClass('edit');
 		tableCell.find('span').hide();
 		if (tableCell.find('input:visible').length > 0)
 			return;
@@ -102,8 +86,6 @@ $(function()
 		{
 			tableCell.find('span').fadeIn();
 			tableCell.find('.input-wrapper').remove();
-			if (!tableRow.is(':hover') && tableRow.find(':focus').length == 0)
-				tableRow.removeClass('active');
 			$('#list').trigger('updateCell', [tableCell, false]);
 			tableCell.removeClass('working');
 		});
