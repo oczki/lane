@@ -40,10 +40,10 @@ $alignments = [
 
 	<ul class="ops">
 		<li>
-			<input type="button" class="delete" value="Delete this list"/>
+			<?= HtmlHelper::buttonInputTag('Delete this list', ['class' => 'btn hl delete']) ?>
 		</li>
 		<li>
-			<input type="button" class="save-sort" value="Save current sort" style="display: none"/>
+			<?= HtmlHelper::buttonInputTag('Save current sort', ['class' => 'btn hl save-sort', 'style' => 'display: none']) ?>
 		</li>
 	</ul>
 
@@ -66,7 +66,7 @@ $alignments = [
 			<tr>
 				<td></td>
 				<td colspan="3">
-					<input type="button" class="add-column" value="Add new column"/>
+					<?= HtmlHelper::buttonInputTag('Add new column', ['class' => 'btn add-column']) ?>
 				</td>
 			</tr>
 		</tfoot>
@@ -78,8 +78,8 @@ $alignments = [
 	</div>
 
 	<div class="submit">
-		<input type="submit" value="Save changes"/>
-		<input type="button" value="Cancel" class="cancel"/>
+		<?= HtmlHelper::submitInputTag('Save changes', ['class' => 'btn hl']) ?>
+		<?= HtmlHelper::buttonInputTag('Cancel', ['class' => 'btn cancel']) ?>
 	</div>
 
 <?= HtmlHelper::tagClose('form') ?>

@@ -100,24 +100,33 @@ input[type=password] {
 	border: 1px solid lightgray;
 	border-radius: 3px;
 }
-input[type=button],
-input[type=submit] {
+.btn {
 	margin: 0.2em;
 	padding: 5px 12px;
-	border: 1px solid lightgray;
-	border-radius: 3px;
-	background: linear-gradient(to bottom,
-		#fafafa 25%,
-		#eee 75%);
+	border: 1px solid #ddd;
+	background: #fff;
 	color: black;
 	cursor: pointer;
+	transition: background-color 0.25s ease 0s,
+		border-color 0.25s ease 0s;
 }
-	input[type=button]:hover,
-	input[type=submit]:hover,
-	input[type=button]:focus,
-	input[type=submit]:focus {
+.btn.hl {
+	border-color: #eee;
+	background: #eee;
+}
+	.btn:hover,
+	.btn:focus {
+		border-color: #8fb;
+		background: #bfd;
 		outline: 0;
 	}
+	.btn.hl:hover,
+	.btn.hl:focus {
+		border-color: #8fb;
+		background: #8fb;
+		outline: 0;
+	}
+
 
 form {
 	display: table;

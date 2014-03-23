@@ -56,7 +56,7 @@ if ($this->context->list->content->css != '')
 
 <?php if ($this->context->canEdit): ?>
 	<div id="table-ops">
-		<input type="button" id="add-row" value="Add new row"/>
-		<input type="button" id="delete-rows" value="Delete selected"/>
+		<?= HtmlHelper::buttonInputTag('Add new row', ['class' => 'btn add-row']) ?>
+		<?= HtmlHelper::buttonInputTag('Delete selected', ['class' => 'btn delete-rows']) ?>
 	</div>
 <?php endif ?>

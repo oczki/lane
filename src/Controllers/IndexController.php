@@ -15,4 +15,14 @@ class IndexController
 			Bootstrap::forward($url);
 		}
 	}
+
+	/**
+	* @route /example
+	* @route /example/
+	*/
+	public function exampleAction()
+	{
+		$url = \Chibi\UrlHelper::route('list', 'view', ['userName' => 'test_subject']);
+		Bootstrap::forward($url);
+	}
 }

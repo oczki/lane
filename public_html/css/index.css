@@ -1,0 +1,18 @@
+#index-nav {
+	list-style-type: none;
+	margin: 1em auto;
+	padding: 0;
+	display: inline-block;
+}
+#index-nav li {
+	display: inline;
+	float: left;
+}
+#index-nav li:nth-child(3) {
+	clear: left;
+}
+#index-nav li a {
+	width: 7em;
+	display: inline-block;
+	margin: 3px;
+}

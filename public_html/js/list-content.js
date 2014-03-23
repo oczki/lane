@@ -229,7 +229,7 @@ $(function()
 
 	var refreshDeleteRowsButton = function(e)
 	{
-		$('#delete-rows').prop('disabled', $('#list input[type=checkbox]:checked').length == 0);
+		$('.delete-rows').prop('disabled', $('#list input[type=checkbox]:checked').length == 0);
 	};
 	$('#list').on('click', 'input[type=checkbox]', function(e)
 	{
@@ -237,7 +237,7 @@ $(function()
 	});
 	refreshDeleteRowsButton();
 
-	$('#delete-rows').click(function(e)
+	$('.delete-rows').click(function(e)
 	{
 		var tableRows = $('#list input[type=checkbox]:checked').parents('tr');
 		tableRows.each(function(i, tableRowNode)
@@ -251,7 +251,7 @@ $(function()
 		queue.delayedFlush();
 	});
 
-	$('#add-row').click(function(e)
+	$('.add-row').click(function(e)
 	{
 		e.preventDefault();
 		var newRow = {

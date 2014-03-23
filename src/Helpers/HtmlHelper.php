@@ -79,7 +79,12 @@ class HtmlHelper
 
 	public static function submitInputTag($text, array $params = [])
 	{
-		return self::inputTag('submit', null, array_merge(['value' => $text], $params));
+		return self::inputTag('submit', null, array_merge(['class' => 'btn', 'value' => $text], $params));
+	}
+
+	public static function buttonInputTag($text, array $params = [])
+	{
+		return self::inputTag('button', null, array_merge(['class' => 'btn', 'value' => $text], $params));
 	}
 
 	public static function hiddenInputTag($name, array $params = [])

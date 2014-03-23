@@ -1,16 +1,27 @@
 <?php
 \Chibi\AssetViewDecorator::addStylesheet('popups.css');
 \Chibi\AssetViewDecorator::addScript('popups.js');
+\Chibi\AssetViewDecorator::addStylesheet('index.css');
 \Chibi\AssetViewDecorator::addScript('index.js');
 ?>
 
 <?php $this->renderFile('messages') ?>
 
-<ul>
+<p>Easily create multiple lists of whatever you want.<br/>
+No community nonsense. No restrictions.<br/>
+Just your list and nothing else.</p>
+
+<ul id="index-nav">
 	<li>
-		<a id="login" href="<?= \Chibi\UrlHelper::route('auth', 'login') ?>">Log in</a>
+		<a class="btn hl" id="login" href="<?= \Chibi\UrlHelper::route('auth', 'login') ?>">Log in</a>
 	</li>
 	<li>
-		<a id="register" href="<?= \Chibi\UrlHelper::route('auth', 'register') ?>">Register</a>
+		<a class="btn" id="about" href="<?= \Chibi\UrlHelper::route('index', 'about') ?>">About</a>
+	</li>
+	<li>
+		<a class="btn hl" id="register" href="<?= \Chibi\UrlHelper::route('auth', 'register') ?>">Register</a>
+	</li>
+	<li>
+		<a class="btn" id="example" href="<?= \Chibi\UrlHelper::route('index', 'example') ?>">View sample</a>
 	</li>
 </ul>
