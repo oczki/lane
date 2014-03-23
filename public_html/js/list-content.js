@@ -248,6 +248,7 @@ $(function()
 			var rowId = tableRow.data('content-id');
 			queue.push(new Job('list-delete-row', [listId, rowId]));
 			tableRow.remove();
+			$('#list').trigger('update');
 		});
 		queue.delayedFlush();
 	});
