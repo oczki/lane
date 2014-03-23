@@ -95,6 +95,9 @@
 	#list td.col-right {
 		text-align: right;
 	}
+	#list tfoot {
+		display: none;
+	}
 
 #table-ops {
 	text-align: center;

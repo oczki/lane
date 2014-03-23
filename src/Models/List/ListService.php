@@ -56,14 +56,17 @@ class ListService
 			$listEntity->userId == $context->userLogged->id;
 	}
 
-	public static function getRows(ListEntity $listEntity)
+	public static function getColumnClasses(ListColumn $column)
 	{
-		return $listEntity->content->rows;
-	}
+		$alignments = [];
+		$alignments[ListColumn::ALIGN_LEFT] = 'col-left';
+		$alignments[ListColumn::ALIGN_CENTER] = 'col-center';
+		$alignments[ListColumn::ALIGN_RIGHT] = 'col-right';
 
-	public static function getColumns(ListEntity $listEntity)
-	{
-		return $listEntity->content->columns;
+		$classes = [];
+		$classes []= $alignments[$column->align];
+
+		return $classes;
 	}
 
 	public static function getPossibleColumnAlign()

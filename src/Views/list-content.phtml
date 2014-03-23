@@ -6,17 +6,43 @@
 \Chibi\AssetViewDecorator::addStylesheet('jquery.tablesorter.custom.css');
 \Chibi\AssetViewDecorator::addScript('jquery.tablesorter.min.js');
 
-$alignments = [];
-$alignments[ListColumn::ALIGN_LEFT] = 'col-left';
-$alignments[ListColumn::ALIGN_CENTER] = 'col-center';
-$alignments[ListColumn::ALIGN_RIGHT] = 'col-right';
-
 if (!isset($this->context->list))
 	return;
 
 \Chibi\AssetViewDecorator::setTitle($this->context->user->name . '&rsquo;s lane&nbsp;&ndash; ' . $this->context->list->name);
 if ($this->context->list->content->css != '')
 	\Chibi\AssetViewDecorator::addStylesheet(\Chibi\UrlHelper::route('list', 'custom-css', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]));
+
+$showRow = function($row)
+{
+?>
+	<?= HtmlHelper::tag('tr', ['data-content-id' => $row->id]) ?>
+		<?php foreach ($row->content as $columnIndex => $rowContent): ?>
+			<?= HtmlHelper::tag('td', [
+				'class' => join(' ', ListService::getColumnClasses($this->context->list->content->columns[$columnIndex]))
+			], false) ?>
+				<div>
+					<?php if ($this->context->canEdit): ?>
+						<a href="#" class="edit-content">
+							<i class="icon icon-edit"></i>
+						</a>
+					<?php endif ?>
+
+					<span class="content" title="<?= $rowContent ?>">
+						<?= $rowContent ?>
+					</span>
+				</div>
+			<?= HtmlHelper::tagClose('td') ?>
+		<?php endforeach ?>
+
+		<?php if ($this->context->canEdit): ?>
+			<td class="row-ops">
+				<input type="checkbox"/>
+			</td>
+		<?php endif ?>
+	<?= HtmlHelper::tagClose('tr') ?>
+<?php
+}
 ?>
 
 <?= HtmlHelper::tag('table', [
@@ -26,16 +52,15 @@ if ($this->context->list->content->css != '')
 	'data-show-row-ids' => $this->context->list->content->showRowIds,
 	'data-sort-style' => $this->context->list->content->sortStyle,
 	'data-list-id' => $this->context->list->urlName,
-	'data-list-rows' => json_encode($this->context->list->content->rows),
 	'data-list-columns' => json_encode($this->context->list->content->columns),
 	'data-last-content-id' => $this->context->list->content->lastContentId], false) ?>
 
 	<thead>
 		<tr>
-			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
+			<?php foreach ($this->context->list->content->columns as $columnIndex => $column): ?>
 				<?= HtmlHelper::tag('th', [
 					'data-resizable-column-id' => $column->id,
-					'class' => $alignments[$column->align],
+					'class' => join(' ', ListService::getColumnClasses($column)),
 					'style' => sprintf('width: %.02f%%', $column->width),
 				], false) ?>
 					<span>
@@ -50,7 +75,19 @@ if ($this->context->list->content->css != '')
 	</thead>
 
 	<tbody>
+		<?php foreach ($this->context->list->content->rows as $rowIndex => $row): ?>
+			<?php $showRow($row) ?>
+		<?php endforeach ?>
 	</tbody>
+
+	<tfoot>
+		<?php
+			$dummyRow = new ListRow();
+			$dummyRow->content = array_fill(0, count($this->context->list->content->columns), '');
+			$dummyRow->id = '';
+			$showRow($dummyRow);
+		?>
+	</tfoot>
 
 <?= HtmlHelper::tagClose('table') ?>
 
