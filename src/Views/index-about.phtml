@@ -1,0 +1,23 @@
+<?php
+\Chibi\AssetViewDecorator::addStylesheet('index-about.css')
+?>
+
+<div id="about">
+	<section>
+		<h1>About</h1>
+
+		<p>Lane stands for <em>list and nothing else</em>. It&rsquo;s meant to be a centralized way of organizing various kinds of things&nbsp;&ndash; watched movies, completed video games, books on plan&#8209;to&#8209;read shelf, or files put on external HDDs&nbsp;&ndash; without the need of having separate accounts on pages like IMDB, Backloggery, Goodreads, or keeping an Excel file.</p>
+		<p>Since each list can have its own CSS rules, you can make it look however you like. You can also use some tags like <code>[b]bold[/b]</code> or <code>[red]colors[/red]</code> to easily edit the look of single cells, entire rows or columns. Read more about editing on the <?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('index', 'help')]) ?>help page<?= HtmlHelper::tagClose('a') ?>.</p>
+		<p><?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('auth', 'register')]) ?>Register<?= HtmlHelper::tagClose('a') ?> your own account, or <?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('auth', 'login')]) ?>log in<?= HtmlHelper::tagClose('a') ?> if you already have one.</p>
+		<p>If you&rsquo;re still not convinced, take a look at an <?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('index', 'example')]) ?>example lane<?= HtmlHelper::tagClose('a') ?> and see the features.</p>
+		<p>Lane is <a href="https://github.com/rr-/lane/">open source</a> and released under MIT license.</p>
+	</section>
+
+	<section>
+		<h1>Privacy policy</h1>
+
+		<p>Lane stores all your lists&rsquo; content along with their settings, custom CSS, and your account credentials&nbsp;&ndash; user name, hashed password, plus optional e&#8209;mail&nbsp;address used to reset your password. If you want, you can tell your browser to remember your credentials, which will set a cookie so you don&rsquo;t need to enter them all the time. Cookies are also used by Google Analytics, which gives us feedback about page views, and Google AdSense that displays ads. You can block accepting cookies in your browser settings.</p>
+		<p>Lists can be set as private, which makes them visible to their owner only. Guests or other registered users cannot view your private lists.</p>
+		<p>You can delete your account at any time.</p>
+	</section>
+</div>

@@ -17,6 +17,23 @@ class IndexController
 	}
 
 	/**
+	* @route /about
+	* @route /about/
+	*/
+	public function aboutAction()
+	{
+	}
+
+	/**
+	* @route /help
+	* @route /help/
+	*/
+	public function helpAction()
+	{
+		throw new NotImplementedException();
+	}
+
+	/**
 	* @route /example
 	* @route /example/
 	*/

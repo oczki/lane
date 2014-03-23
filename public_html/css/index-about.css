@@ -1,0 +1,17 @@
+#about p a {
+	color: #4a6;
+}
+
+#about p {
+	text-align: initial;
+}
+#about h1 {
+	text-align: initial;
+}
+#about section {
+	margin-bottom: 2em;
+}
+
+#main.logo {
+	max-width: 40em;
+}

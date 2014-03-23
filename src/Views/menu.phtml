@@ -17,8 +17,8 @@
 				$links []= ['export', '#', 'Export'];
 			}
 
-			$links []= ['help', '#', 'Help'];
-			$links []= ['about', '#', 'About'];
+			$links []= ['help', \Chibi\UrlHelper::route('index', 'help'), 'Help'];
+			$links []= ['about', \Chibi\UrlHelper::route('index', 'about'), 'About'];
 
 			if ($this->context->isLoggedIn)
 			{
