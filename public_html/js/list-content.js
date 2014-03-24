@@ -191,6 +191,8 @@ $(function()
 		queue.delayedFlush();
 		var tableRow = $('tfoot tr').clone();
 		tableRow.attr('data-content-id', newRow.id);
+		tableRow.find('input[type=checkbox]').attr('id', 'row-' + newRow.id);
+		tableRow.find('label[for]').attr('for', 'row-' + newRow.id);
 		$('#list tbody').append(tableRow);
 		$('#list').trigger('addRows', [tableRow, false]);
 		tableRow.find('.edit-content:eq(0)').click();

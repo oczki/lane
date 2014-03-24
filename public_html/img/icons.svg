@@ -5,7 +5,7 @@
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xml:space="preserve"
-	width="240"
+	width="320"
 	height="40">
 
 	<defs>
@@ -201,6 +201,46 @@
 		</g>
 	</mask>
 
+	<mask maskContentUnits="objectBoundingBox" id="mask_checkbox">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<path fill="#444" d="
+				M5,4 h11 v11 h-11 v-12 h-1 v13 h13 v-13 h-12 z"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_checkbox_checked">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<path fill="#444" d="
+				M5,4 h11 v11 h-11 v-12 h-1 v13 h13 v-13 h-12 z"/>
+			<g transform="translate(10, 12) rotate(45 0 0) translate(-1.06065 -12)">
+				<rect x="0" y="0" fill="white" width="2" height="14"/>
+				<rect x="-6" y="12" fill="white" width="6" height="2"/>
+			</g>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_checkbox2">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<path fill="white" d="
+				M6,5 h9 v9 h-9 v-11 h-2 v13 h13 v-13 h-11 z"/>
+		</g>
+	</mask>
+
+	<mask maskContentUnits="objectBoundingBox" id="mask_checkbox2_checked">
+		<rect x="0" y="0" width="1" height="1"/>
+		<g filter="url(#MaskFilter)" transform="scale(0.05)">
+			<path fill="white" d="
+				M6,5 h9 v9 h-9 v-11 h-2 v13 h13 v-13 h-11 z"/>
+			<g transform="translate(10, 12) rotate(45 0 0) translate(-1.06065 -12)">
+				<rect x="0" y="0" fill="white" width="1.5" height="14"/>
+				<rect x="-6" y="12" fill="white" width="6" height="1.5"/>
+			</g>
+		</g>
+	</mask>
+
 	<defs>
 		<g id="icons">
 			<rect width="20" height="20" x="0" y="0" id="icon_menu" mask="url(#mask_menu)"/>
@@ -215,6 +255,10 @@
 			<rect width="20" height="20" x="180" y="0" id="icon_recycle_bin" mask="url(#mask_recycle_bin)"/>
 			<rect width="20" height="20" x="200" y="0" id="icon_form" mask="url(#mask_form)"/>
 			<rect width="20" height="20" x="220" y="0" id="icon_x" mask="url(#mask_x)"/>
+			<rect width="20" height="20" x="240" y="0" id="icon_x" mask="url(#mask_checkbox)"/>
+			<rect width="20" height="20" x="260" y="0" id="icon_x" mask="url(#mask_checkbox_checked)"/>
+			<rect width="20" height="20" x="280" y="0" id="icon_x" mask="url(#mask_checkbox2)"/>
+			<rect width="20" height="20" x="300" y="0" id="icon_x" mask="url(#mask_checkbox2_checked)"/>
 		</g>
 	</defs>
 	<rect id="background" fill="black" width="100%" height="100%" style="display: none"/>

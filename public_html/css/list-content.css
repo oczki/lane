@@ -64,7 +64,8 @@
 		position: absolute;
 		right: 0;
 	}
-	#list td:hover .icon-edit {
+	#list td:hover .icon-edit,
+	#list td:hover input[type=checkbox]+label.checkbox:before {
 		background-color: hsl(215,100%,65%);
 	}
 	#list a .icon {
@@ -88,6 +89,23 @@
 		#list tbody tr.edit td .icon-edit { background-position: -200px -20px; }
 		#list tbody tr:hover td .icon-delete,
 		#list tbody tr.edit td .icon-delete { background-position: -180px -20px; }
+
+		#list tbody tr:hover td input[type=checkbox]+label.checkbox:before,
+		#list tbody tr.edit td input[type=checkbox]+label.checkbox:before {
+			background-position: -280px -20px;
+		}
+		#list tbody tr:hover td input[type=checkbox]:checked+label.checkbox:before,
+		#list tbody tr.edit td input[type=checkbox]:checked+label.checkbox:before {
+			background-position: -300px -20px;
+		}
+		#list tbody tr td input[type=checkbox]+label.checkbox:before {
+			background-position: -280px 0;
+			background-color: lightgray;
+		}
+		#list tbody tr td input[type=checkbox]:checked+label.checkbox:before {
+			background-position: -300px 0;
+			background-color: black;
+		}
 
 		#list tbody tr:hover a.edit-content,
 		#list tbody tr.edit a.edit-content {

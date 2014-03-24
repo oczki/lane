@@ -93,6 +93,26 @@ input[type=radio],
 input[type=checkbox] {
 	margin: 0.5em 0.2em;
 }
+input[type=checkbox] {
+	display: none;
+}
+	input[type=checkbox]+label.checkbox:before {
+		width: 20px;
+		height: 20px;
+		display: inline-block;
+		content: ' ';
+		background-image: url('/img/icons.png');
+		background-repeat: no-repeat;
+		vertical-align: middle;
+		background-position: -240px 0;
+		background-color: black;
+		transition: background-color 0.25s ease 0s;
+		margin-right: 0.25em;
+	}
+	input[type=checkbox]:checked+label.checkbox:before {
+		background-position: -260px 0;
+	}
+
 input[type=text],
 input[type=password] {
 	margin: 0.2em;
@@ -144,9 +164,6 @@ form {
 	}
 	form label[for] {
 		cursor: pointer;
-	}
-	form label.checkbox {
-		margin-left: 0.5em;
 	}
 
 th {

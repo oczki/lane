@@ -37,7 +37,8 @@ $showRow = function($row)
 
 		<?php if ($this->context->canEdit): ?>
 			<td class="row-ops">
-				<input type="checkbox"/>
+				<input type="checkbox" id="row-<?= intval($row->id) ?>"/>
+				<label for="row-<?= intval($row->id) ?>" class="checkbox"></label>
 			</td>
 		<?php endif ?>
 	<?= HtmlHelper::tagClose('tr') ?>
