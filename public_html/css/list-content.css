@@ -137,19 +137,21 @@
 #list tbody tr {
 	counter-increment: row;
 }
-#list[data-show-row-ids="1"] tbody tr:before {
+#list[data-show-row-ids="1"] tr:before {
 	display: table-cell;
+	padding-right: 0.2em;
 	width: 2.5em;
-	content: counter(row);
-	vertical-align: middle;
 	text-align: right;
+	vertical-align: middle;
+	line-height: 30px;
 	font-size: 95%;
 }
-#list[data-show-row-ids="1"] thead tr:before {
-	display: table-cell;
-	width: 2.5em;
-	content: ' ';
-}
+	#list[data-show-row-ids="1"] thead tr:before {
+		content: ' ';
+	}
+	#list[data-show-row-ids="1"] tbody tr:before {
+		content: counter(row);
+	}
 
 #inner-content .rc-handle {
 	width: 20px;
