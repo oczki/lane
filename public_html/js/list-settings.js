@@ -51,12 +51,25 @@ function createColumnTableRow(data)
 	return row;
 }
 
-function showHideCustomCss(e)
+function showHideCustomCss(immediately)
 {
-	if ($('#list-settings .basic-settings .custom-css').is(':checked'))
-		$('#list-settings .custom-css-edit').slideDown();
+	var target = $('#list-settings .custom-css-edit');
+	var show = $('#list-settings .basic-settings .custom-css').is(':checked');
+
+	if (!immediately)
+	{
+		if (show)
+			target.slideDown();
+		else
+			target.slideUp();
+	}
 	else
-		$('#list-settings .custom-css-edit').slideUp();
+	{
+		if (show)
+			target.show();
+		else
+			target.hide();
+	}
 }
 
 $(function()
@@ -251,6 +264,9 @@ $(function()
 
 
 	// showing custom css
-	$('#list-settings .basic-settings .custom-css').click(showHideCustomCss);
-	showHideCustomCss();
+	$('#list-settings .basic-settings .custom-css').click(function(e)
+	{
+		showHideCustomCss(false);
+	});
+	showHideCustomCss(true);
 });
