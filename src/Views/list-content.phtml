@@ -17,10 +17,15 @@ $showRow = function($row)
 {
 ?>
 	<?= HtmlHelper::tag('tr', ['data-content-id' => $row->id]) ?>
-		<?php foreach ($row->content as $columnIndex => $rowContent): ?>
-			<?= HtmlHelper::tag('td', [
-				'class' => join(' ', ListService::getColumnClasses($this->context->list->content->columns[$columnIndex]))
-			], false) ?>
+		<?php foreach (ListService::getCells($row) as $columnIndex => $rowContent): ?>
+			<?
+				$column = ListService::getColumn($this->context->list, $columnIndex);
+				if ($column === null)
+					continue;
+				echo HtmlHelper::tag('td', [
+					'class' => join(' ', ListService::getColumnClasses($column))
+				], false);
+			?>
 				<div>
 					<?php if ($this->context->canEdit): ?>
 						<a href="#" class="edit-content">
@@ -58,7 +63,7 @@ $showRow = function($row)
 
 	<thead>
 		<tr>
-			<?php foreach ($this->context->list->content->columns as $columnIndex => $column): ?>
+			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
 				<?= HtmlHelper::tag('th', [
 					'data-resizable-column-id' => $column->id,
 					'class' => join(' ', ListService::getColumnClasses($column)),
@@ -76,7 +81,7 @@ $showRow = function($row)
 	</thead>
 
 	<tbody>
-		<?php foreach ($this->context->list->content->rows as $rowIndex => $row): ?>
+		<?php foreach (ListService::getRows($this->context->list) as $rowIndex => $row): ?>
 			<?php $showRow($row) ?>
 		<?php endforeach ?>
 	</tbody>

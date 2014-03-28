@@ -56,6 +56,28 @@ class ListService
 			$listEntity->userId == $context->userLogged->id;
 	}
 
+	public static function getColumn(ListEntity $listEntity, $columnIndex)
+	{
+		return isset($listEntity->content->columns[$columnIndex])
+			? $listEntity->content->columns[$columnIndex]
+			: null;
+	}
+
+	public static function getColumns(ListEntity $listEntity)
+	{
+		return $listEntity->content->columns;
+	}
+
+	public static function getRows(ListEntity $listEntity)
+	{
+		return $listEntity->content->rows;
+	}
+
+	public static function getCells(ListRow $listRow)
+	{
+		return $listRow->content;
+	}
+
 	public static function getColumnClasses(ListColumn $column)
 	{
 		$alignments = [];
