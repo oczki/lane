@@ -16,6 +16,7 @@ function disableExitConfirmation()
 
 function appendUrlParameter(url, key, value)
 {
+	url = url.replace(new RegExp('[?&]' + key + '(=[^?&]+|(?!>[?&])|$)', 'g'), '');
 	var sep = url.indexOf('?') != - 1
 		? '&'
 		: '?';
