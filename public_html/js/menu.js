@@ -18,6 +18,14 @@ function toggleMenu()
 
 $(function()
 {
+	$('html').click(function()
+	{
+		hideMenu();
+	});
+	$('#menu').click(function(e)
+	{
+		e.stopPropagation();
+	});
 	$('#menu-trigger a')
 		.focus(function(e)
 		{
@@ -42,6 +50,7 @@ $(function()
 	$('#menu .login, #menu .register').click(function(e)
 	{
 		e.preventDefault();
+		hideMenu();
 		showPopup($(this).attr('href'));
 	});
 
