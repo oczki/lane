@@ -33,23 +33,30 @@ class ListAddJob implements IJob
 		$listEntity->content = new ListContent();
 
 		$column1 = new ListColumn();
-		$column1->name = 'Example column 1';
-		$column1->width = 70;
+		$column1->name = 'First column';
+		$column1->width = 45;
 		$column1->align = ListColumn::ALIGN_LEFT;
 		$column1->id = ++$listEntity->content->lastContentId;
 
 		$column2 = new ListColumn();
-		$column2->name = 'Example column 2';
-		$column2->width = 30;
+		$column2->name = 'Second column';
+		$column2->width = 23;
 		$column2->align = ListColumn::ALIGN_LEFT;
 		$column2->id = ++$listEntity->content->lastContentId;
 
+		$column3 = new ListColumn();
+		$column3->name = 'Centered column';
+		$column3->width = 32;
+		$column3->align = ListColumn::ALIGN_CENTER;
+		$column3->id = ++$listEntity->content->lastContentId;
+
 		$row = new ListRow();
-		$row->content = ['Example data', ''];
+		$row->content = ['Point here and click the blue icon to edit.', '', ''];
 		$row->id = ++$listEntity->content->lastContentId;
 
 		$listEntity->content->columns []= $column1;
 		$listEntity->content->columns []= $column2;
+		$listEntity->content->columns []= $column3;
 		$listEntity->content->rows []= $row;
 
 		$baseUrlName = TextHelper::convertCase($listEntity->name,

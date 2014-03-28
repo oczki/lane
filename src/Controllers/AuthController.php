@@ -112,6 +112,73 @@ class AuthController
 		$user->email = $email;
 		UserService::saveOrUpdate($user);
 
+		$listEntity = new ListEntity();
+		$listEntity->priority = 1;
+		$listEntity->userId = $user->id;
+		$listEntity->name = 'Getting started';
+		$listEntity->visible = true;
+		$listEntity->content = new ListContent();
+
+		$column1 = new ListColumn();
+		$column1->name = 'First column';
+		$column1->width = 43;
+		$column1->align = ListColumn::ALIGN_LEFT;
+		$column1->id = ++$listEntity->content->lastContentId;
+
+		$column2 = new ListColumn();
+		$column2->name = 'Second column';
+		$column2->width = 37;
+		$column2->align = ListColumn::ALIGN_LEFT;
+		$column2->id = ++$listEntity->content->lastContentId;
+
+		$column3 = new ListColumn();
+		$column3->name = '3rd one';
+		$column3->width = 20;
+		$column3->align = ListColumn::ALIGN_LEFT;
+		$column3->id = ++$listEntity->content->lastContentId;
+
+		$listEntity->content->columns []= $column1;
+		$listEntity->content->columns []= $column2;
+		$listEntity->content->columns []= $column3;
+
+		$rows =
+		[
+			['Welcome to lane! This is your first list.', '', ''],
+			['Point here and click the blue icon →', 'to edit cell\'s contents.', 'Easy, right?'],
+			['', '', ''],
+			['Add new rows using the button below,', 'or use keyboard shortcuts:', ''],
+			['', '[Enter] - save changes', ''],
+			['', '[Tab] - save, go to next cell', ''],
+			['', '[Shift+Tab] - save, prev cell', ''],
+			['', '[Esc] - discard changes', ''],
+			['', '', ''],
+			['Add new lists, or edit the current one', '', ''],
+			['using the menu on the left.', '', ''],
+			['', '', ''],
+			['Click on headers to sort columns.', 'You can also resize them.', '(try it!)'],
+			['', 'Or... make your sort default.', ''],
+			['', 'Or even reorder the lists.', ''],
+			['', '', ''],
+			['[url=' . \Chibi\UrlHelper::route('index', 'help') . ']Click here[/url] to read more about editing.', '', ''],
+			['', '', ''],
+			['The rest is all up to you.', 'Start by creating a new list.', ''],
+		];
+
+		foreach ($rows as $rowContent)
+		{
+			$row = new ListRow();
+			$row->content = $rowContent;
+			$row->id = ++$listEntity->content->lastContentId;
+			$listEntity->content->rows []= $row;
+		}
+
+		$baseUrlName = TextHelper::convertCase($listEntity->name,
+			TextHelper::BLANK_CASE,
+			TextHelper::SNAKE_CASE);
+		ListAddJob::forgeUrlName($user, $listEntity, $baseUrlName);
+
+		ListService::saveOrUpdate($listEntity);
+
 		$_SESSION['logged-in'] = true;
 		$_SESSION['user-id'] = $user->id;
 
