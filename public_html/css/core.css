@@ -115,11 +115,19 @@ input[type=checkbox] {
 
 input[type=text],
 input[type=password] {
-	margin: 0.2em;
+	margin: 0.2em 0;
 	padding: 3px 6px;
 	border: 1px solid lightgray;
 	border-radius: 3px;
 }
+	label+input[type=text],
+	label+input[type=password] {
+		width: 100%;
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+	}
+
 .btn {
 	margin: 0.2em;
 	padding: 5px 12px;

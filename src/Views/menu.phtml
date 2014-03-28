@@ -12,7 +12,7 @@
 			$links = [];
 			if ($this->context->isLoggedIn)
 			{
-				$links []= ['account settings', '#', 'Account settings'];
+				$links []= ['account-settings', \Chibi\UrlHelper::route('user', 'account-settings', ['userName' => $this->context->userLogged->name]), 'Account settings'];
 				$links []= ['import', '#', 'Import'];
 				$links []= ['export', '#', 'Export'];
 			}

@@ -5,21 +5,9 @@ class ListController
 {
 	private function preWork($userName = false)
 	{
-		if ($userName)
-			$user = UserService::getByName($userName);
-		elseif ($this->context->isLoggedIn and $this->context->userLogged)
-			$user = $this->context->userLogged;
-
-		if (!$user)
-			throw new SimpleException('User "' . $userName . '" doesn\'t exist.');
-
-		$this->context->allowIndexing = false;
-		$this->context->layoutName = 'layout-bare';
-		$this->context->user = $user;
-		$this->context->lists = ListService::getByUserId($user->id);
-		$this->context->canEdit =
-			$this->context->isLoggedIn and
-			$this->context->user->id == $this->context->userLogged->id;
+		ControllerHelper::attachUser($userName);
+		ControllerHelper::attachList();
+		ControllerHelper::setLayout();
 	}
 
 	/**
@@ -159,6 +147,7 @@ class ListController
 		}
 
 		$this->context->list = $list;
+		ListService::setLastViewedList($list);
 	}
 
 	/**

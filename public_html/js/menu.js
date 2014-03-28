@@ -47,7 +47,7 @@ $(function()
 		$('#menu').focuslost(hideMenu);
 	});
 
-	$('#menu .login, #menu .register').click(function(e)
+	$('#menu .account-settings, #menu .login, #menu .register').click(function(e)
 	{
 		e.preventDefault();
 		hideMenu();

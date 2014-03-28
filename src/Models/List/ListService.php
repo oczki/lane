@@ -78,6 +78,12 @@ class ListService
 		return $listRow->content;
 	}
 
+
+	public static function getOwner(ListEntity $listEntity)
+	{
+		return UserService::getById($listEntity->userId);
+	}
+
 	public static function getColumnClasses(ListColumn $column)
 	{
 		$alignments = [];
@@ -113,5 +119,17 @@ class ListService
 		$index = intval($index);
 		if ($index < 0 or $index >= count($listEntity->content->rows))
 			throw new Exception('Invalid row index.');
+	}
+
+	public static function setLastViewedList(ListEntity $listEntity)
+	{
+		$_SESSION['last-viewed-list'] = $listEntity;
+	}
+
+	public static function getLastViewedList()
+	{
+		return isset($_SESSION['last-viewed-list'])
+			? $_SESSION['last-viewed-list']
+			: null;
 	}
 }

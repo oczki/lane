@@ -1,0 +1,64 @@
+<h1>Account settings</h1>
+
+<?php
+\Chibi\AssetViewDecorator::addStylesheet('user-account-settings.css');
+\Chibi\AssetViewDecorator::addScript('user-account-settings.js');
+?>
+
+<?= HtmlHelper::tag('form', [
+	'action' => \Chibi\UrlHelper::currentUrl(),
+	'method' => 'post',
+	'id' => 'account-settings',
+	], false) ?>
+
+	<div class="form-wrapper">
+		<?= HtmlHelper::labelDecorator('Last update text',
+			HtmlHelper::checkboxInputTag('show-guests-last-update', $this->context->user->settings->showGuestsLastUpdate),
+			'show &ldquo;last save time&rdquo; to guests') ?>
+
+		<?= HtmlHelper::labelDecorator('Sidebar',
+			HtmlHelper::checkboxInputTag('show-cheat-sheet', $this->context->user->settings->showCheatSheet),
+			'show cheat sheet when editing') ?>
+	</div>
+
+	<p>Enter your current password to change options below.</p>
+
+	<div class="form-wrapper">
+		<?= HtmlHelper::labelDecorator('Current password',
+			HtmlHelper::passwordInputTag('current-password', ['autocomplete' => 'off'])) ?>
+
+		<?= HtmlHelper::labelDecorator('New password',
+			HtmlHelper::passwordInputTag('new-password1', ['autocomplete' => 'off'])) ?>
+
+		<?= HtmlHelper::labelDecorator('Repeat new password',
+			HtmlHelper::passwordInputTag('new-password2', ['autocomplete' => 'off'])) ?>
+
+		<?= HtmlHelper::labelDecorator('E-mail address',
+			HtmlHelper::textInputTag('new-e-mail', ['value' => $this->context->user->email])) ?>
+	</div>
+
+	<div class="submit">
+		<div class="left">
+		<?= HtmlHelper::submitInputTag('Save changes', ['class' => 'btn save-changes hl']) ?>
+		<?= HtmlHelper::buttonInputTag('Cancel', ['class' => 'btn cancel']) ?>
+		</div>
+
+		<div class="right">
+			<?= HtmlHelper::buttonInputTag('More...', ['class' => 'btn more']) ?>
+		</div>
+
+		<div class="clear"></div>
+	</div>
+
+	<div class="danger">
+		<hr/>
+
+		<p>If you want to permantently delete your account, consider exporting your lists data before taking the last step.</p>
+
+		<div class="submit">
+			<?= HtmlHelper::buttonInputTag('Export all data', ['class' => 'btn export-all-data']) ?>
+			<?= HtmlHelper::buttonInputTag('Delete account', ['class' => 'btn delete-account']) ?>
+		</div>
+	</div>
+
+<?= HtmlHelper::tagClose('form') ?>

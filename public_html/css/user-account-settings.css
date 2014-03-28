@@ -1,0 +1,36 @@
+#account-settings .submit {
+	margin: 1em 0 0 0;
+	text-align: center;
+}
+
+#account-settings .left {
+	float: left;
+}
+#account-settings .right {
+	float: right;
+}
+
+#account-settings .danger {
+	margin: 1em 0 0 0;
+}
+
+#account-settings .form-wrapper {
+	display: table;
+	width: 100%;
+}
+#account-settings {
+	width: 30em;
+}
+
+hr {
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAIAAABvrngfAAAAKklEQVQImV3MsREAQAgCwcP+e8bg39GBiCVANi/SLxW2qTAwGu90HxUGGrRbDAcxJSUrAAAAAElFTkSuQmCC');
+	background-size: 6px 6px;
+	height: 4px;
+	border: 0;
+	opacity: .3;
+	margin-top: 0;
+}
+
+input[name=current-password] {
+	margin-bottom: 1em;
+}
