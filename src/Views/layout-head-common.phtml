@@ -19,4 +19,9 @@
 		'name' => 'application-name',
 		'content' => 'lane - list and nothing else',
 		'data-permalink' => \Chibi\UrlHelper::currentUrl()], true) ?>
+
+	<?= HtmlHelper::tag('link', [
+		'rel' => 'icon',
+		'type' => 'image/png',
+		'href' => \Chibi\UrlHelper::absoluteUrl('/img/favicon.png')], true) ?>
 </head>
