@@ -47,10 +47,8 @@ $(function()
 		$('.rc-handle').append('<i class="icon icon-drag"/></i>');
 	}
 
-	$('#list tbody').on('click', '.edit-content', function(e)
+	var startEdit = function(tableCell)
 	{
-		e.preventDefault();
-		var tableCell = $(this).parents('td');
 		var tableRow = tableCell.parents('tr');
 		tableRow.addClass('edit');
 		tableCell.find('span').hide();
@@ -77,7 +75,74 @@ $(function()
 			inputNode.selectionEnd = elemLen;
 			inputNode.focus();
 		}
-	});
+
+		input.one('blur', function(e)
+		{
+			var tableCell = $(this).parents('td');
+			if (tableCell.hasClass('working'))
+				return;
+
+			e.preventDefault();
+			doEdit(tableCell);
+			cancelEdit(tableCell);
+
+		});
+
+		input.on('keydown', function(e)
+		{
+			var tableCell = $(this).parents('td');
+			var tableRow = tableCell.parents('tr');
+
+			if (tableCell.hasClass('working'))
+				return;
+
+			if (e.keyCode == 13)
+			{
+				input.off('blur');
+
+				e.preventDefault();
+				doEdit(tableCell);
+				cancelEdit(tableCell);
+			}
+
+			else if (e.keyCode == 9)
+			{
+				input.off('blur');
+
+				e.preventDefault();
+				doEdit(tableCell);
+				cancelEdit(tableCell);
+
+				var target;
+				if (!e.shiftKey)
+				{
+					target = (tableCell.next('td').find('.edit-content').length > 0)
+						? tableCell.next('td')
+						: tableRow.next('tr');
+
+					target.find('.edit-content').first().click();
+					if (target.length == 0)
+						$('.add-row').click();
+				}
+				else
+				{
+					target = (tableCell.prev('td').find('.edit-content').length > 0)
+						? tableCell.prev('td')
+						: tableRow.prev('tr');
+
+					target.find('.edit-content').last().click();
+				}
+			}
+
+			else if (e.keyCode == 27)
+			{
+				input.off('blur');
+
+				e.preventDefault();
+				cancelEdit(tableCell);
+			}
+		});
+	};
 
 	var cancelEdit = function(tableCell)
 	{
@@ -90,8 +155,9 @@ $(function()
 			$('#list').trigger('updateCell', [tableCell, false]);
 			tableCell.removeClass('working');
 		});
-	}
-	var editCellContent = function(tableCell)
+	};
+
+	var doEdit = function(tableCell)
 	{
 		if (tableCell.hasClass('working'))
 			return;
@@ -109,51 +175,13 @@ $(function()
 			queue.delayedFlush();
 		}
 		tableCell.find('span').text(text).attr('title', text);
-		cancelEdit(tableCell);
 	};
-	$('#list tbody').on('blur', 'input[type=text]', function(e)
+
+	$('#list tbody').on('click', '.edit-content', function(e)
 	{
-		var tableCell = $(this).parents('td');
 		e.preventDefault();
-		editCellContent(tableCell);
-
-	});
-	$('#list tbody').on('keydown', 'input[type=text]', function(e)
-	{
 		var tableCell = $(this).parents('td');
-		var tableRow = tableCell.parents('tr');
-
-		if (e.keyCode == 9 || e.keyCode == 13)
-		{
-			e.preventDefault();
-			editCellContent(tableCell);
-
-			var target;
-			if (!e.shiftKey)
-			{
-				target = (tableCell.next('td').find('.edit-content').length > 0)
-					? tableCell.next('td')
-					: tableRow.next('tr');
-
-				target.find('.edit-content').first().click();
-				if (target.length == 0)
-					$('.add-row').click();
-			}
-			else
-			{
-				target = (tableCell.prev('td').find('.edit-content').length > 0)
-					? tableCell.prev('td')
-					: tableRow.prev('tr');
-
-				target.find('.edit-content').last().click();
-			}
-		}
-
-		if (e.keyCode == 27)
-		{
-			e.preventDefault();
-			cancelEdit(tableCell);
-		}
+		startEdit(tableCell);
 	});
 
 	var refreshDeleteRowsButton = function(e)
