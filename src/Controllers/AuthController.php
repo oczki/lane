@@ -110,6 +110,9 @@ class AuthController
 		$user->name = $name;
 		$user->passHash = $passHash;
 		$user->email = $email;
+		$user->settings = new UserSettings();
+		$user->settings->showGuestsLastUpdate = true;
+		$user->settings->showCheatSheet = false;
 		UserService::saveOrUpdate($user);
 
 		$listEntity = new ListEntity();

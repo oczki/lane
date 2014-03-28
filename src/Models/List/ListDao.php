@@ -70,6 +70,8 @@ class ListDao
 
 	private static function deserializeContent($content)
 	{
+		if (!$content)
+			return null;
 		return unserialize(gzinflate($content));
 	}
 }

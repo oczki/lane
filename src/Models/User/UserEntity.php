@@ -5,4 +5,5 @@ class UserEntity extends AbstractEntity
 	public $name;
 	public $passHash;
 	public $email;
+	public $settings;
 }

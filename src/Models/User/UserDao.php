@@ -23,16 +23,47 @@ class UserDao
 				new Sql\EqualsFunctor('name', new Sql\Binding($userFilter->name)));
 		}
 
-		return DaoHelper::transformEntities('UserEntity', Database::fetchAll($stmt));
+		$rows = Database::fetchAll($stmt);
+		$userEntities = DaoHelper::transformEntities('UserEntity', $rows);
+
+		foreach ($rows as $row)
+		{
+			$userEntity = &$userEntities[$row['id']];
+			$userEntity->settings = self::deserializeSettings($userEntity->settings);
+			unset($userEntity);
+		}
+
+		return $userEntities;
 	}
 
 	public static function saveOrUpdate(UserEntity $userEntity)
 	{
-		return DaoHelper::saveOrUpdate('user', $userEntity);
+		$userEntity->settings = self::serializeSettings($userEntity->settings);
+		try
+		{
+			$ret = DaoHelper::saveOrUpdate('user', $userEntity);
+		}
+		finally
+		{
+			$userEntity->settings = self::deserializeSettings($userEntity->settings);
+		}
+		return $ret;
 	}
 
 	public static function delete(UserEntity $userEntity)
 	{
 		return DaoHelper::delete('user', $userEntity);
+	}
+
+	private static function serializeSettings($settings)
+	{
+		return gzdeflate(serialize($settings));
+	}
+
+	private static function deserializeSettings($settings)
+	{
+		if (!$settings)
+			return null;
+		return unserialize(gzinflate($settings));
 	}
 }
