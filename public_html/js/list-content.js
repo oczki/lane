@@ -20,6 +20,7 @@ $(function()
 		.bind('sortEnd', function(sorter)
 			{
 				$('#list').attr('data-sort-style', JSON.stringify(sorter.target.config.sortList));
+				$('#list tr').removeClass('fresh');
 			});
 
 	if (canEdit)
@@ -190,6 +191,8 @@ $(function()
 		queue.push(new Job('list-add-row', [listId, newRow.id]));
 		queue.delayedFlush();
 		var tableRow = $('tfoot tr').clone();
+		if ($('#list .fresh').length == 0)
+			tableRow.addClass('fresh');
 		tableRow.attr('data-content-id', newRow.id);
 		tableRow.find('input[type=checkbox]').attr('id', 'row-' + newRow.id);
 		tableRow.find('label[for]').attr('for', 'row-' + newRow.id);

@@ -32,8 +32,9 @@
 	#list td .input-wrapper {
 		vertical-align: top;
 		margin: 0 30px 0 0;
-		border-top: 3px solid #f5f5f5;
-		border-bottom: 3px solid #f5f5f5;
+		transition: border-color 0.25s ease 0s;
+		border-top: 3px solid #fff;
+		border-bottom: 3px solid #fff;
 		line-height: normal;
 		background: white;
 		height: 24px;
@@ -84,6 +85,16 @@
 	#list tbody tr.edit:before {
 		background: #f5f5f5;
 	}
+
+		#list tbody tr:hover .input-wrapper,
+		#list tbody tr.edit .input-wrapper {
+			border-top: 3px solid #f5f5f5;
+			border-bottom: 3px solid #f5f5f5;
+		}
+		#list tbody tr.fresh td {
+			border-top: 2px solid hsl(215,80%,90%);
+		}
+
 		/* because why bother standarizing background-position-y, for crying out loud! */
 		#list tbody tr:hover td .icon-edit,
 		#list tbody tr.edit td .icon-edit { background-position: -200px -20px; }
