@@ -11,32 +11,17 @@ class AuthController
 
 		$name = InputHelper::getPost('name');
 		$pass = InputHelper::getPost('pass');
-
-		$passHash = UserService::hashPassword($pass);
-
-		if (InputHelper::getPost('remember'))
-		{
-			setcookie('auth-name', $name, time() + 60 * 60 * 24 * 30, '/');
-			setcookie('auth-pass-hash', $passHash, time() + 60 * 60 * 24 * 30, '/');
-		}
+		$remember = boolval(InputHelper::getPost('remember'));
 
 		try
 		{
-			$user = UserService::getByName($name);
-			if (empty($user))
-				throw new ValidationException('User not found.');
-
-			if ($passHash != $user->passHash)
-				throw new ValidationException('Invalid password.');
+			AuthHelper::login($name, $pass, $remember);
 		}
 		catch (SimpleException $e)
 		{
 			Messenger::error($e->getMessage());
 			return;
 		}
-
-		$_SESSION['logged-in'] = true;
-		$_SESSION['user-id'] = $user->id;
 
 		Messenger::success('Logged in.');
 		Bootstrap::forward('/');
@@ -52,12 +37,7 @@ class AuthController
 		if (!$this->context->isSubmit)
 			return;
 
-		unset($_SESSION['logged-in']);
-		unset($_SESSION['user-id']);
-
-		setcookie('auth-name', '', 0, '/');
-		setcookie('auth-pass-hash', '', 0, '/');
-
+		AuthHelper::logout();
 		Messenger::success('Logged out.');
 		Bootstrap::forward('/');
 	}
