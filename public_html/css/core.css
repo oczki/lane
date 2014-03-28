@@ -173,6 +173,9 @@ form {
 	form label[for] {
 		cursor: pointer;
 	}
+	form.inline {
+		display: inline;
+	}
 
 th {
 	font-weight: normal;

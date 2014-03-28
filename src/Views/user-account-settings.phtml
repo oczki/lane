@@ -5,50 +5,52 @@
 \Chibi\AssetViewDecorator::addScript('user-account-settings.js');
 ?>
 
-<?= HtmlHelper::tag('form', [
-	'action' => \Chibi\UrlHelper::currentUrl(),
-	'method' => 'post',
-	'id' => 'account-settings',
-	], false) ?>
+<div id="account-settings">
 
-	<div class="form-wrapper">
-		<?= HtmlHelper::labelDecorator('Last update text',
-			HtmlHelper::checkboxInputTag('show-guests-last-update', $this->context->user->settings->showGuestsLastUpdate),
-			'show &ldquo;last save time&rdquo; to guests') ?>
+	<?= HtmlHelper::tag('form', [
+		'action' => \Chibi\UrlHelper::currentUrl(),
+		'method' => 'post',
+		], false) ?>
 
-		<?= HtmlHelper::labelDecorator('Sidebar',
-			HtmlHelper::checkboxInputTag('show-cheat-sheet', $this->context->user->settings->showCheatSheet),
-			'show cheat sheet when editing') ?>
-	</div>
+		<div class="form-wrapper">
+			<?= HtmlHelper::labelDecorator('Last update text',
+				HtmlHelper::checkboxInputTag('show-guests-last-update', $this->context->user->settings->showGuestsLastUpdate),
+				'show &ldquo;last save time&rdquo; to guests') ?>
 
-	<p>Enter your current password to change options below.</p>
-
-	<div class="form-wrapper">
-		<?= HtmlHelper::labelDecorator('Current password',
-			HtmlHelper::passwordInputTag('current-password', ['autocomplete' => 'off'])) ?>
-
-		<?= HtmlHelper::labelDecorator('New password',
-			HtmlHelper::passwordInputTag('new-password1', ['autocomplete' => 'off'])) ?>
-
-		<?= HtmlHelper::labelDecorator('Repeat new password',
-			HtmlHelper::passwordInputTag('new-password2', ['autocomplete' => 'off'])) ?>
-
-		<?= HtmlHelper::labelDecorator('E-mail address',
-			HtmlHelper::textInputTag('new-e-mail', ['value' => $this->context->user->email])) ?>
-	</div>
-
-	<div class="submit">
-		<div class="left">
-		<?= HtmlHelper::submitInputTag('Save changes', ['class' => 'btn save-changes hl']) ?>
-		<?= HtmlHelper::buttonInputTag('Cancel', ['class' => 'btn cancel']) ?>
+			<?= HtmlHelper::labelDecorator('Sidebar',
+				HtmlHelper::checkboxInputTag('show-cheat-sheet', $this->context->user->settings->showCheatSheet),
+				'show cheat sheet when editing') ?>
 		</div>
 
-		<div class="right">
-			<?= HtmlHelper::buttonInputTag('More...', ['class' => 'btn more']) ?>
+		<p>Enter your current password to change options below.</p>
+
+		<div class="form-wrapper">
+			<?= HtmlHelper::labelDecorator('Current password',
+				HtmlHelper::passwordInputTag('current-password', ['autocomplete' => 'off'])) ?>
+
+			<?= HtmlHelper::labelDecorator('New password',
+				HtmlHelper::passwordInputTag('new-password1', ['autocomplete' => 'off'])) ?>
+
+			<?= HtmlHelper::labelDecorator('Repeat new password',
+				HtmlHelper::passwordInputTag('new-password2', ['autocomplete' => 'off'])) ?>
+
+			<?= HtmlHelper::labelDecorator('E-mail address',
+				HtmlHelper::textInputTag('new-e-mail', ['value' => $this->context->user->email])) ?>
 		</div>
 
-		<div class="clear"></div>
-	</div>
+		<div class="submit">
+			<div class="left">
+			<?= HtmlHelper::submitInputTag('Save changes', ['class' => 'btn save-changes hl']) ?>
+			<?= HtmlHelper::buttonInputTag('Cancel', ['class' => 'btn cancel']) ?>
+			</div>
+
+			<div class="right">
+				<?= HtmlHelper::buttonInputTag('More...', ['class' => 'btn more']) ?>
+			</div>
+
+			<div class="clear"></div>
+		</div>
+	<?= HtmlHelper::tagClose('form') ?>
 
 	<div class="danger">
 		<hr/>
@@ -57,8 +59,16 @@
 
 		<div class="submit">
 			<?= HtmlHelper::buttonInputTag('Export all data', ['class' => 'btn export-all-data']) ?>
-			<?= HtmlHelper::buttonInputTag('Delete account', ['class' => 'btn delete-account']) ?>
+
+			<?= HtmlHelper::tag('form', [
+				'action' => \Chibi\UrlHelper::route('user', 'delete-account', ['userName' => $this->context->userLogged->name]),
+				'class' => 'inline delete-account',
+				'method' => 'post',
+				], false) ?>
+
+			<?= HtmlHelper::submitInputTag('Delete account') ?>
+
+			<?= HtmlHelper::tagClose('form') ?>
 		</div>
 	</div>
-
-<?= HtmlHelper::tagClose('form') ?>
+</div>

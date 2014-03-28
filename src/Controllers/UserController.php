@@ -65,4 +65,27 @@ class UserController
 			'userName' => ListService::getOwner($lastViewedList)->name,
 			'id' => $lastViewedList->urlName]));
 	}
+
+	/**
+	* @route /a/{userName}/delete-account
+	* @route /a/{userName}/delete-account/
+	* @validate userName [a-zA-Z0-9_-]+
+	*/
+	public function deleteAccountAction($userName)
+	{
+		$this->context->viewName = 'messages';
+		$this->preWork($userName);
+
+		if (!$this->context->canEdit)
+			throw new SimpleException('Cannot delete account of this user.');
+
+		if (!$this->context->isSubmit)
+			return;
+
+		UserService::delete($this->context->user);
+
+		AuthHelper::logout();
+		Messenger::success('Account deleted.');
+		Bootstrap::forward('/');
+	}
 }

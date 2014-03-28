@@ -1,4 +1,6 @@
 <?php
+use Chibi\Database as Database;
+
 class UserService
 {
 	public static function hashPassword($password)
@@ -40,6 +42,11 @@ class UserService
 
 	public static function delete(UserEntity $userEntity)
 	{
-		return UserDao::delete($userEntity);
+		Database::transaction(function() use ($userEntity)
+		{
+			foreach (ListService::getByUserId($userEntity->id) as $listEntity)
+				ListService::delete($listEntity);
+			return UserDao::delete($userEntity);
+		});
 	}
 }

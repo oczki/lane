@@ -13,4 +13,17 @@ $(function()
 	});
 
 	$('#account-settings .danger').hide();
+
+	$('#account-settings .delete-account').submit(function(e)
+	{
+		var text = 'Do you really want to delete your account? ' +
+			'All of your lists will be gone forever. ' +
+			'This operation cannot be undone!';
+
+		if (!confirm(text))
+		{
+			e.preventDefault();
+			e.stopPropagation();
+		}
+	});
 });

@@ -12,6 +12,13 @@ class HtmlHelper
 		return $html;
 	}
 
+	public static function wrapTag($tag, array $params = [], $innerHtml)
+	{
+		return self::tag($tag, $params, false)
+			. $innerHtml
+			. self::tagClose($tag);
+	}
+
 	public static function tagClose($tag)
 	{
 		return '</' . $tag . '>';
