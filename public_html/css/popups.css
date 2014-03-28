@@ -21,7 +21,7 @@
 	text-align: center;
 }
 .popup .ajax-wrapper>* {
-	text-align: initial;
+	text-align: left;
 }
 .popup form {
 	margin: 0 auto;
