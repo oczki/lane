@@ -10,7 +10,7 @@ if (!isset($this->context->list))
 	return;
 
 \Chibi\AssetViewDecorator::setTitle($this->context->user->name . '&rsquo;s lane&nbsp;&ndash; ' . $this->context->list->name);
-if ($this->context->list->content->css != '')
+if ($this->context->list->content->useCustomCss)
 	\Chibi\AssetViewDecorator::addStylesheet(\Chibi\UrlHelper::route('list', 'custom-css', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]));
 
 $showRow = function($row)

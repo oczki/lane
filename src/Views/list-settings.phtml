@@ -57,7 +57,7 @@ $alignments = [
 				'show row numbers') ?>
 
 			<?= HtmlHelper::labelDecorator('User CSS',
-				HtmlHelper::checkboxInputTag('custom-css', $this->context->list->content->css != '', ['class' => 'custom-css']),
+				HtmlHelper::checkboxInputTag('custom-css', $this->context->list->content->useCustomCss, ['class' => 'custom-css']),
 				'enable custom CSS') ?>
 		</div>
 
@@ -88,7 +88,7 @@ $alignments = [
 
 		<div class="custom-css-edit">
 			<p>Custom CSS</p>
-			<textarea name="custom-css"><?= TextHelper::keepWhitespace($this->context->list->content->css) ?></textarea>
+			<textarea name="custom-css"><?= TextHelper::keepWhitespace($this->context->list->content->customCss) ?></textarea>
 		</div>
 
 		<div class="submit">

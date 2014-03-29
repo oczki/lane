@@ -90,7 +90,7 @@ class ListController
 			if (empty($list))
 				throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
 
-			echo $list->content->css;
+			echo $list->content->customCss;
 		}
 		catch (Exception $e)
 		{

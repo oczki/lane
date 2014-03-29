@@ -261,9 +261,13 @@ $(function()
 			'list-id': listId,
 			'new-list-row-ids-enabled': $(this).find('.basic-settings [name=row-ids]').is(':checked') ? 1 : 0}));
 
-		jobs.push(new Job('list-set-css', {
+		jobs.push(new Job('list-set-custom-css', {
 			'list-id': listId,
-			'new-list-css': $(this).find('.custom-css-edit textarea').val()}));
+			'new-list-custom-css': $(this).find('.custom-css-edit textarea').val()}));
+
+		jobs.push(new Job('list-enable-custom-css', {
+			'list-id': listId,
+			'new-list-custom-css-enabled': $('#list-settings .basic-settings .custom-css').is(':checked') ? 1 : 0}));
 
 
 		$(this).data('additional-data', {jobs: jobs});

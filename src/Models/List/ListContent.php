@@ -3,7 +3,8 @@ class ListContent extends StrictPropertyObject
 {
 	public $columns = [];
 	public $rows = [];
-	public $css = '';
+	public $customCss = '';
+	public $useCustomCss = false;
 	public $showRowIds = false;
 	public $sortStyle;
 
