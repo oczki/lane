@@ -8,13 +8,15 @@
 		<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo-small.png') ?>" alt=""/>
 	</a>
 
-	<p id="save-info">
-		<?php if (isset($this->context->list) and $this->context->list->lastUpdate !== null): ?>
-			<?= 'updated ' . TextHelper::formatTimeDelta(time() - $this->context->list->lastUpdate) ?>
-		<?php else: ?>
-			&nbsp;
-		<?php endif ?>
-	</p>
+	<?php if ($this->context->user->settings->showGuestsLastUpdate or $this->context->canEdit): ?>
+		<p id="save-info">
+			<?php if (isset($this->context->list) and $this->context->list->lastUpdate !== null): ?>
+				<?= 'updated ' . TextHelper::formatTimeDelta(time() - $this->context->list->lastUpdate) ?>
+			<?php else: ?>
+				&nbsp;
+			<?php endif ?>
+		</p>
+	<?php endif ?>
 
 	<?php $lists = array_filter($this->context->lists, ['ListController', 'canShow']) ?>
 	<?php if (!empty($lists)): ?>
