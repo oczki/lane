@@ -18,13 +18,24 @@ class ControllerHelper
 			$context->user->id == $context->userLogged->id;
 	}
 
-	public static function attachList()
+	public static function attachLists()
 	{
 		$context = \Chibi\Registry::getContext();
 		$user = $context->user;
 		if (empty($user))
 			throw new SimpleException('Unknown user.');
 		$context->lists = ListService::getByUserId($user->id);
+
+		if (empty($context->lists))
+		{
+			$job = new ListAddJob([
+				'new-list-name' => 'New blank list',
+				'new-list-visibility' => true]);
+
+			JobExecutor::execute($job, $user);
+
+			$context->lists = ListService::getByUserId($user->id);
+		}
 	}
 
 	public static function setLayout()

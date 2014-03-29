@@ -10,16 +10,7 @@ class ListService
 	{
 		$filter = new ListFilter();
 		$filter->userId = $userId;
-		$lists = self::getFilteredLists($filter);
-		if (!empty($lists))
-			return $lists;
-
-		$user = UserService::getById($userId);
-		$job = new ListAddJob('New blank list', true);
-		JobExecutor::execute($job, $user);
-
-		$lists = self::getFilteredLists($filter);
-		return $lists;
+		return self::getFilteredLists($filter);
 	}
 
 	public static function getByUrlName(UserEntity $owner, $urlName)

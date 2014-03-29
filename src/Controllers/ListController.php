@@ -6,7 +6,7 @@ class ListController
 	private function preWork($userName = false)
 	{
 		ControllerHelper::attachUser($userName);
-		ControllerHelper::attachList();
+		ControllerHelper::attachLists();
 		ControllerHelper::setLayout();
 	}
 
@@ -15,9 +15,9 @@ class ListController
 	* @route /a/{userName}/add/
 	* @validate userName [a-zA-Z0-9_-]+
 	*/
-	public function addAction()
+	public function addAction($userName)
 	{
-		$this->preWork();
+		$this->preWork($userName);
 
 		if (!$this->context->canEdit)
 			throw new SimpleException('Cannot add new list.');
