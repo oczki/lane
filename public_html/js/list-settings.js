@@ -162,6 +162,13 @@ $(function()
 		});
 
 
+	//fixing permalink
+	$('#list-settings .fix-permalink').data('success-callback', function()
+	{
+		window.location.href = '/';
+	});
+
+
 	//form submit
 	$('#list-settings .main-settings').submit(function(e)
 	{

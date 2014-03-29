@@ -155,11 +155,7 @@ class AuthController
 			$listEntity->content->rows []= $row;
 		}
 
-		$baseUrlName = TextHelper::convertCase($listEntity->name,
-			TextHelper::BLANK_CASE,
-			TextHelper::SNAKE_CASE);
-		ListAddJob::forgeUrlName($user, $listEntity, $baseUrlName);
-
+		$listEntity->urlName = ListService::forgeUrlName($listEntity);
 		ListService::saveOrUpdate($listEntity);
 
 		$_SESSION['logged-in'] = true;

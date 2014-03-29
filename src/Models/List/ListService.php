@@ -97,6 +97,41 @@ class ListService
 		return $classes;
 	}
 
+	public static function forgeUrlName(ListEntity $list)
+	{
+		$lists = self::getByUserId($list->userId);
+		$lists = array_filter($lists, function($otherList) use ($list)
+		{
+			return $list->id != $otherList->id;
+		});
+
+		$baseUrlName = TextHelper::convertCase($list->name,
+			TextHelper::BLANK_CASE,
+			TextHelper::SNAKE_CASE);
+
+		//very important - strip all insecure characters
+		$baseUrlName = preg_replace('/\W/u', '_', $baseUrlName);
+
+		$urlName = $baseUrlName;
+		do
+		{
+			$index = 1;
+			$found = true;
+			foreach ($lists as $otherList)
+			{
+				if ($otherList->urlName == $urlName)
+				{
+					$urlName = $baseUrlName . $index;
+					++ $index;
+					$found = false;
+				}
+			}
+		}
+		while (!$found);
+
+		return $urlName;
+	}
+
 	public static function getPossibleColumnAlign()
 	{
 		return

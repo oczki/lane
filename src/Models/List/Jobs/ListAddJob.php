@@ -48,41 +48,8 @@ class ListAddJob extends AbstractJob
 		$listEntity->content->columns []= $column3;
 		$listEntity->content->rows []= $row;
 
-		$baseUrlName = TextHelper::convertCase($listEntity->name,
-			TextHelper::BLANK_CASE,
-			TextHelper::SNAKE_CASE);
-		self::forgeUrlName($owner, $listEntity, $baseUrlName);
+		$listEntity->urlName = ListService::forgeUrlName($listEntity);
 
 		return ListService::saveOrUpdate($listEntity);
-	}
-
-	public static function forgeUrlName(
-		UserEntity $owner,
-		ListEntity $listEntity,
-		$baseUrlName)
-	{
-		$filter = new ListFilter();
-		$filter->userId = $owner->id;
-		$lists = ListService::getFilteredLists($filter);
-
-		//very important - strip all insecure characters
-		$baseUrlName = preg_replace('/\W/u', '_', $baseUrlName);
-
-		$listEntity->urlName = $baseUrlName;
-		do
-		{
-			$index = 1;
-			$found = true;
-			foreach ($lists as $otherList)
-			{
-				if ($otherList->urlName == $listEntity->urlName)
-				{
-					$listEntity->urlName = $baseUrlName . $index;
-					++ $index;
-					$found = false;
-				}
-			}
-		}
-		while (!$found);
 	}
 }

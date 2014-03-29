@@ -1,13 +1,11 @@
 <?php
-class ListSetNameJob extends AbstractJob
+class ListFixPermalinkJob extends AbstractJob
 {
 	public function execute(UserEntity $owner)
 	{
-		ListJobHelper::validateListName($this->arguments['new-list-name']);
-
 		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
 
-		$listEntity->name = $this->arguments['new-list-name'];
+		$listEntity->urlName = ListService::forgeUrlName($listEntity);
 
 		ListService::saveOrUpdate($listEntity);
 	}
