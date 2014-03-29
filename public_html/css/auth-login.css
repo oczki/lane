@@ -1,0 +1,16 @@
+#auth-login {
+	width: 25em;
+	margin: 0 auto;
+}
+
+#auth-login p {
+	margin: 0.5em auto;
+}
+
+#auth-login form.forgot-form {
+	margin: 0;
+}
+
+#auth-login .forgot {
+	display: none;
+}

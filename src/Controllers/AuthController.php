@@ -43,6 +43,73 @@ class AuthController
 	}
 
 	/**
+	* @route /auth/reset-password
+	*/
+	public function resetPasswordAction()
+	{
+		$this->context->viewName = null;
+
+		if (!$this->context->isSubmit)
+			return;
+
+		$email = InputHelper::getPost('e-mail');
+		$validator = new Validator($email, 'e-mail');
+		$validator->checkEmail();
+
+		$user = UserService::getByEmail($email);
+		if (empty($user))
+			throw new SimpleException('No such e-mail.');
+
+		$user->settings->passwordResetToken = md5(microtime(true) . mt_rand());
+		UserService::saveOrUpdate($user);
+
+		$link = \Chibi\UrlHelper::route('auth', 'reset-password-confirm', ['userName' => $user->name, 'token' => $user->settings->passwordResetToken]);
+		$subject = 'Lane password reset';
+		$body = 'Someone (probably you) requested to reset your password on Lane. ' .
+			'To continue, click on the following link:' . PHP_EOL . PHP_EOL .
+			$link . PHP_EOL . PHP_EOL .
+			'If you didn\'t request this reset, please ignore this message.' . PHP_EOL . PHP_EOL .
+			'---' . PHP_EOL . PHP_EOL .
+			'Lane (list and nothing else) - http://' . $_SERVER['HTTP_HOST'] . '/';
+
+		$headers = 'From: "Lane bot" <noreply@' . $_SERVER['HTTP_HOST'] . '>';
+
+		mail($user->email, $subject, $body, $headers);
+
+		Messenger::success('An e-mail with link to reset your password was sent.');
+		Bootstrap::forward(\Chibi\UrlHelper::route('auth', 'login'));
+	}
+
+	/**
+	* @route /auth/reset-password-confirm/{userName}/{token}
+	* @validate userName [a-zA-Z0-9_-]+
+	* @validate token [a-fA-F0-9]+
+	*/
+	public function resetPasswordConfirmAction($userName, $token)
+	{
+		$this->context->viewName = 'messages';
+
+		$user = UserService::getByName($userName);
+		if (empty($user))
+			throw new SimpleException('No such user.');
+
+		if ($user->settings->passwordResetToken != $token)
+			throw new SimpleException('Invalid token.');
+
+		$newPassword = str_split('0123456789abcdefghijklmnopqrstuvwxyz');
+		shuffle($newPassword);
+		$newPassword = implode('', $newPassword);
+		$newPassword = substr($newPassword, 0, 8);
+
+		$user->settings->passwordResetToken = null;
+		$user->passHash = UserService::hashPassword($newPassword);
+		UserService::saveOrUpdate($user);
+
+		Bootstrap::markReturn('Log in now', \Chibi\UrlHelper::route('auth', 'login'));
+		Messenger::success('Your new password: ' . $newPassword);
+	}
+
+	/**
 	* @route /auth/register
 	*/
 	public function registerAction()

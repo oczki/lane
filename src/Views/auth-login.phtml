@@ -1,5 +1,7 @@
 <?php
 \Chibi\AssetViewDecorator::setTitle('lane&nbsp;&ndash; Login form');
+\Chibi\AssetViewDecorator::addStylesheet('auth-login.css');
+\Chibi\AssetViewDecorator::addScript('auth-login.js');
 ?>
 
 <h1>Login form</h1>
@@ -21,7 +23,30 @@
 				'remember me') ?>
 
 			<?= HtmlHelper::labelDecorator(false,
-				HtmlHelper::submitInputTag('Log in', ['class' => 'btn hl login'])) ?>
+					HtmlHelper::submitInputTag('Log in', ['class' => 'btn hl login']) .
+					HtmlHelper::buttonInputTag('Forgot?', ['class' => 'btn forgot'])) ?>
+
+		</div>
+
+	</form>
+
+	<form class="forgot-form" action="<?= \Chibi\UrlHelper::route('auth', 'reset-password') ?>" method="post">
+
+		<hr/>
+
+		<div class="form-outer-wrapper">
+
+			<p>To reset your password, enter the e-mail address you specified during registration.</p>
+
+			<div class="form-wrapper">
+
+				<?= HtmlHelper::labelDecorator('E-mail',
+					HtmlHelper::textInputTag('e-mail')) ?>
+
+				<?= HtmlHelper::labelDecorator('',
+					HtmlHelper::submitInputTag('Reset password', ['class' => 'btn hl'])) ?>
+
+			</div>
 
 		</div>
 
