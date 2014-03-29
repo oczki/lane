@@ -242,4 +242,44 @@ $(function()
 		$('#list').trigger('addRows', [tableRow, false]);
 		tableRow.find('.edit-content:eq(0)').click();
 	});
+
+	$('#search input').on('keydown', function(e)
+	{
+		if (e.keyCode == 13)
+		{
+			var texts = $(this).val().toLowerCase().split(/\s+/);
+			e.preventDefault();
+			$('#list tbody tr').each(function(i, tableRowNode)
+			{
+				var tableRow = $(tableRowNode);
+				var shown = true;
+				for (var i = 0; i < texts.length; i ++)
+				{
+					var text = texts[i];
+					shown = shown && (tableRow.text().toLowerCase().indexOf(text) != -1);
+				}
+				if (shown)
+					tableRow.css('display', 'table-row');
+				else
+					tableRow.css('display', 'none');
+			});
+
+			var shownRows = $('#list tbody tr:visible').length;
+			var totalRows = $('#list tbody tr').length;
+			var changeText = function()
+			{
+				$('#search-warning .shown-rows').text(shownRows);
+				$('#search-warning .total-rows').text(totalRows);
+			};
+			if (shownRows < totalRows)
+			{
+				changeText();
+				$('#search-warning').slideDown('fast');
+			}
+			else
+			{
+				$('#search-warning').slideUp('fast', changeText);
+			}
+		}
+	});
 });
