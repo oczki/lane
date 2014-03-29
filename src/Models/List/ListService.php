@@ -36,17 +36,6 @@ class ListService
 		return ListDao::delete($listEntity);
 	}
 
-	public static function canShow(ListEntity $listEntity)
-	{
-		$context = \Chibi\Registry::getContext();
-		if ($listEntity->visible)
-			return true;
-
-		return
-			$context->isLoggedIn and
-			$listEntity->userId == $context->userLogged->id;
-	}
-
 	public static function getColumn(ListEntity $listEntity, $columnIndex)
 	{
 		return isset($listEntity->content->columns[$columnIndex])

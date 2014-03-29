@@ -16,7 +16,7 @@
 		<?php endif ?>
 	</p>
 
-	<?php $lists = array_filter($this->context->lists, ['ListService', 'canShow']) ?>
+	<?php $lists = array_filter($this->context->lists, ['ListController', 'canShow']) ?>
 	<?php if (!empty($lists)): ?>
 		<div id="sidebar-nav">
 			<ul id="lists">

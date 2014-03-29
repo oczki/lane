@@ -15,6 +15,13 @@
 				$links []= ['account-settings', \Chibi\UrlHelper::route('user', 'account-settings', ['userName' => $this->context->userLogged->name]), 'Account settings'];
 				$links []= ['import', '#', 'Import new list'];
 				$links []= ['export', '#', 'Export this list'];
+				if (isset($this->context->list) and $this->context->list->userId == $this->context->userLogged->id)
+				{
+					if (ControllerHelper::canEditData($this->context->user))
+						$links []= ['view-as-guest', \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName, 'guest' => 'guest']), 'View as guest'];
+					else
+						$links []= ['view-as-guest', \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]), 'Back to edit mode'];
+				}
 			}
 
 			$links []= ['help', \Chibi\UrlHelper::route('index', 'help'), 'Editing help'];

@@ -16,7 +16,7 @@ class UserController
 	{
 		$this->preWork($userName);
 
-		if (!$this->context->canEdit)
+		if (!ControllerHelper::canEditData($this->context->user))
 			throw new SimpleException('Cannot edit settings of this user.');
 
 		if (!$this->context->isSubmit)
@@ -76,7 +76,7 @@ class UserController
 		$this->context->viewName = 'messages';
 		$this->preWork($userName);
 
-		if (!$this->context->canEdit)
+		if (!ControllerHelper::canEditData($this->context->user))
 			throw new SimpleException('Cannot delete account of this user.');
 
 		if (!$this->context->isSubmit)

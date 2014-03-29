@@ -1,6 +1,8 @@
 <?php
 class ControllerHelper
 {
+	private static $privilegesRevoked = [];
+
 	public static function attachUser($userName = false)
 	{
 		$context = \Chibi\Registry::getContext();
@@ -12,18 +14,34 @@ class ControllerHelper
 			$user = null;
 
 		$context->user = $user;
-		$context->canEdit =
-			$context->isLoggedIn and
-			$context->user and
-			$context->user->id == $context->userLogged->id;
 	}
 
-	public static function attachLists()
+	public static function revokePrivileges(UserEntity $user)
+	{
+		self::$privilegesRevoked[$user->id] = true;
+	}
+
+	public static function canEditData($user)
 	{
 		$context = \Chibi\Registry::getContext();
-		$user = $context->user;
-		if (empty($user))
+
+		return
+			$user and
+			!isset(self::$privilegesRevoked[$user->id]) and
+			$context->isLoggedIn and
+			$user->id == $context->userLogged->id;
+	}
+
+	public static function attachLists($userName)
+	{
+		$context = \Chibi\Registry::getContext();
+		if ($userName)
+			$user = UserService::getByName($userName);
+		elseif ($context->isLoggedIn and $context->userLogged)
+			$user = $context->userLogged;
+		else
 			throw new SimpleException('Unknown user.');
+
 		$context->lists = ListService::getByUserId($user->id);
 
 		if (empty($context->lists))
@@ -49,7 +67,7 @@ class ControllerHelper
 	{
 		$context = \Chibi\Registry::getContext();
 
-		if (!isset($context->canEdit) or !$context->canEdit)
+		if (!isset($context->user) or !self::canEditData($context->user))
 			throw new SimpleException('Cannot execute jobs for this user.');
 
 		$jobs = [];

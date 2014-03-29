@@ -6,8 +6,18 @@ class ListController
 	private function preWork($userName = false)
 	{
 		ControllerHelper::attachUser($userName);
-		ControllerHelper::attachLists();
+		ControllerHelper::attachLists($userName);
 		ControllerHelper::setLayout();
+	}
+
+	public static function canShow(ListEntity $listEntity)
+	{
+		$context = \Chibi\Registry::getContext();
+		if ($listEntity->visible)
+			return true;
+
+		$owner = UserService::getById($listEntity->userId);
+		return ControllerHelper::canEditData($owner);
 	}
 
 	/**
@@ -19,7 +29,7 @@ class ListController
 	{
 		$this->preWork($userName);
 
-		if (!$this->context->canEdit)
+		if (!ControllerHelper::canEditData($this->context->user))
 			throw new SimpleException('Cannot add new list.');
 
 		if (!$this->context->isSubmit)
@@ -104,19 +114,27 @@ class ListController
 	* @route /u/{userName}/
 	* @route /u/{userName}/{id}
 	* @route /u/{userName}/{id}/
+	* @route /u/{userName}/{id}/{guest}
+	* @route /u/{userName}/{id}/{guest}/
 	* @validate userName [a-zA-Z0-9_-]+
 	* @validate id [^\/]+
+	* @validate guest guest|
 	*/
-	public function viewAction($userName, $id = null)
+	public function viewAction($userName, $id = null, $guest = false)
 	{
 		$this->preWork($userName);
+
+		if (!empty($guest))
+			ControllerHelper::revokePrivileges($this->context->user);
+
+		$this->context->canEdit = ControllerHelper::canEditData($this->context->user);
 
 		if ($id === null)
 		{
 			$id = null;
 			foreach ($this->context->lists as $list)
 			{
-				if (ListService::canShow($list))
+				if (self::canShow($list))
 				{
 					$id = $list->urlName;
 					break;
@@ -136,7 +154,7 @@ class ListController
 			throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
 		}
 
-		if (!ListService::canShow($list))
+		if (!self::canShow($list))
 		{
 			Bootstrap::markReturn(
 				'Return to ' . $userName . '\'s lane',
