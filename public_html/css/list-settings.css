@@ -1,9 +1,8 @@
 #list-settings {
 	width: 35em;
 }
-#list-settings .main-settings {
-	width: 100%;
-	display: inline;
+#list-settings .form-wrapper {
+	display: block;
 }
 #list-settings .basic-settings {
 	float: left;
@@ -39,7 +38,7 @@
 		margin-left: 0;
 	}
 	#list-settings table th,
-	#list-settings table td {
+	#list-settings table td:not(:first-child) {
 		padding: 0 0.5em;
 	}
 		#list-settings table th.align,

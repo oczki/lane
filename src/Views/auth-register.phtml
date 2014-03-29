@@ -4,25 +4,33 @@
 
 <h1>Registration form</h1>
 
-<form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
+<div id="auth-register">
 
-	<?= HtmlHelper::labelDecorator('User name',
-		HtmlHelper::textInputTag('name', ['placeholder' => 'e.g. darth_vader'])) ?>
+	<form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
 
-	<?= HtmlHelper::labelDecorator('Password',
-		HtmlHelper::passwordInputTag('pass1',
-			['autocomplete' => 'off',
-			'placeholder' => 'e.g. ' . str_repeat('•', 5)])) ?>
+		<div class="form-wrapper">
 
-	<?= HtmlHelper::labelDecorator('Repeat password',
-		HtmlHelper::passwordInputTag('pass2',
-			['autocomplete' => 'off',
-			'placeholder' => 'e.g. ' . str_repeat('•', 5)])) ?>
+			<?= HtmlHelper::labelDecorator('User name',
+				HtmlHelper::textInputTag('name', ['placeholder' => 'e.g. darth_vader'])) ?>
 
-	<?= HtmlHelper::labelDecorator('E-mail (optional)',
-		HtmlHelper::textInputTag('e-mail', ['placeholder' => 'e.g. vader@empire.gov'])) ?>
+			<?= HtmlHelper::labelDecorator('Password',
+				HtmlHelper::passwordInputTag('pass1',
+					['autocomplete' => 'off',
+					'placeholder' => 'e.g. ' . str_repeat('•', 5)])) ?>
 
-	<?= HtmlHelper::labelDecorator(false,
-		HtmlHelper::submitInputTag('Register', ['class' => 'btn hl'])) ?>
+			<?= HtmlHelper::labelDecorator('Repeat password',
+				HtmlHelper::passwordInputTag('pass2',
+					['autocomplete' => 'off',
+					'placeholder' => 'e.g. ' . str_repeat('•', 5)])) ?>
 
-</form>
+			<?= HtmlHelper::labelDecorator('E-mail (optional)',
+				HtmlHelper::textInputTag('e-mail', ['placeholder' => 'e.g. vader@empire.gov'])) ?>
+
+			<?= HtmlHelper::labelDecorator(false,
+				HtmlHelper::submitInputTag('Register', ['class' => 'btn hl'])) ?>
+
+		</div>
+
+	</form>
+
+</div>

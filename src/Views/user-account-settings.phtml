@@ -50,6 +50,7 @@
 
 			<div class="clear"></div>
 		</div>
+
 	<?= HtmlHelper::tagClose('form') ?>
 
 	<div class="danger">
@@ -58,17 +59,15 @@
 		<p>If you want to permantently delete your account, consider exporting your lists data before taking the last step.</p>
 
 		<div class="submit">
+
 			<?= HtmlHelper::buttonInputTag('Export all data', ['class' => 'btn export-all-data']) ?>
 
-			<?= HtmlHelper::tag('form', [
+			<?= HtmlHelper::wrapTag('form', [
 				'action' => \Chibi\UrlHelper::route('user', 'delete-account', ['userName' => $this->context->userLogged->name]),
 				'class' => 'inline delete-account',
 				'method' => 'post',
-				], false) ?>
+				], HtmlHelper::submitInputTag('Delete account')) ?>
 
-			<?= HtmlHelper::submitInputTag('Delete account') ?>
-
-			<?= HtmlHelper::tagClose('form') ?>
 		</div>
 	</div>
 </div>

@@ -4,19 +4,27 @@
 
 <h1>Login form</h1>
 
-<form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
+<div id="auth-login">
 
-	<?= HtmlHelper::labelDecorator('User name',
-		HtmlHelper::textInputTag('name')) ?>
+	<form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
 
-	<?= HtmlHelper::labelDecorator('Password',
-		HtmlHelper::passwordInputTag('pass')) ?>
+		<div class="form-wrapper">
 
-	<?= HtmlHelper::labelDecorator('',
-		HtmlHelper::checkboxInputTag('remember', true),
-		'remember me') ?>
+			<?= HtmlHelper::labelDecorator('User name',
+				HtmlHelper::textInputTag('name')) ?>
 
-	<?= HtmlHelper::labelDecorator(false,
-		HtmlHelper::submitInputTag('Log in', ['class' => 'btn hl'])) ?>
+			<?= HtmlHelper::labelDecorator('Password',
+				HtmlHelper::passwordInputTag('pass')) ?>
 
-</form>
+			<?= HtmlHelper::labelDecorator('',
+				HtmlHelper::checkboxInputTag('remember', true),
+				'remember me') ?>
+
+			<?= HtmlHelper::labelDecorator(false,
+				HtmlHelper::submitInputTag('Log in', ['class' => 'btn hl login'])) ?>
+
+		</div>
+
+	</form>
+
+</div>

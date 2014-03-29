@@ -159,8 +159,9 @@ input[type=password] {
 	}
 
 
-form {
+.form-wrapper {
 	display: table;
+	width: 100%;
 }
 	form div.input-row {
 		display: table-row;
@@ -180,6 +181,12 @@ form {
 th {
 	font-weight: normal;
 	text-align: left;
+}
+
+hr {
+	border: 0;
+	background: #eee;
+	height: 2px;
 }
 
 footer {

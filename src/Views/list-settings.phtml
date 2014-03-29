@@ -53,59 +53,62 @@ $alignments = [
 	<?= HtmlHelper::tag('form', [
 		'action' => \Chibi\UrlHelper::currentUrl(),
 		'method' => 'post',
-		'class' => 'main-settings',
 		], false) ?>
 
-		<div class="basic-settings">
-			<?= HtmlHelper::labelDecorator('List name',
-				HtmlHelper::textInputTag('name', ['placeholder' => 'Some name…', 'value' => $this->context->list->name])) ?>
+		<div class="form-wrapper">
 
-			<?= HtmlHelper::labelDecorator('Visibility',
-				HtmlHelper::checkboxInputTag('visibility', $this->context->list->visible),
-				'visible to everyone') ?>
+			<div class="basic-settings">
+				<?= HtmlHelper::labelDecorator('List name',
+					HtmlHelper::textInputTag('name', ['placeholder' => 'Some name…', 'value' => $this->context->list->name])) ?>
 
-			<?= HtmlHelper::labelDecorator('Row IDs',
-				HtmlHelper::checkboxInputTag('row-ids', $this->context->list->content->showRowIds),
-				'show row numbers') ?>
+				<?= HtmlHelper::labelDecorator('Visibility',
+					HtmlHelper::checkboxInputTag('visibility', $this->context->list->visible),
+					'visible to everyone') ?>
 
-			<?= HtmlHelper::labelDecorator('User CSS',
-				HtmlHelper::checkboxInputTag('custom-css', $this->context->list->content->useCustomCss, ['class' => 'custom-css']),
-				'enable custom CSS') ?>
-		</div>
+				<?= HtmlHelper::labelDecorator('Row IDs',
+					HtmlHelper::checkboxInputTag('row-ids', $this->context->list->content->showRowIds),
+					'show row numbers') ?>
 
-		<div class="clear"></div>
+				<?= HtmlHelper::labelDecorator('User CSS',
+					HtmlHelper::checkboxInputTag('custom-css', $this->context->list->content->useCustomCss, ['class' => 'custom-css']),
+					'enable custom CSS') ?>
+			</div>
 
-		<table class="column-manager">
-			<thead>
-				<tr>
-					<th class="drag"></th>
-					<th class="text">Column header</th>
-					<th class="align">Text align</th>
-					<th class="delete">Delete</th>
-				</tr>
-			</thead>
+			<div class="clear"></div>
 
-			<tbody>
-			</tbody>
+			<table class="column-manager">
+				<thead>
+					<tr>
+						<th class="drag"></th>
+						<th class="text">Column header</th>
+						<th class="align">Text align</th>
+						<th class="delete">Delete</th>
+					</tr>
+				</thead>
 
-			<tfoot>
-				<tr>
-					<td></td>
-					<td colspan="3">
-						<?= HtmlHelper::buttonInputTag('Add new column', ['class' => 'btn add-column']) ?>
-					</td>
-				</tr>
-			</tfoot>
-		</table>
+				<tbody>
+				</tbody>
 
-		<div class="custom-css-edit">
-			<p>Custom CSS</p>
-			<textarea name="custom-css"><?= TextHelper::keepWhitespace($this->context->list->content->customCss) ?></textarea>
-		</div>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td colspan="3">
+							<?= HtmlHelper::buttonInputTag('Add new column', ['class' => 'btn add-column']) ?>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
 
-		<div class="submit">
-			<?= HtmlHelper::submitInputTag('Save changes', ['class' => 'btn save-changes hl']) ?>
-			<?= HtmlHelper::buttonInputTag('Cancel', ['class' => 'btn cancel']) ?>
+			<div class="custom-css-edit">
+				<p>Custom CSS</p>
+				<textarea name="custom-css"><?= TextHelper::keepWhitespace($this->context->list->content->customCss) ?></textarea>
+			</div>
+
+			<div class="submit">
+				<?= HtmlHelper::submitInputTag('Save changes', ['class' => 'btn save-changes hl']) ?>
+				<?= HtmlHelper::buttonInputTag('Cancel', ['class' => 'btn cancel']) ?>
+			</div>
+
 		</div>
 
 	<?= HtmlHelper::tagClose('form') ?>
