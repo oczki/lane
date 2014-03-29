@@ -13,26 +13,34 @@ class UserService
 		return UserDao::getFilteredUsers($userFilter);
 	}
 
-	public static function getById($id)
+	public static function getFilteredUser(UserFilter $userFilter)
 	{
-		$filter = new UserFilter();
-		$filter->id = $id;
-		$users = self::getFilteredUsers($filter);
+		$users = self::getFilteredUsers($userFilter);
 		if (empty($users))
 			return null;
 		$user = reset($users);
 		return $user;
 	}
 
+	public static function getById($id)
+	{
+		$filter = new UserFilter();
+		$filter->id = $id;
+		return self::getFilteredUser($filter);
+	}
+
 	public static function getByName($name)
 	{
 		$filter = new UserFilter();
 		$filter->name = $name;
-		$users = self::getFilteredUsers($filter);
-		if (empty($users))
-			return null;
-		$user = reset($users);
-		return $user;
+		return self::getFilteredUser($filter);
+	}
+
+	public static function getByEmail($email)
+	{
+		$filter = new UserFilter();
+		$filter->email = $email;
+		return self::getFilteredUser($filter);
 	}
 
 	public static function saveOrUpdate(UserEntity $userEntity)

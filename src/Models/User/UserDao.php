@@ -23,6 +23,12 @@ class UserDao
 				new Sql\EqualsFunctor('name', new Sql\Binding($userFilter->name)));
 		}
 
+		if ($userFilter->email !== null)
+		{
+			$stmt->getCriterion()->add(
+				new Sql\EqualsFunctor('email', new Sql\Binding($userFilter->email)));
+		}
+
 		$rows = Database::fetchAll($stmt);
 		$userEntities = DaoHelper::transformEntities('UserEntity', $rows);
 
