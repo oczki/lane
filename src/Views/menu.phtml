@@ -13,11 +13,11 @@
 			if ($this->context->isLoggedIn)
 			{
 				$links []= ['account-settings', \Chibi\UrlHelper::route('user', 'account-settings', ['userName' => $this->context->userLogged->name]), 'Account settings'];
-				$links []= ['import', '#', 'Import'];
-				$links []= ['export', '#', 'Export'];
+				$links []= ['import', '#', 'Import new list'];
+				$links []= ['export', '#', 'Export this list'];
 			}
 
-			$links []= ['help', \Chibi\UrlHelper::route('index', 'help'), 'Help'];
+			$links []= ['help', \Chibi\UrlHelper::route('index', 'help'), 'Editing help'];
 			$links []= ['about', \Chibi\UrlHelper::route('index', 'about'), 'About'];
 
 			if ($this->context->isLoggedIn)
