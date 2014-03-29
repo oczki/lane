@@ -40,7 +40,7 @@ class HtmlHelper
 		}
 
 		$html = self::tag('div', ['class' => 'input-row'], false);
-		$html .= self::labelTag($text ? rtrim(trim($text), ':') . ':' : '', ['for' => $id]);
+		$html .= self::labelTag($text ? rtrim(trim($text), ':') . ':' : '', $text ? ['for' => $id] : []);
 		$html .= $inputHtml;
 
 		//additional label for checkboxes and radioboxes
