@@ -1,20 +1,11 @@
 <?php
-class ListSetCssJob implements IJob
+class ListSetCssJob extends AbstractJob
 {
-	private $listId;
-	private $newCss;
-
-	public function __construct($listId, $newCss)
-	{
-		$this->listId = $listId;
-		$this->newCss = $newCss;
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
 
-		$listEntity->content->css = $this->newCss;
+		$listEntity->content->css = $this->arguments['new-list-css'];
 
 		ListService::saveOrUpdate($listEntity);
 	}

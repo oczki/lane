@@ -1,19 +1,10 @@
 <?php
-class ListDeleteRowJob implements IJob
+class ListDeleteRowJob extends AbstractJob
 {
-	private $listId;
-	private $rowId;
-
-	public function __construct($listId, $rowId)
-	{
-		$this->listId = $listId;
-		$this->rowId = $rowId;
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
-		$pos = ListJobHelper::getRowPos($listEntity, $this->rowId);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
+		$pos = ListJobHelper::getRowPos($listEntity, $this->arguments['row-id']);
 
 		self::delete($listEntity->content->rows, $pos);
 

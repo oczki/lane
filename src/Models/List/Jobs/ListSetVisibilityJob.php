@@ -1,20 +1,11 @@
 <?php
-class ListSetVisibilityJob implements IJob
+class ListSetVisibilityJob extends AbstractJob
 {
-	private $listId;
-	private $newVisibility;
-
-	public function __construct($listId, $newVisibility)
-	{
-		$this->listId = $listId;
-		$this->newVisibility = boolval($newVisibility);
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
 
-		$listEntity->visible = $this->newVisibility;
+		$listEntity->visible = boolval($this->arguments['new-list-visibility']);
 
 		ListService::saveOrUpdate($listEntity);
 	}

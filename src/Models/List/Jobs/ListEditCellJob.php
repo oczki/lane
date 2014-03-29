@@ -1,26 +1,13 @@
 <?php
-class ListEditCellJob implements IJob
+class ListEditCellJob extends AbstractJob
 {
-	private $listId;
-	private $rowId;
-	private $columnId;
-	private $newText;
-
-	public function __construct($listId, $rowId, $columnId, $newText)
-	{
-		$this->listId = $listId;
-		$this->rowId = $rowId;
-		$this->columnId = $columnId;
-		$this->newText = $newText;
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
-		$rowPos = ListJobHelper::getRowPos($listEntity, $this->rowId);
-		$columnPos = ListJobHelper::getColumnPos($listEntity, $this->columnId);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
+		$rowPos = ListJobHelper::getRowPos($listEntity, $this->arguments['row-id']);
+		$columnPos = ListJobHelper::getColumnPos($listEntity, $this->arguments['column-id']);
 
-		$listEntity->content->rows[$rowPos]->content[$columnPos] = $this->newText;
+		$listEntity->content->rows[$rowPos]->content[$columnPos] = $this->arguments['new-cell-text'];
 
 		ListService::saveOrUpdate($listEntity);
 	}

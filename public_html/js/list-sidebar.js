@@ -23,7 +23,9 @@ $(function()
 					return;
 				var listId = dragger.parents('li').attr('data-list-id');
 				var priority = dragger.parents('li').index() + 1;
-				queue.push(new Job('list-set-priority', [listId, priority]));
+				queue.push(new Job('list-set-priority', {
+					'list-id': listId,
+					'new-list-priority': priority}));
 				queue.delayedFlush();
 			});
 		});

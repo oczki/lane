@@ -1,19 +1,10 @@
 <?php
-class ListDeleteColumnJob implements IJob
+class ListDeleteColumnJob extends AbstractJob
 {
-	private $listId;
-	private $columnId;
-
-	public function __construct($listId, $columnId)
-	{
-		$this->listId = $listId;
-		$this->columnId = $columnId;
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
-		$pos = ListJobHelper::getColumnPos($listEntity, $this->columnId);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
+		$pos = ListJobHelper::getColumnPos($listEntity, $this->arguments['column-id']);
 
 		self::delete($listEntity->content->columns, $pos);
 

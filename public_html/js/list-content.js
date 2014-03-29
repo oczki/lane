@@ -39,7 +39,10 @@ $(function()
 				set: function(elementId, newWidth)
 				{
 					var columnId = this.convert(elementId);
-					queue.push(new Job('list-set-column-width', [listId, columnId, newWidth]));
+					queue.push(new Job('list-set-column-width', {
+						'list-id': listId,
+						'column-id': columnId,
+						'new-column-width': newWidth}));
 					queue.delayedFlush();
 				}
 			}
@@ -171,7 +174,11 @@ $(function()
 
 		if (text != oldText)
 		{
-			queue.push(new Job('list-edit-cell', [listId, rowId, columnId, text]));
+			queue.push(new Job('list-edit-cell', {
+				'list-id': listId,
+				'row-id': rowId,
+				'column-id': columnId,
+				'new-cell-text': text}));
 			queue.delayedFlush();
 		}
 		tableCell.find('span').text(text).attr('title', text);
@@ -202,7 +209,10 @@ $(function()
 			e.preventDefault();
 			var tableRow = $(tableRowNode);
 			var rowId = tableRow.attr('data-content-id');
-			queue.push(new Job('list-delete-row', [listId, rowId]));
+			queue.push(new Job('list-delete-row', {
+				'list-id': listId,
+				'row-id': rowId}));
+
 			tableRow.remove();
 			$('#list').trigger('update');
 		});
@@ -216,8 +226,12 @@ $(function()
 			id: ++ lastContentId,
 			content: new Array(listColumns.length).map(String.prototype.valueOf, '')
 		};
-		queue.push(new Job('list-add-row', [listId, newRow.id]));
+
+		queue.push(new Job('list-add-row', {
+			'list-id': listId,
+			'new-row-id': newRow.id}));
 		queue.delayedFlush();
+
 		var tableRow = $('tfoot tr').clone();
 		if ($('#list .fresh').length == 0)
 			tableRow.addClass('fresh');

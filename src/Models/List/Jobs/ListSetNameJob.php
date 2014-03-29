@@ -1,22 +1,13 @@
 <?php
-class ListSetNameJob implements IJob
+class ListSetNameJob extends AbstractJob
 {
-	private $listId;
-	private $newName;
-
-	public function __construct($listId, $newName)
-	{
-		$this->listId = $listId;
-		$this->newName = $newName;
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		ListJobHelper::validateListName($this->newName);
+		ListJobHelper::validateListName($this->arguments['new-list-name']);
 
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
 
-		$listEntity->name = $this->newName;
+		$listEntity->name = $this->arguments['new-list-name'];
 		//possibly change urlName here
 
 		ListService::saveOrUpdate($listEntity);

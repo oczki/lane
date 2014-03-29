@@ -1,26 +1,15 @@
 <?php
-class ListSetColumnPosJob implements IJob
+class ListSetColumnPosJob extends AbstractJob
 {
-	private $listId;
-	private $columnId;
-	private $newPos;
-
-	public function __construct($listId, $columnId, $newPos)
-	{
-		$this->listId = $listId;
-		$this->columnId = $columnId;
-		$this->newPos = intval($newPos);
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
 
-		$newPos = $this->newPos;
+		$newPos = intval($this->arguments['new-column-pos']);
 		if ($newPos < 0 or $newPos >= count($listEntity->content->columns))
 			throw new SimpleException('Invalid column target position: ' . $newPos . '.');
 
-		$oldPos = ListJobHelper::getColumnPos($listEntity, $this->columnId);
+		$oldPos = ListJobHelper::getColumnPos($listEntity, $this->arguments['column-id']);
 
 		self::swap($listEntity->content->columns, $oldPos, $newPos);
 

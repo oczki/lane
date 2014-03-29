@@ -29,7 +29,7 @@ function Queue()
 		q.flushing = true;
 		$('#save-info').text('Saving...');
 
-		var url = '/exec';
+		var url = $('meta[data-job-executor-url]').attr('data-job-executor-url');
 		var data = {jobs: q.jobs};
 		q.jobs = [];
 		$.post(url, data, function(rawContent)

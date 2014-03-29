@@ -1,20 +1,9 @@
 <?php
-class ListAddJob implements IJob
+class ListAddJob extends AbstractJob
 {
-	private $name;
-	private $visible;
-
-	public function __construct(
-		$name,
-		$visible)
-	{
-		$this->name = $name;
-		$this->visible = $visible;
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		ListJobHelper::validateListName($this->name);
+		ListJobHelper::validateListName($this->arguments['new-list-name']);
 
 		$allListEntities = array_values(ListJobHelper::getLists($owner));
 
@@ -28,8 +17,8 @@ class ListAddJob implements IJob
 		$listEntity = new ListEntity();
 		$listEntity->priority = $maxPriority + 1;
 		$listEntity->userId = $owner->id;
-		$listEntity->name = $this->name;
-		$listEntity->visible = $this->visible;
+		$listEntity->name = $this->arguments['new-list-name'];
+		$listEntity->visible = $this->arguments['new-list-visibility'];
 		$listEntity->content = new ListContent();
 
 		$column1 = new ListColumn();

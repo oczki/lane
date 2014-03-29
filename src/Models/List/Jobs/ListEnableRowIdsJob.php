@@ -1,11 +1,11 @@
 <?php
-class ListSetSortStyleJob extends AbstractJob
+class ListEnableRowIdsJob extends AbstractJob
 {
 	public function execute(UserEntity $owner)
 	{
 		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
 
-		$listEntity->content->sortStyle = $this->arguments['new-sort-style'];
+		$listEntity->content->showRowIds = $this->arguments['new-list-row-ids-enabled'];
 
 		ListService::saveOrUpdate($listEntity);
 	}

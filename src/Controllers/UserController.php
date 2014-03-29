@@ -88,4 +88,18 @@ class UserController
 		Messenger::success('Account deleted.');
 		Bootstrap::forward('/');
 	}
+
+	/**
+	* @route /a/{userName}/exec
+	* @route /a/{userName}/exec/
+	* @validate userName [a-zA-Z0-9_-]+
+	*/
+	public function execAction($userName)
+	{
+		$this->context->viewName = 'messages';
+		$this->preWork($userName);
+
+		if ($this->context->isSubmit)
+			ControllerHelper::runJobExecutorForCurrentContext();
+	}
 }

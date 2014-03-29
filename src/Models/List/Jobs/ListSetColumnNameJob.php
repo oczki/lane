@@ -1,25 +1,14 @@
 <?php
-class ListSetColumnNameJob implements IJob
+class ListSetColumnNameJob extends AbstractJob
 {
-	private $listId;
-	private $columnId;
-	private $newName;
-
-	public function __construct($listId, $columnId, $newName)
-	{
-		$this->listId = $listId;
-		$this->columnId = $columnId;
-		$this->newName = $newName;
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		ListJobHelper::validateColumnName($this->newName);
+		ListJobHelper::validateColumnName($this->arguments['new-column-name']);
 
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
-		$pos = ListJobHelper::getColumnPos($listEntity, $this->columnId);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
+		$pos = ListJobHelper::getColumnPos($listEntity, $this->arguments['column-id']);
 
-		$listEntity->content->columns[$pos]->name = $this->newName;
+		$listEntity->content->columns[$pos]->name = $this->arguments['new-column-name'];
 
 		ListService::saveOrUpdate($listEntity);
 	}

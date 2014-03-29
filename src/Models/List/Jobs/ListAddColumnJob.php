@@ -1,32 +1,19 @@
 <?php
-class ListAddColumnJob implements IJob
+class ListAddColumnJob extends AbstractJob
 {
-	private $listId;
-	private $columnId;
-	private $name;
-	private $align;
-
-	public function __construct($listId, $columnId, $name, $align)
-	{
-		$this->listId = $listId;
-		$this->columnId = $columnId;
-		$this->name = $name;
-		$this->align = $align;
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
 
-		ListJobHelper::validateColumnName($this->name);
+		ListJobHelper::validateColumnName($this->arguments['new-column-name']);
 
-		if ($this->columnId <= $listEntity->content->lastContentId)
-			throw new SimpleException('Column ID already exists: ' . $this->columnId . '.');
+		if ($this->arguments['new-column-id'] <= $listEntity->content->lastContentId)
+			throw new SimpleException('Column ID already exists: ' . $this->arguments['new-column-id'] . '.');
 
-		if (!in_array($this->align, ListService::getPossibleColumnAlign()))
-			throw new SimpleException('Invalid column align: ' . $this->align . '.');
+		if (!in_array($this->arguments['new-column-align'], ListService::getPossibleColumnAlign()))
+			throw new SimpleException('Invalid column align: ' . $this->arguments['new-column-align'] . '.');
 
-		$listEntity->content->lastContentId = $this->columnId;
+		$listEntity->content->lastContentId = $this->arguments['new-column-id'];
 
 		$mul = count($listEntity->content->columns);
 		$mul /= ($mul + 1);
@@ -34,9 +21,11 @@ class ListAddColumnJob implements IJob
 			$column->width *= $mul;
 
 		$column = new ListColumn();
-		$column->id = $this->columnId;
-		$column->name = $this->name;
-		$column->align = empty($this->align) ? ListColumn::ALIGN_LEFT : $this->align;
+		$column->id = $this->arguments['new-column-id'];
+		$column->name = $this->arguments['new-column-name'];
+		$column->align = !empty($this->arguments['new-column-align'])
+			? $this->arguments['new-column-align']
+			: ListColumn::ALIGN_LEFT;
 		$column->width = 100. / (count($listEntity->content->columns) + 1);
 
 		$listEntity->content->columns []= $column;

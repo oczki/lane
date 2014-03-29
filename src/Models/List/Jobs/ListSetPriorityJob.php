@@ -1,21 +1,12 @@
 <?php
-class ListSetPriorityJob implements IJob
+class ListSetPriorityJob extends AbstractJob
 {
-	private $listId;
-	private $newPriority;
-
-	public function __construct($listId, $newPriority)
-	{
-		$this->listId = $listId;
-		$this->newPriority = intval($newPriority);
-	}
-
 	public function execute(UserEntity $owner)
 	{
 		$allListEntities = array_values(ListJobHelper::getLists($owner));
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
 
-		$newIndex = $this->newPriority - 1;
+		$newIndex = intval($this->arguments['new-list-priority']) - 1;
 		$previousIndex = null;
 		foreach ($allListEntities as $index => $otherListEntity)
 			if ($otherListEntity->urlName == $listEntity->urlName)

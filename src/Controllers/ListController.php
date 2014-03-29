@@ -27,13 +27,13 @@ class ListController
 
 		try
 		{
-			$name = InputHelper::getPost('name');
-			$visible = boolval(InputHelper::getPost('visible'));
+			$job = JobHelper::factory('list-add', [
+				'new-list-name' => InputHelper::getPost('name'),
+				'new-list-visibility' => boolval(InputHelper::getPost('visible'))]);
 
-			$job = new ListAddJob($name, $visible);
-			JobExecutor::execute($job, $this->context->userLogged);
+			JobExecutor::execute($job, $this->context->user);
 
-			$lists = ListService::getByUserId($this->context->userLogged->id);
+			$lists = ListService::getByUserId($this->context->user->id);
 			$newList = array_pop($lists);
 		}
 		catch (SimpleException $e)
@@ -44,7 +44,7 @@ class ListController
 
 		Messenger::success('List added successfully.');
 		Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
-			'userName' => $this->context->userLogged->name,
+			'userName' => $this->context->user->name,
 			'id' => $newList->urlName]));
 	}
 
@@ -63,16 +63,15 @@ class ListController
 			throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
 		$this->context->list = $list;
 
-		if (!$this->context->canEdit)
-			throw new SimpleException('Cannot edit this list.');
+		if ($this->context->isSubmit)
+		{
+			$this->context->viewName = 'messages';
+			ControllerHelper::runJobExecutorForCurrentContext();
 
-		if (!$this->context->isSubmit)
-			return;
-
-		$this->execAction();
-		Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
-			'userName' => $this->context->userLogged->name,
-			'id' => $id]));
+			Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
+				'userName' => $this->context->user->name,
+				'id' => $id]));
+		}
 	}
 
 	/**
@@ -148,35 +147,5 @@ class ListController
 
 		$this->context->list = $list;
 		ListService::setLastViewedList($list);
-	}
-
-	/**
-	* @route /exec
-	* @route /exec/
-	*/
-	public function execAction()
-	{
-		$this->preWork();
-
-		if (!$this->context->canEdit)
-			throw new SimpleException('Cannot edit this list.');
-
-		if (!$this->context->isSubmit)
-			return;
-
-		$jobs = [];
-		$jobTexts = InputHelper::getPost('jobs');
-		if ($jobTexts === null)
-			$jobTexts = [];
-		foreach ($jobTexts as $jobText)
-		{
-			$job = JobExecutor::parse($jobText);
-			$jobs []= $job;
-		}
-
-		JobExecutor::execute($jobs, $this->context->userLogged);
-
-		$this->context->viewName = 'messages';
-		Messenger::success(count($jobs) . ' jobs executed successfully.');
 	}
 }

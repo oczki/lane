@@ -42,7 +42,7 @@ function sendAjax(url, data, successFunc, errorFunc)
 				if (typeof(successFunc) !== 'undefined')
 					successFunc(content);
 				else
-					window.location = content.filter('meta[data-permalink]').attr('data-permalink');
+					window.location = content.filter('meta[data-current-url]').attr('data-current-url');
 			}
 			else
 			{

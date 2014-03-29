@@ -18,7 +18,8 @@
 	<?= HtmlHelper::tag('meta', [
 		'name' => 'application-name',
 		'content' => 'lane - list and nothing else',
-		'data-permalink' => \Chibi\UrlHelper::currentUrl()], true) ?>
+		'data-current-url' => \Chibi\UrlHelper::currentUrl(),
+		'data-job-executor-url' => JobHelper::getJobExecutorUrl()], true) ?>
 
 	<?= HtmlHelper::tag('link', [
 		'rel' => 'icon',

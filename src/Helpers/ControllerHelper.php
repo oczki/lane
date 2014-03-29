@@ -33,4 +33,28 @@ class ControllerHelper
 		$context->allowIndexing = false;
 		$context->layoutName = 'layout-bare';
 	}
+
+	public static function runJobExecutorForCurrentContext()
+	{
+		$context = \Chibi\Registry::getContext();
+
+		if (!isset($context->canEdit) or !$context->canEdit)
+			throw new SimpleException('Cannot execute jobs for this user.');
+
+		$jobs = [];
+		$jobTexts = InputHelper::getPost('jobs');
+		if ($jobTexts === null)
+			$jobTexts = [];
+		foreach ($jobTexts as $jobArray)
+		{
+			$jobName = $jobArray['name'];
+			$jobArgs = $jobArray['args'];
+			$job = JobHelper::factory($jobName, $jobArgs);
+			$jobs []= $job;
+		}
+
+		JobExecutor::execute($jobs, $context->user);
+
+		Messenger::success(count($jobs) . ' jobs executed successfully.');
+	}
 }

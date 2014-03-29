@@ -1,26 +1,15 @@
 <?php
-class ListSetColumnAlignJob implements IJob
+class ListSetColumnAlignJob extends AbstractJob
 {
-	private $listId;
-	private $columnId;
-	private $newAlign;
-
-	public function __construct($listId, $columnId, $newAlign)
-	{
-		$this->listId = $listId;
-		$this->columnId = $columnId;
-		$this->newAlign = $newAlign;
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		if (!in_array($this->newAlign, ListService::getPossibleColumnAlign()))
-			throw new SimpleException('Invalid column align: ' . $this->newAlign . '.');
+		if (!in_array($this->arguments['new-column-align'], ListService::getPossibleColumnAlign()))
+			throw new SimpleException('Invalid column align: ' . $this->arguments['new-column-align'] . '.');
 
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
-		$pos = ListJobHelper::getColumnPos($listEntity, $this->columnId);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
+		$pos = ListJobHelper::getColumnPos($listEntity, $this->arguments['column-id']);
 
-		$listEntity->content->columns[$pos]->align = $this->newAlign;
+		$listEntity->content->columns[$pos]->align = $this->arguments['new-column-align'];
 
 		ListService::saveOrUpdate($listEntity);
 	}

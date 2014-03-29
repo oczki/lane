@@ -1,11 +1,15 @@
-#list-settings form {
+#list-settings {
 	width: 35em;
+}
+#list-settings .main-settings {
+	width: 100%;
+	display: inline;
 }
 #list-settings .basic-settings {
 	float: left;
 }
 #list-settings .ops {
-	float: left;
+	float: right;
 	list-style-type: none;
 	margin: 0 0 0 1em;
 	padding: 0;

@@ -1,5 +1,5 @@
 <?php
-abstract class ListJobHelper
+class ListJobHelper
 {
 	public static function getLists(UserEntity $owner)
 	{

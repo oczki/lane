@@ -14,43 +14,4 @@ class JobExecutor
 			}
 		});
 	}
-
-	public static function parse($jobText)
-	{
-		if (!isset($jobText['name']))
-			throw new Exception('Job name not available.');
-
-		$jobName = $jobText['name'];
-		$jobArgs = !empty($jobText['args'])
-			? $jobText['args']
-			: [];
-
-		$className = sprintf('%s%s',
-			TextHelper::convertCase(
-				$jobName,
-				TextHelper::TRAIN_CASE,
-				TextHelper::UPPER_CAMEL_CASE),
-			'Job');
-
-		try
-		{
-			$class = new ReflectionClass($className);
-			$constructor = new ReflectionMethod($className, '__construct');
-			$expectedArgumentCount = $constructor->getNumberOfRequiredParameters();
-		}
-		catch (Exception $e)
-		{
-			throw new SimpleException('Invalid job name: ' . $jobName . '.');
-		}
-
-		if (count($jobArgs) < $expectedArgumentCount)
-		{
-			throw new SimpleException(sprintf(
-				'Too few job arguments (expected at least %d, got %d).',
-				$expectedArgumentCount,
-				count($jobArgs)));
-		}
-
-		return $class->newInstanceArgs($jobArgs);
-	}
 }

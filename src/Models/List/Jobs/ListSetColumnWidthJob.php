@@ -1,23 +1,12 @@
 <?php
-class ListSetColumnWidthJob implements IJob
+class ListSetColumnWidthJob extends AbstractJob
 {
-	private $listId;
-	private $columnId;
-	private $newWidth;
-
-	public function __construct($listId, $columnId, $newWidth)
-	{
-		$this->listId = $listId;
-		$this->columnId = $columnId;
-		$this->newWidth = $newWidth;
-	}
-
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->listId, $owner);
-		$pos = ListJobHelper::getColumnPos($listEntity, $this->columnId);
+		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
+		$pos = ListJobHelper::getColumnPos($listEntity, $this->arguments['column-id']);
 
-		$listEntity->content->columns[$pos]->width = $this->newWidth;
+		$listEntity->content->columns[$pos]->width = floatval($this->arguments['new-column-width']);
 
 		$totalSum = 0;
 		foreach ($listEntity->content->columns as $otherPos => $column)
