@@ -50,17 +50,81 @@ $(function()
 		$('.rc-handle').append('<i class="icon icon-drag"/></i>');
 	}
 
+	var urlRegex = new RegExp(/\[url=([^\]]+)\](.+?)\[\/url\]/g);
+	var spanClassRegex = new RegExp(/\[([a-zA-Z0-9_-]+)\]((?:[^](?!\[\1\]))*?)(\[\/\1\]|$)/g);
+	var blockClassRegex = new RegExp(/\[(cell|row|col):([a-zA-Z0-9_-]+)\](.*?)(\[\/\1(:\2)?\]|$)/g);
+	var cellUpdated = function(tableCell, newText)
+	{
+		var html = newText;
+
+		//order matters
+		html = html.replace(/\\\]/g, '&#93;');
+		html = html.replace(/\\\\/g, '&#92;');
+		html = html.replace(/\\\[/g, '&#91;');
+
+		html = html.replace(urlRegex, function(match, url, text)
+		{
+			return '<a href="' + url + '">' + text + '</a>';
+		});
+
+		while (html.match(spanClassRegex))
+			html = html.replace(spanClassRegex, function(match, className, text)
+			{
+				return '<span class="span-' + className + '">' + text + '</span>';
+			});
+
+		while (html.match(blockClassRegex))
+			html = html.replace(blockClassRegex, function(match, block, className, text)
+			{
+				if (block == 'cell')
+					tableCell.addClass('block-' + className);
+				return text;
+			});
+
+		tableCell.attr('data-orig-text', newText);
+		tableCell.find('span.content-holder').html(html).attr('title', newText);
+	};
+
+	var rowUpdateStarted = function(tableRow)
+	{
+		tableRow.find('td').each(function(i, tableCellNode)
+		{
+			var tableCell = $(tableCellNode);
+			if (tableCell.attr('class'))
+				tableCell.attr('class', tableCell.attr('class').split(' ').filter(function(c) {
+					return c.lastIndexOf('block-', 0) !== 0;
+				}).join(' '));
+		});
+	};
+
+	var rowUpdateFinished = function(tableRow)
+	{
+		tableRow.find('td').each(function(i, tableCellNode)
+		{
+			var tableCell = $(tableCellNode);
+			var html = tableCell.attr('data-orig-text');
+			while (match = blockClassRegex.exec(html))
+			{
+				var block = match[1];
+				var className = match[2];
+				var text = match[3];
+				if (block == 'row')
+					tableRow.find('td').addClass('block-' + className);
+			}
+		});
+	};
+
 	var startEdit = function(tableCell)
 	{
 		var tableRow = tableCell.parents('tr');
 		tableRow.addClass('edit');
-		tableCell.find('span').hide();
+		tableCell.find('span.content-holder').hide();
 		if (tableCell.find('input:visible').length > 0)
 			return;
 
 		var input = $('<input>');
 		input.attr('type', 'text');
-		input.val(tableCell.find('span').text());
+		input.val(tableCell.attr('data-orig-text'));
 		tableCell.append(input.wrap('<div class="input-wrapper">').parent());
 		input.focus();
 		var inputNode = input.get(0);
@@ -153,7 +217,7 @@ $(function()
 		tableRow.removeClass('edit');
 		tableCell.find('.input-wrapper').fadeOut('fast', function()
 		{
-			tableCell.find('span').fadeIn();
+			tableCell.find('span.content-holder').fadeIn();
 			tableCell.find('.input-wrapper').remove();
 			$('#list').trigger('updateCell', [tableCell, false]);
 			tableCell.removeClass('working');
@@ -167,7 +231,7 @@ $(function()
 		tableCell.addClass('working');
 		var editLink = tableCell.find('.edit-link');
 		var tableRow = tableCell.parents('tr');
-		var oldText = tableCell.find('span').text();
+		var oldText = tableCell.find('span.content-holder').text();
 		var text = tableCell.find('input[type=text]').val();
 		var rowId = tableRow.attr('data-content-id');
 		var columnId = listColumns[tableCell.index()].id;
@@ -181,7 +245,9 @@ $(function()
 				'new-cell-text': text}));
 			queue.delayedFlush();
 		}
-		tableCell.find('span').text(text).attr('title', text);
+		rowUpdateStarted(tableRow);
+		cellUpdated(tableCell, text);
+		rowUpdateFinished(tableRow);
 	};
 
 	$('#list tbody').on('click', '.edit-content', function(e)
@@ -238,9 +304,27 @@ $(function()
 		tableRow.attr('data-content-id', newRow.id);
 		tableRow.find('input[type=checkbox]').attr('id', 'row-' + newRow.id);
 		tableRow.find('label[for]').attr('for', 'row-' + newRow.id);
+		tableRow.find('td').attr('data-orig-text', '');
 		$('#list tbody').append(tableRow);
 		$('#list').trigger('addRows', [tableRow, false]);
 		tableRow.find('.edit-content:eq(0)').click();
+	});
+
+	$('#list tbody tr').each(function(i, tableRowNode)
+	{
+		var tableRow = $(tableRowNode);
+		tableRow.find('td').each(function(j, tableCellNode)
+		{
+			var tableCell = $(tableCellNode);
+			tableCell.attr('data-orig-text', tableCell.find('span.content-holder').text());
+		});
+		rowUpdateStarted(tableRow);
+		tableRow.find('td').each(function(j, tableCellNode)
+		{
+			var tableCell = $(tableCellNode);
+			cellUpdated(tableCell, tableCell.attr('data-orig-text'));
+		});
+		rowUpdateFinished(tableRow);
 	});
 
 	$('#search input').on('keydown', function(e)
