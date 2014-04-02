@@ -70,7 +70,7 @@ class AuthController
 			$link . PHP_EOL . PHP_EOL .
 			'If you didn\'t request this reset, please ignore this message.' . PHP_EOL . PHP_EOL .
 			'---' . PHP_EOL . PHP_EOL .
-			'Lane (list and nothing else) - http://' . $_SERVER['HTTP_HOST'] . '/';
+			'Lane (list and nothing else) - ' . \Chibi\UrlHelper::route('index', 'index');
 
 		$headers = 'From: "Lane bot" <noreply@' . $_SERVER['HTTP_HOST'] . '>';
 
