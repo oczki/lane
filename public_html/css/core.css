@@ -1,6 +1,7 @@
 body {
 	background: white;
 	overflow-y: scroll;
+	text-align: center;
 }
 
 body,
@@ -19,21 +20,30 @@ img {
 	margin: 0 auto;
 	max-width: 69em;
 }
-	#main.logo {
+	body.logo img.logo {
+		margin-bottom: 1em;
+	}
+	body.logo #main {
 		text-align: center;
 		max-width: 50em;
-	}
-	#main.logo .message {
 		display: inline-block;
 	}
-	#main.logo form {
+	body.logo .message {
+		display: inline-block;
+	}
+	body.logo form {
 		margin: 0 auto;
+		text-align: left;
+	}
+	.content-wrapper {
+		display: inline-block;
 		text-align: left;
 	}
 
 .message {
 	border: 1px solid rgba(0, 0, 0, 0.05);
-	padding: 0.2em 0.5em;
+	padding: 0.5em 1em;
+	font-size: 110%;
 	border-radius: 3px;
 	background: rgba(0, 0, 0, 0.05);
 	white-space: pre-wrap;
@@ -227,3 +237,11 @@ body.dragging * {
 body .dragging .dragger .icon {
 	background-color: hsl(215,100%,75%);
 }
+
+.return-link-wrapper {
+	text-align: center;
+	margin: 1em 0;
+}
+.return-link {
+	margin: 0 auto;
+	}

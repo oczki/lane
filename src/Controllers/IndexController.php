@@ -6,6 +6,8 @@ class IndexController
 	*/
 	public function indexAction()
 	{
+		$this->context->allowIndexing = true;
+
 		if ($this->context->isLoggedIn)
 		{
 			$lists = ListService::getByUserId($this->context->userLogged->id);
@@ -22,6 +24,7 @@ class IndexController
 	*/
 	public function aboutAction()
 	{
+		$this->context->allowIndexing = true;
 	}
 
 	/**
@@ -30,6 +33,7 @@ class IndexController
 	*/
 	public function helpAction()
 	{
+		$this->context->allowIndexing = true;
 		throw new NotImplementedException();
 	}
 

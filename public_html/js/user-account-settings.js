@@ -1,10 +1,15 @@
 $(function()
 {
-	$('#account-settings .cancel').click(function(e)
+	if ($('#account-settings').parents('.popup').length > 0)
 	{
-		e.preventDefault();
-		closePopup($(e.target).parents('.popup'));
-	});
+		$('#account-settings .cancel')
+			.show()
+			.click(function(e)
+			{
+				e.preventDefault();
+				closePopup($(e.target).parents('.popup'));
+			});
+	}
 
 	$('#account-settings .more').click(function(e)
 	{

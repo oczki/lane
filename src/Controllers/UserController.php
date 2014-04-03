@@ -4,7 +4,6 @@ class UserController
 	private function preWork()
 	{
 		ControllerHelper::attachUser();
-		ControllerHelper::setLayout();
 	}
 
 	/**

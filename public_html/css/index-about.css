@@ -12,6 +12,6 @@
 	margin-bottom: 2em;
 }
 
-#main.logo {
+body.logo #main {
 	max-width: 40em;
 }

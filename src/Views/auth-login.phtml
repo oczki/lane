@@ -30,13 +30,13 @@
 
 	</form>
 
-	<form class="forgot-form" action="<?= \Chibi\UrlHelper::route('auth', 'reset-password') ?>" method="post">
+	<div class="forgot-form-wrapper">
 
 		<hr/>
 
-		<div class="form-outer-wrapper">
+		<p>To reset your password, enter the e-mail address you specified during registration.</p>
 
-			<p>To reset your password, enter the e-mail address you specified during registration.</p>
+		<form class="forgot-form" action="<?= \Chibi\UrlHelper::route('auth', 'reset-password') ?>" method="post">
 
 			<div class="form-wrapper">
 
@@ -48,8 +48,8 @@
 
 			</div>
 
-		</div>
+		</form>
 
-	</form>
+	</div>
 
 </div>

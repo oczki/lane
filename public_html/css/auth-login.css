@@ -1,10 +1,10 @@
 #auth-login {
 	width: 25em;
-	margin: 0 auto;
+	text-align: center;
 }
 
 #auth-login p {
-	margin: 0.5em auto;
+	margin: 0.5em auto 1em auto;
 }
 
 #auth-login form.forgot-form {

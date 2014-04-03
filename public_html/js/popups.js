@@ -86,13 +86,13 @@ function showPopup(url, cb)
 	});
 }
 
-function closePopup()
+function closePopup(popupDiv)
 {
-	$('.popup:last').prevAll('.cover:first').fadeOut(function()
+	$(popupDiv).prevAll('.cover:first').fadeOut(function()
 	{
 		$(this).remove();
 	});
-	$('.popup:last').fadeOut(function()
+	$(popupDiv).fadeOut(function()
 	{
 		$(this).remove();
 	});

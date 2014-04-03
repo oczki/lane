@@ -56,13 +56,6 @@ class ControllerHelper
 		}
 	}
 
-	public static function setLayout()
-	{
-		$context = \Chibi\Registry::getContext();
-		$context->allowIndexing = false;
-		$context->layoutName = 'layout-bare';
-	}
-
 	public static function runJobExecutorForCurrentContext()
 	{
 		$context = \Chibi\Registry::getContext();

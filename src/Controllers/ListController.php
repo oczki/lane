@@ -7,7 +7,6 @@ class ListController
 	{
 		ControllerHelper::attachUser($userName);
 		ControllerHelper::attachLists($userName);
-		ControllerHelper::setLayout();
 	}
 
 	public static function canShow(ListEntity $listEntity)
@@ -123,6 +122,7 @@ class ListController
 	public function viewAction($userName, $id = null, $guest = false)
 	{
 		$this->preWork($userName);
+		$this->context->layoutName = 'layout-bare';
 
 		if (!empty($guest))
 			ControllerHelper::revokePrivileges($this->context->user);

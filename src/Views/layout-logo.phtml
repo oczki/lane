@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <?= $this->renderFile('layout-head-common') ?>
-<body>
-	<div id="main" class="logo">
+<body class="logo">
+	<div id="main">
 		<a href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
-			<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo.png') ?>" alt=""/>
+			<img class="logo" src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo.png') ?>" alt=""/>
 		</a>
 		<br/>
 
@@ -14,9 +14,11 @@
 			<div class="clear"></div>
 
 			<?php if (isset($this->context->returnLink)): ?>
-				<?= HtmlHelper::tag('a', ['href' => $this->context->returnLink]); ?>
-					<?= $this->context->returnLinkText ?>
-				<?= HtmlHelper::tagClose('a'); ?>
+				<div class="return-link-wrapper">
+					<?= HtmlHelper::tag('a', ['class' => 'btn hl return-link', 'href' => $this->context->returnLink]); ?>
+						<?= $this->context->returnLinkText ?>
+					<?= HtmlHelper::tagClose('a'); ?>
+				</div>
 			<?php endif ?>
 		</div>
 

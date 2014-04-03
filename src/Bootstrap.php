@@ -44,7 +44,7 @@ class Bootstrap
 		$this->context->layoutName = isset($_GET['simple'])
 			? 'layout-bare'
 			: 'layout-logo';
-		$this->context->allowIndexing = true;
+		$this->context->allowIndexing = false;
 
 		$this->context->isSubmit = $_SERVER['REQUEST_METHOD'] == 'POST';
 		$this->context->isLoggedIn = AuthController::isLoggedIn();

@@ -1,7 +1,6 @@
 $(function()
 {
 	$('.forgot-form')
-		.hide()
 		.data('success-callback', function(rawContent)
 		{
 			var message = $(rawContent).find('.message').text();
@@ -13,10 +12,13 @@ $(function()
 			});
 		});
 
+	$('.forgot-form-wrapper')
+		.hide();
+
 	$('.forgot')
 		.show()
 		.click(function(e)
 		{
-			$('.forgot-form').slideToggle();
+			$('.forgot-form-wrapper').slideToggle();
 		});
 });

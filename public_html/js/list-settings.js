@@ -86,12 +86,16 @@ $(function()
 
 
 	//cancelling
-	$('#list-settings .cancel').click(function(e)
+	if ($('#list-settings').parents('.popup').length > 0)
 	{
-		e.preventDefault();
-		closePopup($(e.target).parents('.popup'));
-	});
-
+		$('#list-settings .cancel')
+			.show()
+			.click(function(e)
+			{
+				e.preventDefault();
+				closePopup($(e.target).parents('.popup'));
+			});
+	}
 
 	//deleting the column
 	$('#list-settings').on('click', '.delete-column a', function(e)
