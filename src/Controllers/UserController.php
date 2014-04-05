@@ -99,6 +99,6 @@ class UserController
 		$this->preWork($userName);
 
 		if ($this->context->isSubmit)
-			ControllerHelper::runJobExecutorForCurrentContext();
+			ControllerHelper::executeJobsSafely(ControllerHelper::getJobsFromInput(), $this->context->user);
 	}
 }

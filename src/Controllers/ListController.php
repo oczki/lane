@@ -3,10 +3,16 @@ use Chibi\Database as Database;
 
 class ListController
 {
-	private function preWork($userName = false)
+	private function preWork($userName = false, $listId = null)
 	{
 		ControllerHelper::attachUser($userName);
 		ControllerHelper::attachLists($userName);
+		if ($listId !== null)
+		{
+			$this->context->list = ListService::getByUrlName($this->context->user, $listId);
+			if (empty($this->context->list))
+				throw new SimpleException('List with id = ' . $listId . ' wasn\'t found.');
+		}
 	}
 
 	public static function canShow(ListEntity $listEntity)
@@ -28,33 +34,22 @@ class ListController
 	{
 		$this->preWork($userName);
 
-		if (!ControllerHelper::canEditData($this->context->user))
-			throw new SimpleException('Cannot add new list.');
-
-		if (!$this->context->isSubmit)
-			return;
-
-		try
+		if ($this->context->isSubmit)
 		{
 			$job = JobHelper::factory('list-add', [
 				'new-list-name' => InputHelper::getPost('name'),
 				'new-list-visibility' => boolval(InputHelper::getPost('visible'))]);
 
-			JobExecutor::execute($job, $this->context->user);
+			ControllerHelper::executeJobsSafely([$job], $this->context->user);
 
 			$lists = ListService::getByUserId($this->context->user->id);
 			$newList = array_pop($lists);
-		}
-		catch (SimpleException $e)
-		{
-			Messenger::error($e->getMessage());
-			return;
-		}
 
-		Messenger::success('List added successfully.');
-		Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
-			'userName' => $this->context->user->name,
-			'id' => $newList->urlName]));
+			Messenger::success('List added successfully.');
+			Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
+				'userName' => $this->context->user->name,
+				'id' => $newList->urlName]));
+		}
 	}
 
 	/**
@@ -65,17 +60,12 @@ class ListController
 	*/
 	public function settingsAction($userName, $id)
 	{
-		$this->preWork($userName);
-
-		$list = ListService::getByUrlName($this->context->user, $id);
-		if (empty($list))
-			throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
-		$this->context->list = $list;
+		$this->preWork($userName, $id);
 
 		if ($this->context->isSubmit)
 		{
 			$this->context->viewName = 'messages';
-			ControllerHelper::runJobExecutorForCurrentContext();
+			ControllerHelper::executeJobsSafely(ControllerHelper::getJobsFromInput(), $this->context->user);
 
 			Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
 				'userName' => $this->context->user->name,
@@ -93,13 +83,9 @@ class ListController
 
 		try
 		{
-			$this->preWork($userName);
+			$this->preWork($userName, $id);
 
-			$list = ListService::getByUrlName($this->context->user, $id);
-			if (empty($list))
-				throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
-
-			echo $list->content->customCss;
+			echo $this->context->list->content->customCss;
 		}
 		catch (Exception $e)
 		{

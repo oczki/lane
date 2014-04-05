@@ -56,13 +56,8 @@ class ControllerHelper
 		}
 	}
 
-	public static function runJobExecutorForCurrentContext()
+	public static function getJobsFromInput()
 	{
-		$context = \Chibi\Registry::getContext();
-
-		if (!isset($context->user) or !self::canEditData($context->user))
-			throw new SimpleException('Cannot execute jobs for this user.');
-
 		$jobs = [];
 		$jobTexts = InputHelper::getPost('jobs');
 		if ($jobTexts === null)
@@ -74,8 +69,15 @@ class ControllerHelper
 			$job = JobHelper::factory($jobName, $jobArgs);
 			$jobs []= $job;
 		}
+		return $jobs;
+	}
 
-		JobExecutor::execute($jobs, $context->user);
+	public static function executeJobsSafely($jobs, $user)
+	{
+		if (!isset($user) or !self::canEditData($user))
+			throw new SimpleException('Cannot execute jobs for this user.');
+
+		JobExecutor::execute($jobs, $user);
 
 		Messenger::success(count($jobs) . ' jobs executed successfully.');
 	}
