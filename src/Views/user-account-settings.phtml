@@ -63,7 +63,7 @@
 			<?= HtmlHelper::buttonInputTag('Export all data', ['class' => 'btn export-all-data']) ?>
 
 			<?= HtmlHelper::wrapTag('form', [
-				'action' => \Chibi\UrlHelper::route('user', 'delete-account', ['userName' => $this->context->userLogged->name]),
+				'action' => \Chibi\UrlHelper::route('user', 'delete-account', ['userName' => $this->context->user->name]),
 				'class' => 'inline delete-account',
 				'method' => 'post',
 				], HtmlHelper::submitInputTag('Delete account')) ?>
