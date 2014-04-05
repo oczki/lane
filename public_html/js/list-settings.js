@@ -280,8 +280,10 @@ $(function()
 			'list-id': listId,
 			'new-list-custom-css-enabled': $('#list-settings .basic-settings .custom-css').is(':checked') ? 1 : 0}));
 
-
-		$(this).data('additional-data', {jobs: jobs});
+		$(this).data('serializer', function()
+		{
+			return $.param({jobs: jobs});
+		});
 	});
 
 

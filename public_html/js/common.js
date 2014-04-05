@@ -29,7 +29,7 @@ function appendUrlParameter(url, key, value)
 
 function sendAjax(url, data, successFunc, errorFunc)
 {
-	$.ajax(
+	var ajaxParams =
 	{
 		type: 'POST',
 		url: url,
@@ -52,7 +52,16 @@ function sendAjax(url, data, successFunc, errorFunc)
 					alert(content.find('.message').text());
 			}
 		},
-	});
+	};
+
+	if (data instanceof FormData)
+	{
+		ajaxParams.enctype = 'multipart/form-data';
+		ajaxParams.processData = false;
+		ajaxParams.contentType = false;
+	}
+
+	$.ajax(ajaxParams);
 }
 
 $(function()
@@ -63,10 +72,9 @@ $(function()
 
 		var form = $(this);
 		var url = appendUrlParameter(form.attr('action'), 'simple');
-		var data = form.serialize();
-		var additionalData = form.data('additional-data');
-		if (typeof(additionalData) !== 'undefined')
-			data += '&' + $.param(additionalData);
+		var data = (typeof form.data('serializer') !== 'undefined')
+			? form.data('serializer')()
+			: form.serialize();
 
 		var target = form.closest('.content-wrapper');
 		if (target.length == 0)
