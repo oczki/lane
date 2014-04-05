@@ -13,7 +13,7 @@
 			if ($this->context->isLoggedIn)
 			{
 				$links []= ['account-settings', \Chibi\UrlHelper::route('user', 'account-settings', ['userName' => $this->context->userLogged->name]), 'Account settings'];
-				$links []= ['import', '#', 'Import new list'];
+				$links []= ['import', \Chibi\UrlHelper::route('list', 'import', ['userName' => $this->context->user->name]), 'Import new list'];
 				$links []= ['export', \Chibi\UrlHelper::route('list', 'export', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]), 'Export this list'];
 				if (isset($this->context->list) and $this->context->list->userId == $this->context->userLogged->id)
 				{

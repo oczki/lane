@@ -160,4 +160,46 @@ class ListService
 		}
 		return json_encode($json, JSON_PRETTY_PRINT |  JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 	}
+
+	public static function unserialize($jsonText)
+	{
+		try
+		{
+			$json = json_decode($jsonText);
+
+			$list = new ListEntity();
+			$list->name = $json->name;
+			$list->visible = $json->visible;
+			$list->content = new ListContent();
+
+			$list->content->customCss = $json->content->customCss;
+			$list->content->useCustomCss = $json->content->useCustomCss;
+			$list->content->showRowIds = $json->content->showRowIds;
+			$list->content->sortStyle = $json->content->sortStyle;
+
+			foreach ($json->content->columns as $jsonColumn)
+			{
+				$column = new ListColumn();
+				$column->name = $jsonColumn->name;
+				$column->width = $jsonColumn->width;
+				$column->align = $jsonColumn->align;
+				$column->id = ++$list->content->lastContentId;
+				$list->content->columns []= $column;
+			}
+
+			foreach ($json->content->rows as $jsonRow)
+			{
+				$row = new ListRow();
+				$row->content = $jsonRow->content;
+				$row->id = ++$list->content->lastContentId;
+				$list->content->rows []= $row;
+			}
+
+			return $list;
+		}
+		catch (Exception $e)
+		{
+			throw new SimpleException('Error while decoding imported list (' . $e->getMessage() . '). Is this valid list?');
+		}
+	}
 }

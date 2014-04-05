@@ -5,17 +5,8 @@ class ListAddJob extends AbstractJob
 	{
 		ListJobHelper::validateListName($this->arguments['new-list-name']);
 
-		$allListEntities = array_values(ListJobHelper::getLists($owner));
-
-		$maxPriority = array_reduce($allListEntities, function($max, $listEntity)
-		{
-			return $listEntity->priority > $max
-				? $listEntity->priority
-				: $max;
-		}, 0);
-
 		$listEntity = new ListEntity();
-		$listEntity->priority = $maxPriority + 1;
+		$listEntity->priority = ListJobHelper::getNewPriority($owner);
 		$listEntity->userId = $owner->id;
 		$listEntity->name = $this->arguments['new-list-name'];
 		$listEntity->visible = $this->arguments['new-list-visibility'];

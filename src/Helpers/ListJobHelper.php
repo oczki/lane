@@ -19,6 +19,20 @@ class ListJobHelper
 		return $listEntity;
 	}
 
+	public static function getNewPriority(UserEntity $owner)
+	{
+		$allListEntities = array_values(self::getLists($owner));
+
+		$maxPriority = array_reduce($allListEntities, function($max, $listEntity)
+		{
+			return $listEntity->priority > $max
+				? $listEntity->priority
+				: $max;
+		}, 0);
+
+		return $maxPriority + 1;
+	}
+
 	public static function getColumnPos(ListEntity $listEntity, $columnId)
 	{
 		foreach ($listEntity->content->columns as $i => $column)

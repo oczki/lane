@@ -154,6 +154,40 @@ class ListController
 	}
 
 	/**
+	* @route /a/{userName}/import
+	* @route /a/{userName}/import/
+	*/
+	public function importAction($userName)
+	{
+		$this->preWork($userName);
+
+		if (!ControllerHelper::canEditData($this->context->user))
+			throw new SimpleException('Cannot import list to this user.');
+
+		if ($this->context->isSubmit)
+		{
+			$file = InputHelper::getFile('file');
+			if ($file === null)
+				throw new SimpleException('No file provided.');
+
+			$jsonText = file_get_contents($file['tmp_name']);
+			$list = ListService::unserialize($jsonText);
+			$list->userId = $this->context->user->id;
+			$list->priority = ListJobHelper::getNewPriority($this->context->user);
+			$list->urlName = ListService::forgeUrlName($list);
+			ListService::saveOrUpdate($list);
+
+			$lists = ListService::getByUserId($this->context->user->id);
+			$newList = array_pop($lists);
+
+			Messenger::success('List added successfully.');
+			Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
+				'userName' => $this->context->user->name,
+				'id' => $newList->urlName]));
+		}
+	}
+
+	/**
 	* @route /a/{userName}/export
 	* @route /a/{userName}/export/
 	* @route /a/{userName}/export/{id}
