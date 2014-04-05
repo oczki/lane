@@ -5,7 +5,8 @@ class HtmlHelper
 	{
 		$html = '<' . $tag;
 		foreach ($params as $k => $v)
-			$html .= ' ' . $k . '="' . htmlspecialchars($v) . '"';
+			if ($v !== null)
+				$html .= ' ' . $k . '="' . htmlspecialchars($v) . '"';
 		if ($selfClose)
 			$html .= '/';
 		$html .= '>';
@@ -72,6 +73,11 @@ class HtmlHelper
 			$otherParams['value'] = InputHelper::getPost($name);
 		}
 		return self::tag('input', array_merge($otherParams, $params), true);
+	}
+
+	public static function fileInputTag($name, array $params = [])
+	{
+		return self::inputTag('file', $name, array_merge(['value' => null], $params));
 	}
 
 	public static function textInputTag($name, array $params = [])

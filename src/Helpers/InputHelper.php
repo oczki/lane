@@ -7,4 +7,11 @@ class InputHelper
 			? $_POST[$key]
 			: null;
 	}
+
+	public static function getFile($key)
+	{
+		return isset($_FILES[$key])
+			? $_FILES[$key]
+			: null;
+	}
 }
