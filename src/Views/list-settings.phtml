@@ -1,5 +1,3 @@
-<h1>Edit list <em><?= htmlspecialchars($this->context->list->name) ?></em></h1>
-
 <?php
 \Chibi\AssetViewDecorator::addStylesheet('list-settings.css');
 \Chibi\AssetViewDecorator::addScript('list-settings.js');
@@ -17,6 +15,8 @@ $alignments = [
 	'data-list-id' => $this->context->list->urlName,
 	'data-list-columns' => json_encode($this->context->list->content->columns),
 	'data-last-content-id' => $this->context->list->content->lastContentId], false) ?>
+
+	<h1>Edit list <em><?= htmlspecialchars($this->context->list->name) ?></em></h1>
 
 	<ul class="ops">
 		<li>

@@ -1,11 +1,11 @@
-<h1>Account settings</h1>
-
 <?php
 \Chibi\AssetViewDecorator::addStylesheet('user-account-settings.css');
 \Chibi\AssetViewDecorator::addScript('user-account-settings.js');
 ?>
 
 <div id="account-settings">
+
+	<h1>Account settings</h1>
 
 	<?= HtmlHelper::tag('form', [
 		'action' => \Chibi\UrlHelper::currentUrl(),
