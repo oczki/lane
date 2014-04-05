@@ -92,22 +92,23 @@ class ListService
 		//very important - strip all insecure characters
 		$baseUrlName = preg_replace('/\W/u', '_', $baseUrlName);
 
+		$index = 1;
 		$urlName = $baseUrlName;
 		do
 		{
-			$index = 1;
-			$found = true;
+			$continue = false;
 			foreach ($lists as $otherList)
 			{
 				if ($otherList->urlName == $urlName)
 				{
 					$urlName = $baseUrlName . $index;
 					++ $index;
-					$found = false;
+					$continue = true;
+					break;
 				}
 			}
 		}
-		while (!$found);
+		while ($continue);
 
 		return $urlName;
 	}
