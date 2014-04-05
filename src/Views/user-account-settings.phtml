@@ -60,7 +60,9 @@
 
 		<div class="submit">
 
-			<?= HtmlHelper::buttonInputTag('Export all data', ['class' => 'btn export-all-data']) ?>
+			<?= HtmlHelper::wrapTag('a', [
+				'href' => \Chibi\URlHelper::route('list', 'export', ['userName' => $this->context->user->name]),
+				'class' => 'btn export-all-data'], 'Export all data') ?>
 
 			<?= HtmlHelper::wrapTag('form', [
 				'action' => \Chibi\UrlHelper::route('user', 'delete-account', ['userName' => $this->context->user->name]),

@@ -152,4 +152,55 @@ class ListController
 		$this->context->list = $list;
 		ListService::setLastViewedList($list);
 	}
+
+	/**
+	* @route /a/{userName}/export
+	* @route /a/{userName}/export/
+	* @route /a/{userName}/export/{id}
+	* @route /a/{userName}/export/{id}/
+	* @validate userName [a-zA-Z0-9_-]+
+	* @validate id [^\/]+
+	*/
+	public function exportAction($userName, $id = null)
+	{
+		$this->preWork($userName, $id);
+
+		if ($id === null)
+		{
+			$outFileName = 'lane_export-' . date('Y-m-d_h-i-s') . '.zip';
+			$zipPath = tempnam(sys_get_temp_dir(), 'lane-export');
+
+			$lists = array_filter($this->context->lists, [__CLASS__, 'canShow']);
+			if (empty($lists))
+				throw new SimplException('All of this user\'s lists are private.');
+
+			$zip = new ZipArchive();
+			if (!$zip->open($zipPath))
+				throw new SimpleException('Failed to create ZIP archive.');
+
+			foreach ($lists as $list)
+				$zip->addFromString($list->urlName . '.json', ListService::serialize($list));
+
+			$zip->close();
+
+			\Chibi\HeadersHelper::set('Content-Type', 'application/zip');
+			\Chibi\HeadersHelper::set('Content-Disposition', 'inline; filename="' . $outFileName . '"');
+			\Chibi\HeadersHelper::set('Content-Transfer-Encoding', 'binary');
+			readfile($zipPath);
+			unlink($zipPath);
+			exit;
+		}
+		else
+		{
+			if (!self::canShow($this->context->list))
+				throw new SimpleException('Cannot export this list.');
+			$outFileName = $this->context->list->urlName . '.json';
+
+			\Chibi\HeadersHelper::set('Content-Type', 'application/zip');
+			\Chibi\HeadersHelper::set('Content-Disposition', 'inline; filename="' . $outFileName . '"');
+			\Chibi\HeadersHelper::set('Content-Transfer-Encoding', 'binary');
+			echo ListService::serialize($this->context->list);
+			exit;
+		}
+	}
 }

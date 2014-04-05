@@ -147,4 +147,17 @@ class ListService
 			? $_SESSION['last-viewed-list']
 			: null;
 	}
+
+	public static function serialize(ListEntity $list)
+	{
+		$json = (array) $list;
+
+		$illegalKeys = ['id', 'userId', 'urlName', 'priority', 'lastUpdate'];
+		foreach ($illegalKeys as $key)
+		{
+			assert(array_key_exists($key, $json));
+			unset($json[$key]);
+		}
+		return json_encode($json, JSON_PRETTY_PRINT |  JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+	}
 }
