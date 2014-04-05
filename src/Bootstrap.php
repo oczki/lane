@@ -81,6 +81,7 @@ class Bootstrap
 			$this->context->layoutName = 'layout-logo';
 			$this->context->viewName = 'error-exception';
 			$this->render();
+			Logger::logException($e);
 		}
 	}
 }
