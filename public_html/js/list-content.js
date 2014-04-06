@@ -51,8 +51,8 @@ $(function()
 	}
 
 	var urlRegex = new RegExp(/\[url=([^\]]+)\](.+?)\[\/url\]/g);
-	var spanClassRegex = new RegExp(/\[([a-zA-Z0-9_-]+)\]((?:[^](?!\[\1\]))*?)(\[\/\1\]|$)/g);
-	var blockClassRegex = new RegExp(/\[(cell|row|col):([a-zA-Z0-9_-]+)\](.*?)(\[\/\1(:\2)?\]|$)/g);
+	var spanClassRegex = new RegExp(/\[([a-zA-Z0-9_-]+)\]((?:.(?!\[\1\]))*?)(\[\/\1\]|$)/g);
+	var blockClassRegex = new RegExp(/\[(cell|row):([a-zA-Z0-9_-]+)\]([^\[]*)(\[\/\1(:\2)?\])?/g);
 	var cellUpdated = function(tableCell, newText)
 	{
 		var html = newText;
@@ -67,18 +67,15 @@ $(function()
 			return '<a href="' + url + '">' + text + '</a>';
 		});
 
+		html = html.replace(blockClassRegex, function(match, block, className, text)
+		{
+			return text;
+		});
+
 		while (html.match(spanClassRegex))
 			html = html.replace(spanClassRegex, function(match, className, text)
 			{
 				return '<span class="span-' + className + '">' + text + '</span>';
-			});
-
-		while (html.match(blockClassRegex))
-			html = html.replace(blockClassRegex, function(match, block, className, text)
-			{
-				if (block == 'cell')
-					tableCell.addClass('block-' + className);
-				return text;
 			});
 
 		tableCell.attr('data-orig-text', newText);
@@ -108,8 +105,11 @@ $(function()
 				var block = match[1];
 				var className = match[2];
 				var text = match[3];
+
 				if (block == 'row')
 					tableRow.find('td').addClass('block-' + className);
+				if (block == 'cell')
+					tableCell.addClass('block-' + className);
 			}
 		});
 	};
