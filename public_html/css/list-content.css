@@ -196,7 +196,7 @@
 
 #list .span-b { font-weight: bold; }
 #list .span-u { text-decoration: underline; }
-#list .span-i { font-style: italics; }
+#list .span-i { font-style: italic; }
 #list .span-s { text-decoration: line-through; }
 #list .span-red { color: #ed1c24; }
 #list .span-orange { color: #ff8c00; }
@@ -214,7 +214,7 @@
 
 #list .block-b { font-weight: bold; }
 #list .block-u { text-decoration: underline; }
-#list .block-i { font-style: italics; }
+#list .block-i { font-style: italic; }
 #list .block-s { text-decoration: line-through; }
 #list .block-red { color: #ed1c24; }
 #list .block-orange { color: #ff8c00; }
