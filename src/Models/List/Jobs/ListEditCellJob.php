@@ -3,9 +3,9 @@ class ListEditCellJob extends AbstractJob
 {
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
-		$rowPos = ListJobHelper::getRowPos($listEntity, $this->arguments['row-id']);
-		$columnPos = ListJobHelper::getColumnPos($listEntity, $this->arguments['column-id']);
+		$listEntity = ListService::getByUrlName($owner, $this->arguments['list-id']);
+		$rowPos = ListService::getRowPos($listEntity, $this->arguments['row-id']);
+		$columnPos = ListService::getColumnPos($listEntity, $this->arguments['column-id']);
 
 		$listEntity->content->rows[$rowPos]->content[$columnPos] = $this->arguments['new-cell-text'];
 

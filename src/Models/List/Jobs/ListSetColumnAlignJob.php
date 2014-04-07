@@ -6,8 +6,8 @@ class ListSetColumnAlignJob extends AbstractJob
 		if (!in_array($this->arguments['new-column-align'], ListService::getPossibleColumnAlign()))
 			throw new SimpleException('Invalid column align: ' . $this->arguments['new-column-align'] . '.');
 
-		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
-		$pos = ListJobHelper::getColumnPos($listEntity, $this->arguments['column-id']);
+		$listEntity = ListService::getByUrlName($owner, $this->arguments['list-id']);
+		$pos = ListService::getColumnPos($listEntity, $this->arguments['column-id']);
 
 		$listEntity->content->columns[$pos]->align = $this->arguments['new-column-align'];
 

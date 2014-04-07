@@ -3,9 +3,9 @@ class ListAddColumnJob extends AbstractJob
 {
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
+		$listEntity = ListService::getByUrlName($owner, $this->arguments['list-id']);
 
-		ListJobHelper::validateColumnName($this->arguments['new-column-name']);
+		ListService::validateColumnName($this->arguments['new-column-name']);
 
 		if ($this->arguments['new-column-id'] <= $listEntity->content->lastContentId)
 			throw new SimpleException('Column ID already exists: ' . $this->arguments['new-column-id'] . '.');

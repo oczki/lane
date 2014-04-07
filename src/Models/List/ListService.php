@@ -6,6 +6,11 @@ class ListService
 		return ListDao::getFilteredLists($listFilter);
 	}
 
+	public static function getByUser(UserEntity $user)
+	{
+		return self::getByUserId($user->id);
+	}
+
 	public static function getByUserId($userId)
 	{
 		$filter = new ListFilter();
@@ -202,5 +207,51 @@ class ListService
 		{
 			throw new SimpleException('Error while decoding imported list (' . $e->getMessage() . '). Is this valid list?');
 		}
+	}
+
+	public static function getNewPriority(UserEntity $owner)
+	{
+		$allListEntities = array_values(self::getLists($owner));
+
+		$maxPriority = array_reduce($allListEntities, function($max, $listEntity)
+		{
+			return $listEntity->priority > $max
+				? $listEntity->priority
+				: $max;
+		}, 0);
+
+		return $maxPriority + 1;
+	}
+
+	public static function getColumnPos(ListEntity $listEntity, $columnId)
+	{
+		foreach ($listEntity->content->columns as $i => $column)
+			if ($column->id == $columnId)
+				return $i;
+
+		throw new SimpleException('Invalid column ID: ' . $columnId . '.');
+	}
+
+	public static function getRowPos(ListEntity $listEntity, $rowId)
+	{
+		foreach ($listEntity->content->rows as $i => $row)
+			if ($row->id == $rowId)
+				return $i;
+
+		throw new SimpleException('Invalid row ID: ' . $rowId . '.');
+	}
+
+	public static function validateListName($name)
+	{
+		$validator = new Validator($name, 'list name');
+		$validator->checkMinLength(1);
+		$validator->checkMaxLength(20);
+	}
+
+	public static function validateColumnName($name)
+	{
+		$validator = new Validator($name, 'column name');
+		$validator->checkMinLength(1);
+		$validator->checkMaxLength(100);
 	}
 }

@@ -3,7 +3,7 @@ class ListDeleteJob extends AbstractJob
 {
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
+		$listEntity = ListService::getByUrlName($owner, $this->arguments['list-id']);
 
 		ListService::delete($listEntity);
 	}

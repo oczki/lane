@@ -3,7 +3,7 @@ class ListAddRowJob extends AbstractJob
 {
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
+		$listEntity = ListService::getByUrlName($owner, $this->arguments['list-id']);
 
 		if (empty($this->arguments['row-content']))
 			$this->arguments['new-row-content'] = array_fill(0, count($listEntity->content->columns), '');

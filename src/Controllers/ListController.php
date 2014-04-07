@@ -175,7 +175,7 @@ class ListController
 			$jsonText = file_get_contents($file['tmp_name']);
 			$list = ListService::unserialize($jsonText);
 			$list->userId = $this->context->user->id;
-			$list->priority = ListJobHelper::getNewPriority($this->context->user);
+			$list->priority = ListService::getNewPriority($this->context->user);
 			$list->urlName = ListService::forgeUrlName($list);
 			ListService::saveOrUpdate($list);
 

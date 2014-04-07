@@ -3,9 +3,9 @@ class ListSetNameJob extends AbstractJob
 {
 	public function execute(UserEntity $owner)
 	{
-		ListJobHelper::validateListName($this->arguments['new-list-name']);
+		ListService::validateListName($this->arguments['new-list-name']);
 
-		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
+		$listEntity = ListService::getByUrlName($owner, $this->arguments['list-id']);
 
 		$listEntity->name = $this->arguments['new-list-name'];
 

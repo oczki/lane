@@ -3,13 +3,13 @@ class ListSetColumnPosJob extends AbstractJob
 {
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
+		$listEntity = ListService::getByUrlName($owner, $this->arguments['list-id']);
 
 		$newPos = intval($this->arguments['new-column-pos']);
 		if ($newPos < 0 or $newPos >= count($listEntity->content->columns))
 			throw new SimpleException('Invalid column target position: ' . $newPos . '.');
 
-		$oldPos = ListJobHelper::getColumnPos($listEntity, $this->arguments['column-id']);
+		$oldPos = ListService::getColumnPos($listEntity, $this->arguments['column-id']);
 
 		self::swap($listEntity->content->columns, $oldPos, $newPos);
 

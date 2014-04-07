@@ -3,10 +3,10 @@ class ListAddJob extends AbstractJob
 {
 	public function execute(UserEntity $owner)
 	{
-		ListJobHelper::validateListName($this->arguments['new-list-name']);
+		ListService::validateListName($this->arguments['new-list-name']);
 
 		$listEntity = new ListEntity();
-		$listEntity->priority = ListJobHelper::getNewPriority($owner);
+		$listEntity->priority = ListService::getNewPriority($owner);
 		$listEntity->userId = $owner->id;
 		$listEntity->name = $this->arguments['new-list-name'];
 		$listEntity->visible = $this->arguments['new-list-visibility'];

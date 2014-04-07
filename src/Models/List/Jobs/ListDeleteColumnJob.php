@@ -3,8 +3,8 @@ class ListDeleteColumnJob extends AbstractJob
 {
 	public function execute(UserEntity $owner)
 	{
-		$listEntity = ListJobHelper::getList($this->arguments['list-id'], $owner);
-		$pos = ListJobHelper::getColumnPos($listEntity, $this->arguments['column-id']);
+		$listEntity = ListService::getByUrlName($owner, $this->arguments['list-id']);
+		$pos = ListService::getColumnPos($listEntity, $this->arguments['column-id']);
 
 		self::delete($listEntity->content->columns, $pos);
 
