@@ -198,25 +198,25 @@ class AuthController
 
 		$rows =
 		[
-			['Welcome to lane! This is your first list.', '', ''],
+			['[b]Welcome to lane![/b] This is your first list.', '', ''],
 			['Point here and click the blue icon →', 'to edit cell\'s contents.', 'Easy, right?'],
 			['', '', ''],
 			['Add new rows using the button below,', 'or use keyboard shortcuts:', ''],
-			['', '[Enter] - save changes', ''],
-			['', '[Tab] - save, go to next cell', ''],
-			['', '[Shift+Tab] - save, prev cell', ''],
-			['', '[Esc] - discard changes', ''],
+			['', '\[Enter] - save changes', ''],
+			['', '\[Tab] - save, go to next cell', ''],
+			['', '\[Shift+Tab] - save, prev cell', ''],
+			['', '\[Esc] - discard changes', ''],
 			['', '', ''],
 			['Add new lists, or edit the current one', '', ''],
-			['using the menu on the left.', '', ''],
+			['using the menu to the left.', '', ''],
 			['', '', ''],
-			['Click on headers to sort columns.', 'You can also resize them.', '(try it!)'],
-			['', 'Or... make your sort default.', ''],
-			['', 'Or even reorder the lists.', ''],
+			['Click on headers to sort columns.', 'You can also [orange]resize them.', '[orange](Try it!)'],
+			['', 'Or... [blue]make your sort default.', ''],
+			['', 'Or even [red]reorder the lists.', ''],
 			['', '', ''],
 			['[url=' . \Chibi\UrlHelper::route('index', 'help') . ']Click here[/url] to read more about editing.', '', ''],
 			['', '', ''],
-			['The rest is all up to you.', 'Start by creating a new list.', ''],
+			['[row:green][row:b]The rest is all up to you.', 'Start by creating a new list.', ''],
 		];
 
 		foreach ($rows as $rowContent)
