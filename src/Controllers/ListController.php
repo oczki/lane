@@ -11,7 +11,7 @@ class ListController
 		{
 			$this->context->list = ListService::getByUrlName($this->context->user, $listId);
 			if (empty($this->context->list))
-				throw new SimpleException('List with id = ' . $listId . ' wasn\'t found.');
+				throw new InvalidListException($listId);
 		}
 	}
 
@@ -34,7 +34,7 @@ class ListController
 		$this->prework();
 
 		if (!ControllerHelper::canEditData($this->context->user))
-			throw new SimpleException('Cannot add new list for this user.');
+			throw new UnprivilegedOperationException();
 
 		if ($this->context->isSubmit)
 		{
@@ -129,7 +129,7 @@ class ListController
 				}
 			}
 			if (empty($id))
-				throw new SimpleException('Looks like all of user\'s lists are private.');
+				throw new InvalidListException(null, InvalidListException::REASON_PRIVATE);
 		}
 
 		$list = ListService::getByUrlName($this->context->user, $id);
@@ -139,7 +139,7 @@ class ListController
 				'Return to ' . $userName . '\'s lane',
 				\Chibi\UrlHelper::route('list', 'view', ['userName' => $userName]));
 
-			throw new SimpleException('List with id = ' . $id . ' wasn\'t found.');
+			throw new InvalidListException($id);
 		}
 
 		if (!self::canShow($list))
@@ -148,7 +148,7 @@ class ListController
 				'Return to ' . $userName . '\'s lane',
 				\Chibi\UrlHelper::route('list', 'view', ['userName' => $userName]));
 
-			throw new SimpleException('List with id = ' . $id . ' is not available for public.');
+			throw new InvalidListException($id, InvalidListException::REASON_PRIVATE);
 		}
 
 		$this->context->list = $list;
@@ -164,7 +164,7 @@ class ListController
 		$this->preWork();
 
 		if (!ControllerHelper::canEditData($this->context->user))
-			throw new SimpleException('Cannot import list to this user.');
+			throw new UnprivilegedOperationException();
 
 		if ($this->context->isSubmit)
 		{
@@ -182,7 +182,7 @@ class ListController
 			$lists = ListService::getByUserId($this->context->user->id);
 			$newList = array_pop($lists);
 
-			Messenger::success('List added successfully.');
+			Messenger::success('List imported successfully.');
 			Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
 				'userName' => $this->context->user->name,
 				'id' => $newList->urlName]));
@@ -208,7 +208,7 @@ class ListController
 
 			$lists = array_filter($this->context->lists, [__CLASS__, 'canShow']);
 			if (empty($lists))
-				throw new SimplException('All of this user\'s lists are private.');
+				throw new InvalidListException(null, InvalidListException::REASON_PRIVATE);
 
 			$zip = new ZipArchive();
 			if (!$zip->open($zipPath))
@@ -229,7 +229,7 @@ class ListController
 		else
 		{
 			if (!self::canShow($this->context->list))
-				throw new SimpleException('Cannot export this list.');
+				throw new UnprivilegedOperationException();
 			$outFileName = $this->context->list->urlName . '.json';
 
 			\Chibi\HeadersHelper::set('Content-Type', 'application/zip');

@@ -41,7 +41,7 @@ class ControllerHelper
 			$user = $context->userLogged;
 
 		if (!$user)
-			throw new SimpleException('Unknown user.');
+			throw new InvalidUserException($userName);
 
 		$context->lists = ListService::getByUserId($user->id);
 
@@ -76,7 +76,7 @@ class ControllerHelper
 	public static function executeJobsSafely($jobs, $user)
 	{
 		if (!isset($user) or !self::canEditData($user))
-			throw new SimpleException('Cannot execute jobs for this user.');
+			throw new UnprivilegedOperationException();
 
 		JobExecutor::execute($jobs, $user);
 

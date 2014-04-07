@@ -14,15 +14,7 @@ class AuthController
 		$pass = InputHelper::getPost('pass');
 		$remember = boolval(InputHelper::getPost('remember'));
 
-		try
-		{
-			AuthHelper::login($name, $pass, $remember);
-		}
-		catch (SimpleException $e)
-		{
-			Messenger::error($e->getMessage());
-			return;
-		}
+		AuthHelper::login($name, $pass, $remember);
 
 		Messenger::success('Logged in.');
 		Bootstrap::forward('/');
@@ -95,7 +87,7 @@ class AuthController
 
 		$user = UserService::getByName($userName);
 		if (empty($user))
-			throw new SimpleException('No such user.');
+			throw new InvalidUserException($userName);
 
 		if ($user->settings->passwordResetToken != $token)
 			throw new SimpleException('Invalid token.');
@@ -122,40 +114,32 @@ class AuthController
 		if (!$this->context->isSubmit)
 			return;
 
-		try
+		$name = InputHelper::getPost('name');
+		$pass1 = InputHelper::getPost('pass1');
+		$pass2 = InputHelper::getPost('pass2');
+		$email = InputHelper::getPost('e-mail');
+
+		$user = UserService::getByName($name);
+		if (!empty($user))
+			throw new ValidationException('User with given name already exists.');
+
+		if ($pass1 != $pass2)
+			throw new ValidationException('Passwords must be the same.');
+		$pass = $pass1;
+		$passHash = UserService::hashPassword($pass);
+
+		$validator = new Validator($pass, 'password');
+		$validator->checkMinLength(1);
+
+		$validator = new Validator($name, 'user name');
+		$validator->checkMinLength(1);
+		$validator->checkMaxLength(20);
+		$validator->checkRegex('/^[a-zA-Z0-9_-]+$/');
+
+		if (!empty($email))
 		{
-			$name = InputHelper::getPost('name');
-			$pass1 = InputHelper::getPost('pass1');
-			$pass2 = InputHelper::getPost('pass2');
-			$email = InputHelper::getPost('e-mail');
-
-			$user = UserService::getByName($name);
-			if (!empty($user))
-				throw new ValidationException('User with given name already exists.');
-
-			if ($pass1 != $pass2)
-				throw new ValidationException('Passwords must be the same.');
-			$pass = $pass1;
-			$passHash = UserService::hashPassword($pass);
-
-			$validator = new Validator($pass, 'password');
-			$validator->checkMinLength(1);
-
-			$validator = new Validator($name, 'user name');
-			$validator->checkMinLength(1);
-			$validator->checkMaxLength(20);
-			$validator->checkRegex('/^[a-zA-Z0-9_-]+$/');
-
-			if (!empty($email))
-			{
-				$validator = new Validator($email, 'e-mail');
-				$validator->checkEmail();
-			}
-		}
-		catch (SimpleException $e)
-		{
-			Messenger::error($e->getMessage());
-			return;
+			$validator = new Validator($email, 'e-mail');
+			$validator->checkEmail();
 		}
 
 		$user = new UserEntity();

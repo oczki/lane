@@ -15,7 +15,7 @@ class UserController
 		$this->preWork();
 
 		if (!ControllerHelper::canEditData($this->context->user))
-			throw new SimpleException('Cannot edit settings of this user.');
+			throw new UnprivilegedOperationException();
 
 		if (!$this->context->isSubmit)
 			return;
@@ -74,7 +74,7 @@ class UserController
 		$this->preWork();
 
 		if (!ControllerHelper::canEditData($this->context->user))
-			throw new SimpleException('Cannot delete account of this user.');
+			throw new UnprivilegedOperationException();
 
 		if (!$this->context->isSubmit)
 			return;

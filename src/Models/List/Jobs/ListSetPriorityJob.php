@@ -15,9 +15,6 @@ class ListSetPriorityJob extends AbstractJob
 		$priorities = range(1, count($allListEntities));
 		array_splice($priorities, $newIndex, 1);
 		array_splice($priorities, $previousIndex, 0, $newIndex + 1);
-		//$priorities = array_flip($priorities);
-
-		//throw new SimpleException(print_r($priorities, true));
 
 		foreach ($allListEntities as $i => $listEntity)
 		{
