@@ -209,6 +209,7 @@
 #list .span-purple { color: #9f00ff; }
 #list .span-pink { color: #ffa0a0; }
 #list .span-white { color: white; }
+#list .span-grey,
 #list .span-gray { color: #999; }
 #list .span-back { color: black; }
 
@@ -227,5 +228,6 @@
 #list .block-purple { color: #9f00ff; }
 #list .block-pink { color: #ffa0a0; }
 #list .block-white { color: white; }
+#list .block-grey,
 #list .block-gray { color: #999; }
 #list .block-back { color: black; }
