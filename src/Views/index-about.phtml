@@ -8,7 +8,7 @@
 		<h1>About</h1>
 
 		<p>Lane stands for <em>list and nothing else</em>. It&rsquo;s meant to be a centralized way of organizing various kinds of things&nbsp;&ndash; watched movies, completed video games, books on plan&#8209;to&#8209;read shelf, or files put on external HDDs&nbsp;&ndash; without the need of having separate accounts on pages like IMDB, Backloggery, Goodreads, or keeping an Excel file.</p>
-		<p>Since each list can have its own CSS rules, you can make it look however you like. You can also use some tags like <code>[b]bold[/b]</code> or <code>[red]colors[/red]</code> to easily edit the look of single cells, entire rows or columns. Read more about editing on the <?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('index', 'help')]) ?>help page<?= HtmlHelper::tagClose('a') ?>.</p>
+		<p>Since each list can have its own CSS rules, you can make it look however you like. You can also use some tags like <code>[b]bold[/b]</code> or <code>[red]colors[/red]</code> to easily edit the look of single cells or entire rows. Read more about editing on the <?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('index', 'help')]) ?>help page<?= HtmlHelper::tagClose('a') ?>.</p>
 		<p><?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('auth', 'register')]) ?>Register<?= HtmlHelper::tagClose('a') ?> your own account, or <?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('auth', 'login')]) ?>log in<?= HtmlHelper::tagClose('a') ?> if you already have one.</p>
 		<p>If you&rsquo;re still not convinced, take a look at an <?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('index', 'example')]) ?>example lane<?= HtmlHelper::tagClose('a') ?> and see the features.</p>
 	</section>
