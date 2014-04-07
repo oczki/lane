@@ -58,18 +58,28 @@
 
 		<p>If you want to permanently delete your account, consider exporting your lists data before taking the last step.</p>
 
-		<div class="submit">
+		<?= HtmlHelper::tag('form', [
+			'action' => \Chibi\UrlHelper::route('user', 'delete-account', ['userName' => $this->context->user->name]),
+			'class' => 'inline delete-account',
+			'method' => 'post',
+			], false) ?>
 
-			<?= HtmlHelper::wrapTag('a', [
-				'href' => \Chibi\URlHelper::route('list', 'export', ['userName' => $this->context->user->name]),
-				'class' => 'btn export-all-data'], 'Export all data') ?>
+			<div class="form-wrapper">
+				<?= HtmlHelper::labelDecorator('Current password',
+					HtmlHelper::passwordInputTag('current-password', ['autocomplete' => 'off'])) ?>
+			</div>
 
-			<?= HtmlHelper::wrapTag('form', [
-				'action' => \Chibi\UrlHelper::route('user', 'delete-account', ['userName' => $this->context->user->name]),
-				'class' => 'inline delete-account',
-				'method' => 'post',
-				], HtmlHelper::submitInputTag('Delete account')) ?>
+			<div class="submit">
 
-		</div>
+				<?= HtmlHelper::wrapTag('a', [
+					'href' => \Chibi\URlHelper::route('list', 'export', ['userName' => $this->context->user->name]),
+					'class' => 'btn export-all-data'], 'Export all data') ?>
+
+				<?= HtmlHelper::submitInputTag('Delete account') ?>
+
+			</div>
+
+		<?= HtmlHelper::tagClose('form') ?>
+
 	</div>
 </div>

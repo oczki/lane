@@ -79,6 +79,13 @@ class UserController
 		if (!$this->context->isSubmit)
 			return;
 
+		$currentPassword = InputHelper::getPost('current-password');
+		$currentPasswordHash = UserService::hashPassword($currentPassword);
+		$currentPasswordOk = $currentPasswordHash == $this->context->user->passHash;
+
+		if (!$currentPasswordOk)
+			throw new ValidationException('Must supply valid current password.');
+
 		UserService::delete($this->context->user);
 
 		AuthHelper::logout();
