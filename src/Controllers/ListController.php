@@ -26,13 +26,15 @@ class ListController
 	}
 
 	/**
-	* @route /a/{userName}/add
-	* @route /a/{userName}/add/
-	* @validate userName [a-zA-Z0-9_-]+
+	* @route /add
+	* @route /add/
 	*/
-	public function addAction($userName)
+	public function addAction()
 	{
-		$this->preWork($userName);
+		$this->prework();
+
+		if (!ControllerHelper::canEditData($this->context->user))
+			throw new SimpleException('Cannot add new list for this user.');
 
 		if ($this->context->isSubmit)
 		{
@@ -53,8 +55,8 @@ class ListController
 	}
 
 	/**
-	* @route /a/{userName}/{id}/settings
-	* @route /a/{userName}/{id}/settings/
+	* @route /edit/{userName}/{id}
+	* @route /edit/{userName}/{id}/
 	* @validate userName [a-zA-Z0-9_-]+
 	* @validate id [^\/]+
 	*/
@@ -74,8 +76,8 @@ class ListController
 	}
 
 	/**
-	* @route /a/{userName}/{id}/css
-	* @route /a/{userName}/{id}/css/
+	* @route /css/{userName}/{id}
+	* @route /css/{userName}/{id}/
 	*/
 	public function customCssAction($userName, $id = null)
 	{
@@ -154,12 +156,12 @@ class ListController
 	}
 
 	/**
-	* @route /a/{userName}/import
-	* @route /a/{userName}/import/
+	* @route /import
+	* @route /import/
 	*/
-	public function importAction($userName)
+	public function importAction()
 	{
-		$this->preWork($userName);
+		$this->preWork();
 
 		if (!ControllerHelper::canEditData($this->context->user))
 			throw new SimpleException('Cannot import list to this user.');
@@ -188,10 +190,10 @@ class ListController
 	}
 
 	/**
-	* @route /a/{userName}/export
-	* @route /a/{userName}/export/
-	* @route /a/{userName}/export/{id}
-	* @route /a/{userName}/export/{id}/
+	* @route /export/{userName}
+	* @route /export/{userName}/
+	* @route /export/{userName}/{id}
+	* @route /export/{userName}/{id}/
 	* @validate userName [a-zA-Z0-9_-]+
 	* @validate id [^\/]+
 	*/

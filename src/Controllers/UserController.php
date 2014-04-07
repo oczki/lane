@@ -7,13 +7,12 @@ class UserController
 	}
 
 	/**
-	* @route /a/{userName}/account-settings
-	* @route /a/{userName}/account-settings/
-	* @validate userName [a-zA-Z0-9_-]+
+	* @route /settings
+	* @route /settings/
 	*/
-	public function accountSettingsAction($userName)
+	public function accountSettingsAction()
 	{
-		$this->preWork($userName);
+		$this->preWork();
 
 		if (!ControllerHelper::canEditData($this->context->user))
 			throw new SimpleException('Cannot edit settings of this user.');
@@ -66,14 +65,13 @@ class UserController
 	}
 
 	/**
-	* @route /a/{userName}/delete-account
-	* @route /a/{userName}/delete-account/
-	* @validate userName [a-zA-Z0-9_-]+
+	* @route /delete-account
+	* @route /delete-account/
 	*/
-	public function deleteAccountAction($userName)
+	public function deleteAccountAction()
 	{
 		$this->context->viewName = 'messages';
-		$this->preWork($userName);
+		$this->preWork();
 
 		if (!ControllerHelper::canEditData($this->context->user))
 			throw new SimpleException('Cannot delete account of this user.');
@@ -89,14 +87,13 @@ class UserController
 	}
 
 	/**
-	* @route /a/{userName}/exec
-	* @route /a/{userName}/exec/
-	* @validate userName [a-zA-Z0-9_-]+
+	* @route /exec
+	* @route /exec/
 	*/
-	public function execAction($userName)
+	public function execAction()
 	{
 		$this->context->viewName = 'messages';
-		$this->preWork($userName);
+		$this->preWork();
 
 		if ($this->context->isSubmit)
 			ControllerHelper::executeJobsSafely(ControllerHelper::getJobsFromInput(), $this->context->user);

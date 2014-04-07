@@ -3,6 +3,7 @@ class AuthController
 {
 	/**
 	* @route /auth/login
+	* @route /auth/login/
 	*/
 	public function loginAction()
 	{
@@ -29,6 +30,7 @@ class AuthController
 
 	/**
 	* @route /auth/logout
+	* @route /auth/logout/
 	*/
 	public function logoutAction()
 	{
@@ -44,6 +46,7 @@ class AuthController
 
 	/**
 	* @route /auth/reset-password
+	* @route /auth/reset-password/
 	*/
 	public function resetPasswordAction()
 	{
@@ -82,6 +85,7 @@ class AuthController
 
 	/**
 	* @route /auth/reset-password-confirm/{userName}/{token}
+	* @route /auth/reset-password-confirm/{userName}/{token}/
 	* @validate userName [a-zA-Z0-9_-]+
 	* @validate token [a-fA-F0-9]+
 	*/
@@ -111,6 +115,7 @@ class AuthController
 
 	/**
 	* @route /auth/register
+	* @route /auth/register/
 	*/
 	public function registerAction()
 	{
