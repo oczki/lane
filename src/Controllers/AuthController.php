@@ -67,7 +67,8 @@ class AuthController
 			'---' . PHP_EOL . PHP_EOL .
 			'Lane (list and nothing else) - ' . \Chibi\UrlHelper::route('index', 'index');
 
-		$headers = 'From: "Lane bot" <noreply@' . $_SERVER['HTTP_HOST'] . '>';
+		$mail = $this->config->mail->userBot . '@' . $this->config->mail->domain;
+		$headers = 'From: "Lane bot" <' . $mail . '>';
 
 		mail($user->email, $subject, $body, $headers);
 

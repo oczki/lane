@@ -11,6 +11,37 @@
 		<p>Since each list can have its own CSS rules, you can make it look however you like. You can also use some tags like <code>[b]bold[/b]</code> or <code>[red]colors[/red]</code> to easily edit the look of single cells, entire rows or columns. Read more about editing on the <?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('index', 'help')]) ?>help page<?= HtmlHelper::tagClose('a') ?>.</p>
 		<p><?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('auth', 'register')]) ?>Register<?= HtmlHelper::tagClose('a') ?> your own account, or <?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('auth', 'login')]) ?>log in<?= HtmlHelper::tagClose('a') ?> if you already have one.</p>
 		<p>If you&rsquo;re still not convinced, take a look at an <?= HtmlHelper::tag('a', ['href' => \Chibi\UrlHelper::route('index', 'example')]) ?>example lane<?= HtmlHelper::tagClose('a') ?> and see the features.</p>
+	</section>
+
+	<section>
+		<h1>Contact</h1>
+
+		<p>You can send us a message at&nbsp;
+
+			<?php
+				$mail = sprintf('%s@%s', $this->config->mail->userContact, $this->config->mail->domain);
+				$indexes = range(0, strlen($mail) - 1);
+				shuffle($indexes);
+				$xor = array_map(function($i) { return mt_rand(0, 255); }, $indexes);
+				$out = array_values(str_split($mail));
+				$out = array_map(function($i) use ($out) { return $out[$i]; }, $indexes);
+				$out = array_map(function($i) use ($out, $xor) { return ord($out[$i]) ^ $xor[$i]; }, array_keys($indexes));
+			?>
+
+			<script type="text/javascript">
+				var out = <?= json_encode($out) ?>;
+				var xor = <?= json_encode($xor) ?>;
+				var indexes = <?= json_encode(array_flip($indexes)) ?>;
+				var mail = '';
+				for (var i in indexes)
+				{
+					mail += String.fromCharCode(out[indexes[i]] ^ xor[indexes[i]]);
+				}
+				document.write('<a href="mailto:' + mail + '">' + mail + '</a>');
+			</script>
+			<noscript>[Javascript disabled]</noscript>.
+		</p>
+
 		<p>Lane is <a href="https://github.com/rr-/lane/">open source</a> and released under MIT license.</p>
 	</section>
 
@@ -19,7 +50,7 @@
 
 		<p>Lane stores all your lists&rsquo; content along with their settings, custom CSS, and your account credentials&nbsp;&ndash; user name, hashed password, plus optional e&#8209;mail&nbsp;address used to reset your password. If you want, you can tell your browser to remember your credentials, which will set a cookie so you don&rsquo;t need to enter them all the time. Cookies are also used by Google Analytics, which gives us feedback about page views, and Google AdSense that displays ads. You can block accepting cookies in your browser settings.</p>
 		<p>Lists can be set as private, which makes them visible to their owner only. Guests or other registered users cannot view your private lists.</p>
-		<p>You can delete your account at any time.</p>
+		<p>You can delete your account at any time. Doing so will remove <em>all</em> your data.</p>
 	</section>
 
 </div>
