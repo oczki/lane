@@ -39,7 +39,8 @@ class ControllerHelper
 			$user = UserService::getByName($userName);
 		elseif ($context->isLoggedIn and $context->userLogged)
 			$user = $context->userLogged;
-		else
+
+		if (!$user)
 			throw new SimpleException('Unknown user.');
 
 		$context->lists = ListService::getByUserId($user->id);
