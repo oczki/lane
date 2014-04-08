@@ -1,0 +1,37 @@
+.span-b { font-weight: bold; }
+.span-u { text-decoration: underline; }
+.span-i { font-style: italic; }
+.span-s { text-decoration: line-through; }
+.span-red { color: #ed1c24; }
+.span-orange { color: #ff8c00; }
+.span-yellow { color: #f1d400; }
+.span-green { color: #00b140; }
+.span-cyan,
+.span-teal { color: #3fd5c6; }
+.span-blue { color: #0087bd; }
+.span-violet,
+.span-purple { color: #9f00ff; }
+.span-pink { color: #ffa0a0; }
+.span-white { color: white; }
+.span-grey,
+.span-gray { color: #999; }
+.span-back { color: black; }
+
+.block-b { font-weight: bold; }
+.block-u { text-decoration: underline; }
+.block-i { font-style: italic; }
+.block-s { text-decoration: line-through; }
+.block-red { color: #ed1c24; }
+.block-orange { color: #ff8c00; }
+.block-yellow { color: #f1d400; }
+.block-green { color: #00b140; }
+.block-cyan,
+.block-teal { color: #3fd5c6; }
+.block-blue { color: #0087bd; }
+.block-violet,
+.block-purple { color: #9f00ff; }
+.block-pink { color: #ffa0a0; }
+.block-white { color: white; }
+.block-grey,
+.block-gray { color: #999; }
+.block-back { color: black; }
