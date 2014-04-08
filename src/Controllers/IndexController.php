@@ -34,7 +34,6 @@ class IndexController
 	public function helpAction()
 	{
 		$this->context->allowIndexing = true;
-		throw new NotImplementedException();
 	}
 
 	/**

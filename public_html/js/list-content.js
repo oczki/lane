@@ -64,7 +64,7 @@ $(function()
 
 		html = html.replace(urlRegex, function(match, url, text)
 		{
-			return '<a href="' + url + '">' + text + '</a>';
+			return '<a class="span-url" href="' + url + '">' + text + '</a>';
 		});
 
 		html = html.replace(blockClassRegex, function(match, block, className, text)

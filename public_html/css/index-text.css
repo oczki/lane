@@ -1,0 +1,30 @@
+.text p a {
+	color: hsl(215,80%,55%);
+}
+
+.text h1,
+.text p {
+	text-align: left;
+}
+.text section {
+	margin-bottom: 2em;
+}
+
+body.logo .text {
+	max-width: 40em;
+}
+
+.text table {
+	border: 1px solid gainsboro;
+	border-collapse: collapse;
+	width: 100%;
+}
+.text table th {
+	font-weight: bold;
+	background: whitesmoke;
+}
+.text table th,
+.text table td {
+	border: 1px solid gainsboro;
+	padding: 0.2em 0.5em;
+}

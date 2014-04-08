@@ -1,0 +1,185 @@
+<?php
+\Chibi\AssetViewDecorator::addStylesheet('index-text.css');
+\Chibi\AssetViewDecorator::addStylesheet('list-classes.css');
+\Chibi\AssetViewDecorator::setTitle('lane&nbsp;&ndash; help');
+?>
+
+<div id="help" class="text">
+
+	<section>
+		<h1>Basic editing</h1>
+
+		<p>To edit text in a cell, point the mouse cursor at it and click the blue icon that will appear on hover. After modifying the text to your liking, you can either accept the changes (by pressing [Enter] or clicking outside the cell) or discard them by pressing [Esc]. Pressing [Tab] will save changes and move on to the next cell, while [Shift]+[Tab] will go to previous cell after saving.</p>
+		<p>If columns are sorted, adding new row will not apply the sort until you click on any of the headers or reload the page. This way newly added rows always appear on the bottom of the list.</p>
+		<p>To remove a row, select its checkbox to the right and click [Delete selected] at the bottom of the page.</p>
+		<p>That's all you need to know to start basic editing!</p>
+	</section>
+
+	<section>
+		<h1>Simple tags</h1>
+
+		<p>Tags allow you to easily change the appearance of text, its background and other cell properties. All of them consist of square brackets and class name in between them. The simplest tags include:</p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Tag</th>
+					<th>Example</th>
+					<th>Result</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td><code>[b]</code></td>
+					<td><code>[b]bold[/b] text</code></td>
+					<td><span class="span-b">bold</span> text</td>
+				</tr>
+
+				<tr>
+					<td><code>[i]</code></td>
+					<td><code>[i]italic type</code></td>
+					<td><span class="span-i">italic type</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[u]</code></td>
+					<td><code>[u]under[/u]lined!</code></td>
+					<td><span class="span-u">under</span>lined!</td>
+				</tr>
+
+				<tr>
+					<td><code>[s]</code></td>
+					<td><code>strike[s]through</code></td>
+					<td>strike<span class="span-s">through</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[url=...]</code></td>
+					<td><code>[url=http://example.com]Click me![/url]</code></td>
+					<td><a class="span-url" href="http://example.com">Click me!</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<p>With the exception of URLs, tags don't really need to be closed if it's not needed&nbsp;– the engine will take care of them. Below are some predefined color tags:</p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Color tag</th>
+					<th>Result</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>[red]</code></td>
+					<td><span class="span-red">fire red</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[orange]</code></td>
+					<td><span class="span-orange">juicy orange</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[yellow]</code></td>
+					<td><span class="span-yellow">lemon yellow</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[green]</code></td>
+					<td><span class="span-green">fresh green</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[teal]</code> or <code>[cyan]</code></td>
+					<td><span class="span-teal">light blue</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[blue]</code></td>
+					<td><span class="span-blue">bluer blue</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[violet]</code> or <code>[purple]</code></td>
+					<td><span class="span-violet">royal purple</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[pink]</code></td>
+					<td><span class="span-pink">am I cute?</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[white]</code></td>
+					<td><span class="span-white">I'm here!</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[gray]</code> or <code>[grey]</code></td>
+					<td><span class="span-gray">between white and black</span></td>
+				</tr>
+
+				<tr>
+					<td><code>[black]</code></td>
+					<td><span class="span-black">lack of light</span></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<p>You are not limited to these tags, of course. With proper use of advanced tags and CSS classes, the possibilities grow endless.</p>
+	</section>
+
+	<section>
+		<h1>Advanced tags</h1>
+
+		<p>First things first, we need to make something clear&nbsp;– the above basic tags only apply to <code>&lt;span&gt;</code> elements of the table, which simply surround the text. If&nbsp;you need more control than just coloring the text, read on.</p>
+		<p>Basically, what each <code>[tag]</code> does is apply a specific CSS class to the element. If&nbsp;it has no prefix, it only applies to text span; however, you can make it apply to the whole cell or even the entire row:</p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Prefixed tag</th>
+					<th>CSS class</th>
+					<th>Result</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>[red]</code></td>
+					<td><code>.span-red</code></td>
+					<td><table><tr>
+					<td style="width:70%">red text <span class="span-red">after the tag</span></td>
+					<td>hello</span></td>
+					</tr></table></td>
+				</tr>
+
+				<tr>
+					<td><code>[cell:red]</code></td>
+					<td><code>.block-red</code></td>
+					<td><table><tr>
+					<td style="width:70%" class="block-red">entire cell is red</td>
+					<td>hola</span></td>
+					</tr></table></td>
+				</tr>
+
+				<tr>
+					<td><code>[row:red]</code></td>
+					<td><code>.block-red</code></td>
+					<td><table><tr>
+					<td style="width:70%" class="block-red">whole row gets redder</td>
+					<td class="block-red">ciao</td>
+					</tr></table></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<p>Combining tags is pretty straightforward:<br/><code>[row:blue][row:i]Blue italics that [red]suddenly turn red!</code></p>
+		<p>This method allows you to create new CSS classes and write rules that will modify the look of elements to your liking. Of course, you're not limited to styling based on tags alone&nbsp;– you can change the appearance of pretty much anything on the page when the styled list is displayed. Go ahead and experiment a bit&nbsp;– move and resize buttons, add backgrounds or animations; do whatever CSS3 allows.</p>
+		<p>Alternatively, keep it simple and stick with the default look.</p>
+		<p>If you've gone too far and got stuck with broken CSS (e.g. made the whole page invisible), you can go directly to list settings through <code><?= \Chibi\UrlHelper::absoluteUrl(\Chibi\UrlHelper::route('list', 'settings', ['id' => 'listName'])) ?></code>.</p>
+	</section>
+
+</div>
