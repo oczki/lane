@@ -50,7 +50,7 @@ $(function()
 		$('.rc-handle').append('<i class="icon icon-drag"/></i>');
 	}
 
-	var urlRegex = new RegExp(/\[url=([^\]]+)\](.+?)\[\/url\]/g);
+	var urlRegex = new RegExp(/\[url(=([^\]]+))?\](.+?)\[\/url\]/g);
 	var spanClassRegex = new RegExp(/\[([a-zA-Z0-9_-]+)\]((?:.(?!\[\1\]))*?)(\[\/\1\]|$)/g);
 	var blockClassRegex = new RegExp(/\[(cell|row):([a-zA-Z0-9_-]+)\]([^\[]*)(\[\/\1(:\2)?\])?/g);
 	var cellUpdated = function(tableCell, newText)
@@ -62,8 +62,12 @@ $(function()
 		html = html.replace(/\\\\/g, '&#92;');
 		html = html.replace(/\\\[/g, '&#91;');
 
-		html = html.replace(urlRegex, function(match, url, text)
+		html = html.replace(urlRegex, function(match, _, url, text)
 		{
+			if (!url)
+				url = text;
+			if (url.indexOf('://') == -1)
+				url = 'http://' + url;
 			return '<a class="span-url" href="' + url + '">' + text + '</a>';
 		});
 
