@@ -211,7 +211,7 @@ class ListService
 
 	public static function getNewPriority(UserEntity $owner)
 	{
-		$allListEntities = array_values(self::getLists($owner));
+		$allListEntities = array_values(self::getByUser($owner));
 
 		$maxPriority = array_reduce($allListEntities, function($max, $listEntity)
 		{
