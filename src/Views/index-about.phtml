@@ -17,31 +17,7 @@
 	<section>
 		<h1>Contact</h1>
 
-		<p>You can send us a message at&nbsp;
-
-			<?php
-				$mail = sprintf('%s@%s', $this->config->mail->userContact, $this->config->mail->domain);
-				$indexes = range(0, strlen($mail) - 1);
-				shuffle($indexes);
-				$xor = array_map(function($i) { return mt_rand(0, 255); }, $indexes);
-				$out = array_values(str_split($mail));
-				$out = array_map(function($i) use ($out) { return $out[$i]; }, $indexes);
-				$out = array_map(function($i) use ($out, $xor) { return ord($out[$i]) ^ $xor[$i]; }, array_keys($indexes));
-			?>
-
-			<script type="text/javascript">
-				var out = <?= json_encode($out) ?>;
-				var xor = <?= json_encode($xor) ?>;
-				var indexes = <?= json_encode(array_flip($indexes)) ?>;
-				var mail = '';
-				for (var i in indexes)
-				{
-					mail += String.fromCharCode(out[indexes[i]] ^ xor[indexes[i]]);
-				}
-				document.write('<a href="mailto:' + mail + '">' + mail + '</a>');
-			</script>
-			<noscript>[Javascript disabled]</noscript>.
-		</p>
+		<p>You can send us a message at&nbsp;<?= EmailObfuscator::embedJavascript(sprintf('%s@%s', $this->config->mail->userContact, $this->config->mail->domain)) ?></p>
 
 		<p>Lane is <a href="https://github.com/rr-/lane/">open source</a> and released under MIT license.</p>
 	</section>
