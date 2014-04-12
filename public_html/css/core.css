@@ -20,7 +20,11 @@ img {
 	margin: 0 auto;
 	max-width: 69em;
 }
-	body.logo img.logo {
+	a.logo {
+		display: block;
+		margin: 0 auto;
+	}
+	body.logo a.logo {
 		margin-bottom: 1em;
 	}
 	body.logo #main {
