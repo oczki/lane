@@ -1,5 +1,5 @@
 <?php
-class AuthHelper
+class Auth
 {
 	public static function logout()
 	{
@@ -29,5 +29,43 @@ class AuthHelper
 
 		$_SESSION['logged-in'] = true;
 		$_SESSION['user-id'] = $user->id;
+
+		return $user;
+	}
+
+	public static function isLoggedIn()
+	{
+		return isset($_SESSION['logged-in']);
+	}
+
+	public static function getLoggedInUser()
+	{
+		return UserService::getById($_SESSION['user-id']);
+	}
+
+	public static function tryAutoLogin()
+	{
+		if (Auth::isLoggedIn())
+			return true;
+
+		if (!isset($_COOKIE['auth-name']))
+			return false;
+		$name = $_COOKIE['auth-name'];
+
+		if (!isset($_COOKIE['auth-pass-hash']))
+			return false;
+		$passHash = $_COOKIE['auth-pass-hash'];
+
+		$user = UserService::getByName($name);
+		if (empty($user))
+			return false;
+
+		if ($passHash != $user->passHash)
+			return false;
+
+		$_SESSION['logged-in'] = true;
+		$_SESSION['user-id'] = $user->id;
+
+		return Auth::isLoggedIn();
 	}
 }

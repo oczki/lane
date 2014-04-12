@@ -4,9 +4,9 @@ class JobHelper
 	public static function getJobExecutorUrl()
 	{
 		$context = \Chibi\Registry::getContext();
-		if (!$context->isLoggedIn)
+		if (!Auth::isLoggedIn())
 			return null;
-		return \Chibi\UrlHelper::route('user', 'exec', ['userName' => $context->userLogged->name]);
+		return \Chibi\UrlHelper::route('user', 'exec', ['userName' => Auth::getLoggedInUser()->name]);
 	}
 
 	private static $jobId = 0;

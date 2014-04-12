@@ -14,7 +14,7 @@ class AuthController
 		$pass = InputHelper::getPost('pass');
 		$remember = boolval(InputHelper::getPost('remember'));
 
-		AuthHelper::login($name, $pass, $remember);
+		Auth::login($name, $pass, $remember);
 
 		Messenger::success('Logged in.');
 		Bootstrap::forward('/');
@@ -31,7 +31,7 @@ class AuthController
 		if (!$this->context->isSubmit)
 			return;
 
-		AuthHelper::logout();
+		Auth::logout();
 		Messenger::success('Logged out.');
 		Bootstrap::forward('/');
 	}
@@ -220,36 +220,5 @@ class AuthController
 
 		Messenger::success('Registration successful');
 		Bootstrap::forward('/');
-	}
-
-	public static function isLoggedIn()
-	{
-		return isset($_SESSION['logged-in']);
-	}
-
-	public static function tryAutoLogin()
-	{
-		if (self::isLoggedIn())
-			return true;
-
-		if (!isset($_COOKIE['auth-name']))
-			return false;
-		$name = $_COOKIE['auth-name'];
-
-		if (!isset($_COOKIE['auth-pass-hash']))
-			return false;
-		$passHash = $_COOKIE['auth-pass-hash'];
-
-		$user = UserService::getByName($name);
-		if (empty($user))
-			return false;
-
-		if ($passHash != $user->passHash)
-			return false;
-
-		$_SESSION['logged-in'] = true;
-		$_SESSION['user-id'] = $user->id;
-
-		return self::isLoggedIn();
 	}
 }

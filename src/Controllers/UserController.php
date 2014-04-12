@@ -88,7 +88,7 @@ class UserController
 
 		UserService::delete($this->context->user);
 
-		AuthHelper::logout();
+		Auth::logout();
 		Messenger::success('Account deleted.');
 		Bootstrap::forward('/');
 	}

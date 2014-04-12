@@ -47,13 +47,8 @@ class Bootstrap
 		$this->context->allowIndexing = false;
 
 		$this->context->isSubmit = $_SERVER['REQUEST_METHOD'] == 'POST';
-		$this->context->isLoggedIn = AuthController::isLoggedIn();
-		if (!$this->context->isLoggedIn)
-			$this->context->isLoggedIn = AuthController::tryAutoLogin();
-		if ($this->context->isLoggedIn)
-			$this->context->userLogged = UserService::getById($_SESSION['user-id']);
-		else
-			$this->context->userLogged = null;
+		if (!Auth::isLoggedIn())
+			Auth::tryAutoLogin();
 
 		try
 		{

@@ -10,12 +10,12 @@
 	<ul>
 		<?php
 			$links = [];
-			if ($this->context->isLoggedIn)
+			if (Auth::isLoggedIn())
 			{
-				$links []= ['account-settings', \Chibi\UrlHelper::route('user', 'account-settings', ['userName' => $this->context->userLogged->name]), 'Account settings'];
+				$links []= ['account-settings', \Chibi\UrlHelper::route('user', 'account-settings', ['userName' => Auth::getLoggedInUser()->name]), 'Account settings'];
 				$links []= ['import', \Chibi\UrlHelper::route('list', 'import', ['userName' => $this->context->user->name]), 'Import new list'];
 				$links []= ['export', \Chibi\UrlHelper::route('list', 'export', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]), 'Export this list'];
-				if (isset($this->context->list) and $this->context->list->userId == $this->context->userLogged->id)
+				if (isset($this->context->list) and $this->context->list->userId == Auth::getLoggedInUser()->id)
 				{
 					if (ControllerHelper::canEditData($this->context->user))
 						$links []= ['view-as-guest', \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName, 'guest' => 'guest']), 'View as guest'];
@@ -27,7 +27,7 @@
 			$links []= ['help', \Chibi\UrlHelper::route('index', 'help'), 'Editing help'];
 			$links []= ['about', \Chibi\UrlHelper::route('index', 'about'), 'About'];
 
-			if ($this->context->isLoggedIn)
+			if (Auth::isLoggedIn())
 			{
 				$links []= ['logout', \Chibi\UrlHelper::route('auth', 'logout'), 'Log out'];
 			}

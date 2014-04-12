@@ -8,11 +8,11 @@ class IndexController
 	{
 		$this->context->allowIndexing = true;
 
-		if ($this->context->isLoggedIn)
+		if (Auth::isLoggedIn())
 		{
-			$lists = ListService::getByUserId($this->context->userLogged->id);
+			$lists = ListService::getByUserId(Auth::getLoggedInUser()->id);
 
-			$url = \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->userLogged->name]);
+			$url = \Chibi\UrlHelper::route('list', 'view', ['userName' => Auth::getLoggedInUser()->name]);
 
 			Bootstrap::forward($url);
 		}

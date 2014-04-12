@@ -8,8 +8,8 @@ class ControllerHelper
 		$context = \Chibi\Registry::getContext();
 		if ($userName)
 			$user = UserService::getByName($userName);
-		elseif ($context->isLoggedIn and $context->userLogged)
-			$user = $context->userLogged;
+		elseif (Auth::isLoggedIn() and Auth::getLoggedInUser())
+			$user = Auth::getLoggedInUser();
 		else
 			$user = null;
 
@@ -28,8 +28,9 @@ class ControllerHelper
 		return
 			$user and
 			!isset(self::$privilegesRevoked[$user->id]) and
-			$context->isLoggedIn and
-			$user->id == $context->userLogged->id;
+			Auth::isLoggedIn() and
+			Auth::getLoggedInUser() and
+			$user->id == Auth::getLoggedInUser()->id;
 	}
 
 	public static function attachLists($userName)
@@ -37,8 +38,8 @@ class ControllerHelper
 		$context = \Chibi\Registry::getContext();
 		if ($userName)
 			$user = UserService::getByName($userName);
-		elseif ($context->isLoggedIn and $context->userLogged)
-			$user = $context->userLogged;
+		elseif (Auth::isLoggedIn() and Auth::getLoggedInUser())
+			$user = Auth::getLoggedInUser();
 
 		if (!$user)
 			throw new InvalidUserException($userName);
