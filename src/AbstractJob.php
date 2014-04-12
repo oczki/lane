@@ -22,9 +22,9 @@ abstract class AbstractJob
 	{
 		$name = get_called_class();
 		$name = preg_replace('/Job$/', '', $name);
-		return TextHelper::convertCase($name,
-			TextHelper::UPPER_CAMEL_CASE,
-			TextHelper::SPINAL_CASE);
+		return TextCaseConverter::convert($name,
+			TextCaseConverter::UPPER_CAMEL_CASE,
+			TextCaseConverter::SPINAL_CASE);
 	}
 
 	public abstract function execute(UserEntity $user);

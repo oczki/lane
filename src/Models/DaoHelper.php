@@ -57,7 +57,10 @@ class DaoHelper
 		$rawEntity = [];
 		foreach ($entity as $key => $val)
 		{
-			$keyKC = TextHelper::convertCase($key, TextHelper::CAMEL_CASE, TextHelper::SNAKE_CASE);
+			$keyKC = TextCaseConverter::convert($key,
+				TextCaseConverter::CAMEL_CASE,
+				TextCaseConverter::SNAKE_CASE);
+
 			$rawEntity[$keyKC] = $val;
 		}
 		return $rawEntity;
@@ -68,7 +71,10 @@ class DaoHelper
 		$entity = new $desiredClassName;
 		foreach ($rawEntity as $key => $val)
 		{
-			$keyCC = TextHelper::convertCase($key, TextHelper::SNAKE_CASE, TextHelper::LOWER_CAMEL_CASE);
+			$keyCC = TextCaseConverter::convert($key,
+				TextCaseConverter::SNAKE_CASE,
+				TextCaseConverter::LOWER_CAMEL_CASE);
+
 			$entity->$keyCC = $val;
 		}
 		return $entity;

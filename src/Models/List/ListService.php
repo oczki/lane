@@ -90,9 +90,9 @@ class ListService
 			return $list->id != $otherList->id;
 		});
 
-		$baseUrlName = TextHelper::convertCase($list->name,
-			TextHelper::BLANK_CASE,
-			TextHelper::SNAKE_CASE);
+		$baseUrlName = TextCaseConverter::convert($list->name,
+			TextCaseConverter::BLANK_CASE,
+			TextCaseConverter::SNAKE_CASE);
 
 		//very important - strip all insecure characters
 		$baseUrlName = preg_replace('/\W/u', '_', $baseUrlName);

@@ -47,10 +47,10 @@ class JobHelper
 	public static function factory($jobName, array $jobArgs = [])
 	{
 		$className = sprintf('%s%s',
-			TextHelper::convertCase(
+			TextCaseConverter::convert(
 				$jobName,
-				TextHelper::SPINAL_CASE,
-				TextHelper::UPPER_CAMEL_CASE),
+				TextCaseConverter::SPINAL_CASE,
+				TextCaseConverter::UPPER_CAMEL_CASE),
 			'Job');
 
 		try
