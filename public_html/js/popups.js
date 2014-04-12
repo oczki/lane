@@ -1,7 +1,7 @@
 function showPopup(url, cb)
 {
 	url = appendUrlParameter(url, 'simple');
-	$.get(url, function(rawContent)
+	$.ajax(url).done(function(rawContent)
 	{
 		var content = $(rawContent);
 		var stylesheets = content.filter('link');
@@ -83,6 +83,9 @@ function showPopup(url, cb)
 		{
 			showFunc();
 		}
+	}).fail(function(rawContent)
+	{
+		alert('Error!');
 	});
 }
 

@@ -34,24 +34,6 @@ function sendAjax(url, data, successFunc, errorFunc)
 		type: 'POST',
 		url: url,
 		data: data,
-		success: function(rawContent)
-		{
-			var content = $(rawContent);
-			if (content.find('.success').length > 0)
-			{
-				if (typeof(successFunc) !== 'undefined')
-					successFunc(content);
-				else
-					window.location = content.filter('meta[data-current-url]').attr('data-current-url');
-			}
-			else
-			{
-				if (typeof(errorFunc) !== 'undefined')
-					errorFunc(content);
-				else
-					alert(content.find('.message').text());
-			}
-		},
 	};
 
 	if (data instanceof FormData)
@@ -61,7 +43,21 @@ function sendAjax(url, data, successFunc, errorFunc)
 		ajaxParams.contentType = false;
 	}
 
-	$.ajax(ajaxParams);
+	$.ajax(ajaxParams).done(function(rawContent)
+	{
+		var content = $(rawContent);
+		if (typeof(successFunc) !== 'undefined')
+			successFunc(content);
+		else
+			window.location = content.filter('meta[data-current-url]').attr('data-current-url');
+	}).fail(function(xhr)
+	{
+		var content = $(xhr.responseText);
+		if (typeof(errorFunc) !== 'undefined')
+			errorFunc(content);
+		else
+			alert(content.find('.message').text());
+	});
 }
 
 $(function()

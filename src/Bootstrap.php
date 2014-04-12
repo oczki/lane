@@ -63,12 +63,14 @@ class Bootstrap
 			}
 			catch (\Chibi\UnhandledRouteException $e)
 			{
+				\Chibi\HeadersHelper::setCode(404);
 				self::markReturn();
 				throw new SimpleException('Page not found.');
 			}
 		}
 		catch (SimpleException $e)
 		{
+			\Chibi\HeadersHelper::setCode(400);
 			self::markReturn();
 			Messenger::error($e->getMessage());
 			$this->context->layoutName = 'layout-logo';
@@ -77,6 +79,7 @@ class Bootstrap
 		}
 		catch (Exception $e)
 		{
+			\Chibi\HeadersHelper::setCode(400);
 			$this->context->exception = $e;
 			$this->context->layoutName = 'layout-logo';
 			$this->context->viewName = 'error-exception';
