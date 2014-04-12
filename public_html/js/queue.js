@@ -32,25 +32,25 @@ function Queue()
 		var url = $('meta[data-job-executor-url]').attr('data-job-executor-url');
 		var data = {jobs: q.jobs};
 		q.jobs = [];
-		$.post(url, data, function(rawContent)
+		$.post(url, data).done(function()
 		{
-			var content = $(rawContent);
-
-			//check for any errors, if errors were found - disable all editing
-			if (content.find('.error').length > 0)
-			{
-				alert("An error occured:\n\n" +
-					content.find('.error').text() +
-					"\n\nPlease reload the page and redo the changes.");
-				q.disabled = true;
-			}
+			$('#save-info').text('Saved');
 
 			if (typeof(callback) !== 'undefined')
 				callback();
 
-			disableExitConfirmation();
-			$('#save-info').text('Saved');
+		}).fail(function(xhr)
+		{
+			$('#save-info').text('Errors!');
 
+			alert("An error occured:\n\n" +
+				xhr.responseJSON.error +
+				"\n\nPlease reload the page and redo the changes.");
+
+			q.disabled = true;
+		}).always(function()
+		{
+			disableExitConfirmation();
 			q.flushing = false;
 		});
 	}

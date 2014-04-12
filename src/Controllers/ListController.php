@@ -38,19 +38,19 @@ class ListController
 
 		if ($this->context->isSubmit)
 		{
-			$job = JobHelper::factory('list-add', [
+			$this->context->viewName = 'messages';
+
+			$job = Api::jobFactory('list-add', [
 				'new-list-name' => InputHelper::getPost('name'),
 				'new-list-visibility' => boolval(InputHelper::getPost('visible'))]);
 
-			ControllerHelper::executeJobsSafely([$job], $this->context->user);
-
-			$lists = ListService::getByUserId($this->context->user->id);
-			$newList = array_pop($lists);
+			$statuses = Api::run($job, $this->context->user);
+			$newId = $statuses[0]['list-id'];
 
 			Messenger::success('List added successfully.');
 			Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
 				'userName' => $this->context->user->name,
-				'id' => $newList->urlName]));
+				'id' => $newId]));
 		}
 	}
 
@@ -66,8 +66,9 @@ class ListController
 		if ($this->context->isSubmit)
 		{
 			$this->context->viewName = 'messages';
-			ControllerHelper::executeJobsSafely(ControllerHelper::getJobsFromInput(), $this->context->user);
+			Api::run(ApiController::getJobsFromInput(), $this->context->user);
 
+			Messenger::success('List edited successfully.');
 			Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
 				'userName' => $this->context->user->name,
 				'id' => $id]));

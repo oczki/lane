@@ -19,7 +19,7 @@
 		'name' => 'application-name',
 		'content' => 'lane - list and nothing else',
 		'data-current-url' => \Chibi\UrlHelper::currentUrl(),
-		'data-job-executor-url' => JobHelper::getJobExecutorUrl()], true) ?>
+		'data-job-executor-url' => Api::getUrl()], true) ?>
 
 	<?= HtmlHelper::tag('link', [
 		'rel' => 'icon',

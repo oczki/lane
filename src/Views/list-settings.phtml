@@ -21,30 +21,30 @@ $alignments = [
 	<ul class="ops">
 		<li>
 			<?= HtmlHelper::wrapTag('form', [
-				'action' => JobHelper::getJobExecutorUrl(),
+				'action' => Api::getUrl(),
 				'class' => 'inline delete-list',
 				'method' => 'post'],
-					JobHelper::serializeJobHtml(new ListDeleteJob(['list-id' => $this->context->list->urlName])) .
+					Api::serializeJobHtml(new ListDeleteJob(['list-id' => $this->context->list->urlName])) .
 					HtmlHelper::submitInputTag('Delete this list', ['class' => 'btn hl'])) ?>
 		</li>
 
 		<li>
 			<?= HtmlHelper::wrapTag('form', [
-				'action' => JobHelper::getJobExecutorUrl(),
+				'action' => Api::getUrl(),
 				'class' => 'inline save-sort',
 				'style' => 'display: none',
 				'method' => 'post'],
-					JobHelper::serializeJobHtml(new ListSetSortStyleJob(['list-id' => $this->context->list->urlName, 'new-sort-style' => ''])) .
+					Api::serializeJobHtml(new ListSetSortStyleJob(['list-id' => $this->context->list->urlName, 'new-sort-style' => ''])) .
 					HtmlHelper::submitInputTag('Save current sort', ['class' => 'btn hl'])) ?>
 		</li>
 
 		<?php if ($this->context->list->urlName != ListService::forgeUrlName($this->context->list)): ?>
 			<li>
 				<?= HtmlHelper::wrapTag('form', [
-					'action' => JobHelper::getJobExecutorUrl(),
+					'action' => Api::getUrl(),
 					'class' => 'inline fix-permalink',
 					'method' => 'post'],
-						JobHelper::serializeJobHtml(new ListFixPermalinkJob(['list-id' => $this->context->list->urlName])) .
+						Api::serializeJobHtml(new ListFixPermalinkJob(['list-id' => $this->context->list->urlName])) .
 						HtmlHelper::submitInputTag('Fix permalink', ['class' => 'btn hl'])) ?>
 			</li>
 		<?php endif ?>

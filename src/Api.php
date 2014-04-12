@@ -1,15 +1,9 @@
 <?php
-class JobHelper
-{
-	public static function getJobExecutorUrl()
-	{
-		$context = \Chibi\Registry::getContext();
-		if (!Auth::isLoggedIn())
-			return null;
-		return \Chibi\UrlHelper::route('user', 'exec', ['userName' => Auth::getLoggedInUser()->name]);
-	}
+use \Chibi\Database as Database;
 
-	private static $jobId = 0;
+class Api
+{
+	protected static $jobId = 0;
 	public static function serializeJobHtml(AbstractJob $job)
 	{
 		++ self::$jobId;
@@ -44,7 +38,7 @@ class JobHelper
 		return $html;
 	}
 
-	public static function factory($jobName, array $jobArgs = [])
+	public static function jobFactory($jobName, array $jobArgs = [])
 	{
 		$className = sprintf('%s%s',
 			TextCaseConverter::convert(
@@ -63,5 +57,31 @@ class JobHelper
 		}
 
 		return $class->newInstanceArgs([$jobArgs]);
+	}
+
+	public static function getUrl()
+	{
+		return \Chibi\UrlHelper::route('api', 'run');
+	}
+
+	public static function run($jobs, $owner, $skipCheck = false)
+	{
+		if (!$skipCheck)
+		{
+			if (!$owner or !ControllerHelper::canEditData($owner))
+				throw new UnprivilegedOperationException();
+		}
+
+		$jobs = is_array($jobs) ? $jobs : [$jobs];
+		$statuses = [];
+		Database::transaction(function() use ($jobs, $owner, &$statuses)
+		{
+			foreach ($jobs as $job)
+			{
+				$statuses []= $job->execute($owner);
+			}
+		});
+
+		return $statuses;
 	}
 }

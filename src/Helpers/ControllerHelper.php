@@ -52,35 +52,9 @@ class ControllerHelper
 				'new-list-name' => 'New blank list',
 				'new-list-visibility' => true]);
 
-			JobExecutor::execute($job, $user);
+			Api::run($job, $user, true);
 
 			$context->lists = ListService::getByUserId($user->id);
 		}
-	}
-
-	public static function getJobsFromInput()
-	{
-		$jobs = [];
-		$jobTexts = InputHelper::getPost('jobs');
-		if ($jobTexts === null)
-			$jobTexts = [];
-		foreach ($jobTexts as $jobArray)
-		{
-			$jobName = $jobArray['name'];
-			$jobArgs = $jobArray['args'];
-			$job = JobHelper::factory($jobName, $jobArgs);
-			$jobs []= $job;
-		}
-		return $jobs;
-	}
-
-	public static function executeJobsSafely($jobs, $user)
-	{
-		if (!isset($user) or !self::canEditData($user))
-			throw new UnprivilegedOperationException();
-
-		JobExecutor::execute($jobs, $user);
-
-		Messenger::success(count($jobs) . ' jobs executed successfully.');
 	}
 }

@@ -41,6 +41,8 @@ class ListAddJob extends AbstractJob
 
 		$listEntity->urlName = ListService::forgeUrlName($listEntity);
 
-		return ListService::saveOrUpdate($listEntity);
+		ListService::saveOrUpdate($listEntity);
+
+		return ['list-id' => $listEntity->urlName];
 	}
 }

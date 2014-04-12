@@ -63,6 +63,7 @@ class Bootstrap
 				throw new SimpleException('Page not found.');
 			}
 		}
+
 		catch (SimpleException $e)
 		{
 			\Chibi\HeadersHelper::setCode(400);
@@ -72,6 +73,7 @@ class Bootstrap
 			$this->context->viewName = null;
 			$this->render();
 		}
+
 		catch (Exception $e)
 		{
 			\Chibi\HeadersHelper::setCode(400);
