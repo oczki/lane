@@ -55,14 +55,13 @@ class ListController
 	}
 
 	/**
-	* @route /edit/{userName}/{id}
-	* @route /edit/{userName}/{id}/
-	* @validate userName [a-zA-Z0-9_-]+
+	* @route /edit/{id}
+	* @route /edit/{id}/
 	* @validate id [^\/]+
 	*/
-	public function settingsAction($userName, $id)
+	public function settingsAction($id)
 	{
-		$this->preWork($userName, $id);
+		$this->preWork(null, $id);
 
 		if ($this->context->isSubmit)
 		{
