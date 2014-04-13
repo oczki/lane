@@ -42,29 +42,86 @@ class Auth
 		return UserService::getById($_SESSION['user-id']);
 	}
 
-	public static function loginFromCookie()
+	public static function loginFromDigest()
 	{
-		if (Auth::isLoggedIn())
-			return true;
+		$realm = 'lane';
 
-		if (!isset($_COOKIE['auth-name']))
-			return false;
-		$name = $_COOKIE['auth-name'];
+		if (empty($_SERVER['PHP_AUTH_DIGEST']))
+		{
+			\Chibi\HeadersHelper::setCode(401);
+			\Chibi\HeadersHelper::set('WWW-Authenticate', 'Digest realm="' . $realm . '",qop="auth",nonce="' . uniqid() . '",opaque="' . md5($realm) . '"');
 
-		if (!isset($_COOKIE['auth-pass-hash']))
-			return false;
-		$passHash = $_COOKIE['auth-pass-hash'];
+			throw new SimpleException('Authorization required');
+		}
 
-		$user = UserService::getByName($name);
-		if (empty($user))
-			return false;
+		$needed_parts = array_flip([
+			'nonce',
+			'nc',
+			'cnonce',
+			'qop',
+			'username',
+			'uri',
+			'response',
+		]);
+		$data = [];
+		$keys = implode('|', array_keys($needed_parts));
 
-		if ($passHash != $user->passHash)
-			return false;
+		preg_match_all(
+			'@(' . $keys . ')=(?:([\'"])([^\2]+?)\2|([^\s,]+))@',
+			$_SERVER['PHP_AUTH_DIGEST'],
+			$matches,
+			PREG_SET_ORDER);
+
+		foreach ($matches as $m)
+		{
+			$data[$m[1]] = $m[3] ? $m[3] : $m[4];
+			unset($needed_parts[$m[1]]);
+		}
+
+		if (!empty($needed_parts))
+			throw new SimpleException('Authorization error');
+
+		$user = UserService::getByName($data['username']);
+		if (!$user)
+			return null;
+
+		// generate the valid response
+		$a1 = $user->passHash;
+		$a2 = md5($_SERVER['REQUEST_METHOD'] . ':' . $data['uri']);
+		$valid_response = md5(implode(':', [$a1, $data['nonce'], $data['nc'], $data['cnonce'], $data['qop'], $a2]));
+
+		if ($data['response'] != $valid_response)
+			return null;
 
 		$_SESSION['logged-in'] = true;
 		$_SESSION['user-id'] = $user->id;
 
-		return Auth::isLoggedIn();
+		return $user;
+	}
+
+	public static function loginFromCookie()
+	{
+		if (self::isLoggedIn())
+			return self::getLoggedInUser();
+
+		if (!isset($_COOKIE['auth-name']))
+			return null;
+		$name = $_COOKIE['auth-name'];
+
+		if (!isset($_COOKIE['auth-pass-hash']))
+			return null;
+		$passHash = $_COOKIE['auth-pass-hash'];
+
+		$user = UserService::getByName($name);
+		if (empty($user))
+			return null;
+
+		if ($passHash != $user->passHash)
+			return null;
+
+		$_SESSION['logged-in'] = true;
+		$_SESSION['user-id'] = $user->id;
+
+		return $user;
 	}
 }

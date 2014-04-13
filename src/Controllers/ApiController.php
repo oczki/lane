@@ -37,7 +37,11 @@ class ApiController
 			elseif (InputHelper::getPost('user'))
 				$user = Auth::login(InputHelper::getPost('user'), InputHelper::getPost('pass'), false);
 			else
-				$user = null;
+				$user = Auth::loginFromDigest();
+
+			if (!$user)
+				throw new ValidationException('Not authorized.');
+
 
 			$jobs = self::getJobsFromInput();
 			if (empty($jobs))
@@ -48,7 +52,8 @@ class ApiController
 		}
 		catch (Exception $e)
 		{
-			\Chibi\HeadersHelper::setCode(400);
+			if (\Chibi\HeadersHelper::getCode() != 401)
+				\Chibi\HeadersHelper::setCode(400);
 			$this->context->json['error'] = $e->getMessage();
 		}
 	}
