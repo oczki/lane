@@ -151,34 +151,34 @@ class AuthController
 		$user->passHash = UserService::hashPassword($user, $pass);
 		UserService::saveOrUpdate($user);
 
-		$listEntity = new ListEntity();
-		$listEntity->priority = 1;
-		$listEntity->userId = $user->id;
-		$listEntity->name = 'Getting started';
-		$listEntity->visible = true;
-		$listEntity->content = new ListContent();
+		$list = new ListEntity();
+		$list->priority = 1;
+		$list->userId = $user->id;
+		$list->name = 'Getting started';
+		$list->visible = true;
+		$list->content = new ListContent();
 
 		$column1 = new ListColumn();
 		$column1->name = 'First column';
 		$column1->width = 43;
 		$column1->align = ListColumn::ALIGN_LEFT;
-		$column1->id = ++$listEntity->content->lastContentId;
+		$column1->id = ++$list->content->lastContentId;
 
 		$column2 = new ListColumn();
 		$column2->name = 'Second column';
 		$column2->width = 37;
 		$column2->align = ListColumn::ALIGN_LEFT;
-		$column2->id = ++$listEntity->content->lastContentId;
+		$column2->id = ++$list->content->lastContentId;
 
 		$column3 = new ListColumn();
 		$column3->name = '3rd one';
 		$column3->width = 20;
 		$column3->align = ListColumn::ALIGN_LEFT;
-		$column3->id = ++$listEntity->content->lastContentId;
+		$column3->id = ++$list->content->lastContentId;
 
-		$listEntity->content->columns []= $column1;
-		$listEntity->content->columns []= $column2;
-		$listEntity->content->columns []= $column3;
+		$list->content->columns []= $column1;
+		$list->content->columns []= $column2;
+		$list->content->columns []= $column3;
 
 		$rows =
 		[
@@ -207,12 +207,12 @@ class AuthController
 		{
 			$row = new ListRow();
 			$row->content = $rowContent;
-			$row->id = ++$listEntity->content->lastContentId;
-			$listEntity->content->rows []= $row;
+			$row->id = ++$list->content->lastContentId;
+			$list->content->rows []= $row;
 		}
 
-		$listEntity->urlName = ListService::forgeUrlName($listEntity);
-		ListService::saveOrUpdate($listEntity);
+		$list->urlName = ListService::forgeUrlName($list);
+		ListService::saveOrUpdate($list);
 
 		$_SESSION['logged-in'] = true;
 		$_SESSION['user-id'] = $user->id;

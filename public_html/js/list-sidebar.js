@@ -21,9 +21,11 @@ $(function()
 			{
 				if (!isChanged)
 					return;
+				var userName = dragger.parents('li').attr('data-user-name');
 				var listId = dragger.parents('li').attr('data-list-id');
 				var priority = dragger.parents('li').index() + 1;
 				queue.push(new Job('list-set-priority', {
+					'user-name': userName,
 					'list-id': listId,
 					'new-list-priority': priority}));
 				queue.delayedFlush();

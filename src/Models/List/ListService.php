@@ -30,32 +30,32 @@ class ListService
 		return $list;
 	}
 
-	public static function saveOrUpdate(ListEntity $listEntity)
+	public static function saveOrUpdate(ListEntity $list)
 	{
-		$listEntity->lastUpdate = time();
-		return ListDao::saveOrUpdate($listEntity);
+		$list->lastUpdate = time();
+		return ListDao::saveOrUpdate($list);
 	}
 
-	public static function delete(ListEntity $listEntity)
+	public static function delete(ListEntity $list)
 	{
-		return ListDao::delete($listEntity);
+		return ListDao::delete($list);
 	}
 
-	public static function getColumn(ListEntity $listEntity, $columnIndex)
+	public static function getColumn(ListEntity $list, $columnIndex)
 	{
-		return isset($listEntity->content->columns[$columnIndex])
-			? $listEntity->content->columns[$columnIndex]
+		return isset($list->content->columns[$columnIndex])
+			? $list->content->columns[$columnIndex]
 			: null;
 	}
 
-	public static function getColumns(ListEntity $listEntity)
+	public static function getColumns(ListEntity $list)
 	{
-		return $listEntity->content->columns;
+		return $list->content->columns;
 	}
 
-	public static function getRows(ListEntity $listEntity)
+	public static function getRows(ListEntity $list)
 	{
-		return $listEntity->content->rows;
+		return $list->content->rows;
 	}
 
 	public static function getCells(ListRow $listRow)
@@ -64,9 +64,9 @@ class ListService
 	}
 
 
-	public static function getOwner(ListEntity $listEntity)
+	public static function getOwner(ListEntity $list)
 	{
-		return UserService::getById($listEntity->userId);
+		return UserService::getById($list->userId);
 	}
 
 	public static function getColumnClasses(ListColumn $column)
@@ -128,23 +128,23 @@ class ListService
 		];
 	}
 
-	private static function checkColumnIndex(ListEntity $listEntity, &$index)
+	private static function checkColumnIndex(ListEntity $list, &$index)
 	{
 		$index = intval($index);
-		if ($index < 0 or $index >= count($listEntity->content->columns))
+		if ($index < 0 or $index >= count($list->content->columns))
 			throw new Exception('Invalid column index.');
 	}
 
-	private static function checkRowIndex(ListEntity $listEntity, &$index)
+	private static function checkRowIndex(ListEntity $list, &$index)
 	{
 		$index = intval($index);
-		if ($index < 0 or $index >= count($listEntity->content->rows))
+		if ($index < 0 or $index >= count($list->content->rows))
 			throw new Exception('Invalid row index.');
 	}
 
-	public static function setLastViewedList(ListEntity $listEntity)
+	public static function setLastViewedList(ListEntity $list)
 	{
-		$_SESSION['last-viewed-list'] = $listEntity;
+		$_SESSION['last-viewed-list'] = $list;
 	}
 
 	public static function getLastViewedList()
@@ -213,28 +213,28 @@ class ListService
 	{
 		$allListEntities = array_values(self::getByUser($owner));
 
-		$maxPriority = array_reduce($allListEntities, function($max, $listEntity)
+		$maxPriority = array_reduce($allListEntities, function($max, $list)
 		{
-			return $listEntity->priority > $max
-				? $listEntity->priority
+			return $list->priority > $max
+				? $list->priority
 				: $max;
 		}, 0);
 
 		return $maxPriority + 1;
 	}
 
-	public static function getColumnPos(ListEntity $listEntity, $columnId)
+	public static function getColumnPos(ListEntity $list, $columnId)
 	{
-		foreach ($listEntity->content->columns as $i => $column)
+		foreach ($list->content->columns as $i => $column)
 			if ($column->id == $columnId)
 				return $i;
 
 		throw new SimpleException('Invalid column ID: ' . $columnId . '.');
 	}
 
-	public static function getRowPos(ListEntity $listEntity, $rowId)
+	public static function getRowPos(ListEntity $list, $rowId)
 	{
-		foreach ($listEntity->content->rows as $i => $row)
+		foreach ($list->content->rows as $i => $row)
 			if ($row->id == $rowId)
 				return $i;
 

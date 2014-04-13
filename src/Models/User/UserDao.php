@@ -34,31 +34,31 @@ class UserDao
 
 		foreach ($rows as $row)
 		{
-			$userEntity = &$userEntities[$row['id']];
-			$userEntity->settings = self::deserializeSettings($userEntity->settings);
-			unset($userEntity);
+			$user = &$userEntities[$row['id']];
+			$user->settings = self::deserializeSettings($user->settings);
+			unset($user);
 		}
 
 		return $userEntities;
 	}
 
-	public static function saveOrUpdate(UserEntity $userEntity)
+	public static function saveOrUpdate(UserEntity $user)
 	{
-		$userEntity->settings = self::serializeSettings($userEntity->settings);
+		$user->settings = self::serializeSettings($user->settings);
 		try
 		{
-			$ret = DaoHelper::saveOrUpdate('user', $userEntity);
+			$ret = DaoHelper::saveOrUpdate('user', $user);
 		}
 		finally
 		{
-			$userEntity->settings = self::deserializeSettings($userEntity->settings);
+			$user->settings = self::deserializeSettings($user->settings);
 		}
 		return $ret;
 	}
 
-	public static function delete(UserEntity $userEntity)
+	public static function delete(UserEntity $user)
 	{
-		return DaoHelper::delete('user', $userEntity);
+		return DaoHelper::delete('user', $user);
 	}
 
 	private static function serializeSettings($settings)

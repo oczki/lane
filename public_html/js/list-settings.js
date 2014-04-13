@@ -75,6 +75,7 @@ function showHideCustomCss(immediately)
 $(function()
 {
 	//data load
+	var userName = $('#list-settings').attr('data-user-name');
 	var listId = $('#list-settings').attr('data-list-id');
 	var listColumns = $.parseJSON($('#list-settings').attr('data-list-columns'));
 	var lastContentId = $('#list-settings').attr('data-last-content-id');
@@ -211,6 +212,7 @@ $(function()
 			{
 				//delete removed columns
 				jobs.push(new Job('list-delete-column', {
+					'user-name': userName,
 					'list-id': listId,
 					'column-id': previousColumn.id}));
 			}
@@ -222,6 +224,7 @@ $(function()
 				if (previousColumn.name != currentColumn.name)
 				{
 					jobs.push(new Job('list-set-column-name', {
+						'user-name': userName,
 						'list-id': listId,
 						'column-id': currentColumn.id,
 						'new-column-name': currentColumn.name}));
@@ -230,6 +233,7 @@ $(function()
 				if (previousColumn.align != currentColumn.align)
 				{
 					jobs.push(new Job('list-set-column-align', {
+						'user-name': userName,
 						'list-id': listId,
 						'column-id': currentColumn.id,
 						'new-column-align': currentColumn.align}));
@@ -244,6 +248,7 @@ $(function()
 				return;
 
 			jobs.push(new Job('list-add-column', {
+				'user-name': userName,
 				'list-id': listId,
 				'new-column-id': currentColumn.id,
 				'new-column-name': currentColumn.name,
@@ -254,6 +259,7 @@ $(function()
 		$.each(currentColumns, function(i, currentColumn)
 		{
 			jobs.push(new Job('list-set-column-pos', {
+				'user-name': userName,
 				'list-id': listId,
 				'column-id': currentColumn.id,
 				'new-column-pos': currentColumn.priority}));
@@ -261,22 +267,27 @@ $(function()
 
 		//set other stuff
 		jobs.push(new Job('list-set-name', {
+			'user-name': userName,
 			'list-id': listId,
 			'new-list-name': $(this).find('.basic-settings [name=name]').val()}));
 
 		jobs.push(new Job('list-set-visibility', {
+			'user-name': userName,
 			'list-id': listId,
 			'new-list-visibility': $(this).find('.basic-settings [name=visibility]').is(':checked') ? 1 : 0}));
 
 		jobs.push(new Job('list-enable-row-ids', {
+			'user-name': userName,
 			'list-id': listId,
 			'new-list-row-ids-enabled': $(this).find('.basic-settings [name=row-ids]').is(':checked') ? 1 : 0}));
 
 		jobs.push(new Job('list-set-custom-css', {
+			'user-name': userName,
 			'list-id': listId,
 			'new-list-custom-css': $(this).find('.custom-css-edit textarea').val()}));
 
 		jobs.push(new Job('list-enable-custom-css', {
+			'user-name': userName,
 			'list-id': listId,
 			'new-list-custom-css-enabled': $('#list-settings .basic-settings .custom-css').is(':checked') ? 1 : 0}));
 

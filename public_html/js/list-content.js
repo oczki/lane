@@ -3,6 +3,7 @@ $(function()
 	var queue = QueueFactory();
 	var canEdit = $('#list').attr('data-can-edit') == '1';
 	var listId = $('#list').attr('data-list-id');
+	var userName = $('#list').attr('data-user-name');
 	var listColumns = $.parseJSON($('#list').attr('data-list-columns'));
 	var lastContentId = $('#list').attr('data-last-content-id');
 
@@ -40,6 +41,7 @@ $(function()
 				{
 					var columnId = this.convert(elementId);
 					queue.push(new Job('list-set-column-width', {
+						'user-name': userName,
 						'list-id': listId,
 						'column-id': columnId,
 						'new-column-width': newWidth}));
@@ -243,6 +245,7 @@ $(function()
 		if (text != oldText)
 		{
 			queue.push(new Job('list-edit-cell', {
+				'user-name': userName,
 				'list-id': listId,
 				'row-id': rowId,
 				'column-id': columnId,
@@ -280,6 +283,7 @@ $(function()
 			var tableRow = $(tableRowNode);
 			var rowId = tableRow.attr('data-content-id');
 			queue.push(new Job('list-delete-row', {
+				'user-name': userName,
 				'list-id': listId,
 				'row-id': rowId}));
 
@@ -298,8 +302,10 @@ $(function()
 		};
 
 		queue.push(new Job('list-add-row', {
+			'user-name': userName,
 			'list-id': listId,
-			'new-row-id': newRow.id}));
+			'new-row-id': newRow.id,
+			'new-row-content': newRow.content}));
 		queue.delayedFlush();
 
 		var tableRow = $('tfoot tr').clone();

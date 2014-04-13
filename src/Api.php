@@ -64,21 +64,15 @@ class Api
 		return \Chibi\UrlHelper::route('api', 'run');
 	}
 
-	public static function run($jobs, $owner, $skipCheck = false)
+	public static function run($jobs)
 	{
-		if (!$skipCheck)
-		{
-			if (!$owner or !ControllerHelper::canEditData($owner))
-				throw new UnprivilegedOperationException();
-		}
-
 		$jobs = is_array($jobs) ? $jobs : [$jobs];
 		$statuses = [];
-		Database::transaction(function() use ($jobs, $owner, &$statuses)
+		Database::transaction(function() use ($jobs, &$statuses)
 		{
 			foreach ($jobs as $job)
 			{
-				$statuses []= $job->execute($owner);
+				$statuses []= $job->execute();
 			}
 		});
 

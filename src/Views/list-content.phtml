@@ -69,6 +69,7 @@ $showRow = function($row)
 	'data-can-edit' => $this->context->canEdit ? '1' : '0',
 	'data-show-row-ids' => $this->context->list->content->showRowIds,
 	'data-sort-style' => $this->context->list->content->sortStyle,
+	'data-user-name' => $this->context->user->name,
 	'data-list-id' => $this->context->list->urlName,
 	'data-list-columns' => json_encode($this->context->list->content->columns),
 	'data-last-content-id' => $this->context->list->content->lastContentId], false) ?>

@@ -28,6 +28,7 @@
 							$list->urlName == $this->context->list->urlName);
 
 						echo HtmlHelper::tag('li', [
+							'data-user-name' => $this->context->user->name,
 							'data-list-id' => $list->urlName,
 							'class' => $active ? 'active' : '']);
 

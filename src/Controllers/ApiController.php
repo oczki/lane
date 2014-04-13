@@ -47,7 +47,7 @@ class ApiController
 			if (empty($jobs))
 				throw new SimpleException('No jobs to execute.');
 
-			$statuses = Api::run($jobs, $user);
+			$statuses = Api::run($jobs);
 			$this->context->json['status'] = $statuses;
 		}
 		catch (Exception $e)

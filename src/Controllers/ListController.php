@@ -15,13 +15,13 @@ class ListController
 		}
 	}
 
-	public static function canShow(ListEntity $listEntity)
+	public static function canShow(ListEntity $list)
 	{
 		$context = \Chibi\Registry::getContext();
-		if ($listEntity->visible)
+		if ($list->visible)
 			return true;
 
-		$owner = UserService::getById($listEntity->userId);
+		$owner = UserService::getById($list->userId);
 		return ControllerHelper::canEditData($owner);
 	}
 
@@ -41,10 +41,11 @@ class ListController
 			$this->context->viewName = 'messages';
 
 			$job = Api::jobFactory('list-add', [
+				'user-name' => $this->context->user->name,
 				'new-list-name' => InputHelper::getPost('name'),
 				'new-list-visibility' => boolval(InputHelper::getPost('visible'))]);
 
-			$statuses = Api::run($job, $this->context->user);
+			$statuses = Api::run($job);
 			$newId = $statuses[0]['list-id'];
 
 			Messenger::success('List added successfully.');
@@ -66,7 +67,7 @@ class ListController
 		if ($this->context->isSubmit)
 		{
 			$this->context->viewName = 'messages';
-			Api::run(ApiController::getJobsFromInput(), $this->context->user);
+			Api::run(ApiController::getJobsFromInput());
 
 			Messenger::success('List edited successfully.');
 			Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [

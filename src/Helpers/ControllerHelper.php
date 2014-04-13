@@ -49,10 +49,11 @@ class ControllerHelper
 		if (empty($context->lists))
 		{
 			$job = new ListAddJob([
+				'user-name' => $user->name,
 				'new-list-name' => 'New blank list',
 				'new-list-visibility' => true]);
 
-			Api::run($job, $user, true);
+			Api::run($job);
 
 			$context->lists = ListService::getByUserId($user->id);
 		}

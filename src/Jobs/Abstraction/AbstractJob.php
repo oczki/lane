@@ -1,5 +1,5 @@
 <?php
-abstract class AbstractJob
+abstract class AbstractJob implements IJob
 {
 	protected $arguments = [];
 
@@ -13,9 +13,11 @@ abstract class AbstractJob
 		$this->arguments = $arguments;
 	}
 
-	public function getArguments()
+	public function getArgument($key)
 	{
-		return $this->arguments;
+		if (!isset($this->arguments[$key]))
+			throw new SimpleException('Error: must supply "' . $key . '" argument.');
+		return $this->arguments[$key];
 	}
 
 	public function getName()
@@ -27,5 +29,10 @@ abstract class AbstractJob
 			TextCaseConverter::SPINAL_CASE);
 	}
 
-	public abstract function execute(UserEntity $user);
+	public function getApiUser()
+	{
+		return Auth::getLoggedInUser();
+	}
+
+	public abstract function execute();
 }

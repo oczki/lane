@@ -43,18 +43,18 @@ class UserService
 		return self::getFilteredUser($filter);
 	}
 
-	public static function saveOrUpdate(UserEntity $userEntity)
+	public static function saveOrUpdate(UserEntity $user)
 	{
-		return UserDao::saveOrUpdate($userEntity);
+		return UserDao::saveOrUpdate($user);
 	}
 
-	public static function delete(UserEntity $userEntity)
+	public static function delete(UserEntity $user)
 	{
-		Database::transaction(function() use ($userEntity)
+		Database::transaction(function() use ($user)
 		{
-			foreach (ListService::getByUserId($userEntity->id) as $listEntity)
-				ListService::delete($listEntity);
-			return UserDao::delete($userEntity);
+			foreach (ListService::getByUserId($user->id) as $list)
+				ListService::delete($list);
+			return UserDao::delete($user);
 		});
 	}
 }

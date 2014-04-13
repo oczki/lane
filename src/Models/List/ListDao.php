@@ -36,31 +36,31 @@ class ListDao
 
 		foreach ($rows as $row)
 		{
-			$listEntity = &$listEntities[$row['id']];
-			$listEntity->content = self::deserializeContent($listEntity->content);
-			unset($listEntity);
+			$list = &$listEntities[$row['id']];
+			$list->content = self::deserializeContent($list->content);
+			unset($list);
 		}
 
 		return $listEntities;
 	}
 
-	public static function saveOrUpdate(ListEntity $listEntity)
+	public static function saveOrUpdate(ListEntity $list)
 	{
-		$listEntity->content = self::serializeContent($listEntity->content);
+		$list->content = self::serializeContent($list->content);
 		try
 		{
-			$ret = DaoHelper::saveOrUpdate('list', $listEntity);
+			$ret = DaoHelper::saveOrUpdate('list', $list);
 		}
 		finally
 		{
-			$listEntity->content = self::deserializeContent($listEntity->content);
+			$list->content = self::deserializeContent($list->content);
 		}
 		return $ret;
 	}
 
-	public static function delete(ListEntity $listEntity)
+	public static function delete(ListEntity $list)
 	{
-		return DaoHelper::delete('list', $listEntity);
+		return DaoHelper::delete('list', $list);
 	}
 
 	private static function serializeContent($content)
