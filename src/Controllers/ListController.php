@@ -155,7 +155,7 @@ class ListController
 		if ($this->context->isSubmit)
 		{
 			$file = InputHelper::getFile('file');
-			if ($file === null)
+			if (!$file or !$file['tmp_name'])
 				throw new SimpleException('No file provided.');
 
 			$jsonText = file_get_contents($file['tmp_name']);
