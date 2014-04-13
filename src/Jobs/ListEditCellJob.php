@@ -1,4 +1,13 @@
 <?php
+/**
+* Updates existing cell contents.
+*
+* @user-name: name of list owner
+* @list-id: id of list
+* @column-id: id of column that contains given cell
+* @row-id: id of row that contains given cell
+* @new-cell-text: new cell contents
+*/
 class ListEditCellJob extends GenericListJob
 {
 	public function execute()

@@ -1,4 +1,12 @@
 <?php
+/**
+* Sets new column position (used for swapping columns).
+*
+* @user-name: name of list owner
+* @list-id: id of list
+* @column-id: id of column to change position of
+* @new-column-pos: integer specifying desired column position
+*/
 class ListSetColumnPosJob extends GenericListJob
 {
 	public function execute()

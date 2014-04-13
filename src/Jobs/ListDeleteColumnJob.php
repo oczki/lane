@@ -1,4 +1,11 @@
 <?php
+/**
+* Deletes one column from list.
+*
+* @user-name: name of list owner
+* @list-id: id of list
+* @column-id: id of column to delete
+*/
 class ListDeleteColumnJob extends GenericListJob
 {
 	public function execute()

@@ -1,4 +1,11 @@
 <?php
+/**
+* Deletes one row from list.
+*
+* @user-name: name of list owner
+* @list-id: id of list
+* @row-id: id of row to delete
+*/
 class ListDeleteRowJob extends GenericListJob
 {
 	public function execute()

@@ -1,4 +1,11 @@
 <?php
+/**
+* Adds new list.
+*
+* @user-name: name of list owner
+* @new-list-name: name of the new list
+* @new-list-visibility: whether new list should be visible or not
+*/
 class ListAddJob extends GenericUserJob
 {
 	public function execute()

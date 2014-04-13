@@ -1,4 +1,10 @@
 <?php
+/**
+* Deletes whole list. Should be used with caution.
+*
+* @user-name: name of list owner
+* @list-id: id of list
+*/
 class ListDeleteJob extends GenericListJob
 {
 	public function execute()

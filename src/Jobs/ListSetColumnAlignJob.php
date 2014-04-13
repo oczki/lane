@@ -1,4 +1,12 @@
 <?php
+/**
+* Sets new column align.
+*
+* @user-name: name of list owner
+* @list-id: id of list
+* @column-id: id of column to change the align of
+* @new-column-align: new colum nalign
+*/
 class ListSetColumnAlignJob extends GenericListJob
 {
 	public function execute()

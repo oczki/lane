@@ -1,4 +1,11 @@
 <?php
+/**
+* Sets new list position (used for swapping lists).
+*
+* @user-name: name of list owner
+* @list-id: id of list
+* @new-list-priority: integer specifying desired list position
+*/
 class ListSetPriorityJob extends GenericListJob
 {
 	public function execute()

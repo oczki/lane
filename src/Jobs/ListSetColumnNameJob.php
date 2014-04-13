@@ -1,4 +1,12 @@
 <?php
+/**
+* Sets new column name.
+*
+* @user-name: name of list owner
+* @list-id: id of list
+* @column-id: id of column to change name of
+* @new-column-name: new column name
+*/
 class ListSetColumnNameJob extends GenericListJob
 {
 	public function execute()

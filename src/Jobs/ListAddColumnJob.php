@@ -1,4 +1,13 @@
 <?php
+/**
+* Adds new column to list.
+*
+* @user-name: name of list owner
+* @list-id: id of list
+* @new-column-name: name of the new column
+* @new-column-id: content if of the new column
+* @new-column-align: text align of the new column
+*/
 class ListAddColumnJob extends GenericListJob
 {
 	public function execute()

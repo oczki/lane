@@ -39,3 +39,11 @@ pre {
 	border-left: 4px solid gainsboro;
 	padding: 0.5em 0.5em 0.5em 1em;
 }
+
+tr.odd {
+	background: #fcfcfc;
+}
+
+hr {
+	margin-bottom: 3em;
+}

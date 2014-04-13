@@ -1,4 +1,12 @@
 <?php
+/**
+* Adds new row to list.
+*
+* @user-name: name of list owner
+* @list-id: id of list
+* @new-row-id: id of new row
+* @new-row-content: array with row content
+*/
 class ListAddRowJob extends GenericListJob
 {
 	public function execute()

@@ -1,4 +1,12 @@
 <?php
+/**
+* Sets new column width.
+*
+* @user-name: name of list owner
+* @list-id: id of list
+* @column-id: id of column to change width of
+* @new-column-width: new column width
+*/
 class ListSetColumnWidthJob extends GenericListJob
 {
 	public function execute()
