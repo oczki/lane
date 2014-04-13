@@ -22,7 +22,8 @@ jobs =
 		name: 'show-list',
 		args:
 		{
-			list-id: 5
+			user-name: example,
+			list-id: movies
 		}
 	}
 ]
@@ -31,7 +32,8 @@ EOF
 		<p>This should be represented in your requests in following format:</p>
 		<pre><code><?= TextHelper::keepWhiteSpace(<<<EOF
 jobs[0][name]=show-list
-jobs[0][args][list-id]=5
+jobs[0][args][user-name]=example
+jobs[0][args][list-id]=movies
 EOF
 ); ?></code></pre>
 		<p>As you probably already figured it out, you may run many jobs using just one HTTP request. This brings us to next concept, which is&hellip;</p>
@@ -44,7 +46,7 @@ EOF
 		<p>Output is always in JSON. If requests succeeds, response yields HTTP code <code>200 OK</code> and returns JSON with <code>status</code> field containing array of job execution statuses in order they were executed (usually status is empty). Upon failure, whole transaction is rolled back, error message is shown in <code>error</code> field (sorry, no error IDs) and response yields <code>400 Bad Request</code>.</p>
 
 		<h2>Authentication</h2>
-		<p>Currently you must be logged in to use any API functionalities. Note that this may change in future for jobs that don&rsquo;t require credentials, e.g. enumerating someone&rsquo;s lists. In order to authenticate yourself, you must pass <code>user</code> and <code>pass</code> parameters with user&rsquo;s credentials or, if you&rsquo;re worried about sending passwords in plaintext over network, use <a href="http://en.wikipedia.org/wiki/Digest_access_authentication">HTTP digest authentication</a>.</p>
+		<p>Usually you must be logged in to use any API functionalities; some jobs, however, don&rsquo;t require credentials (e.g. enumerating someone&rsquo;s lists). In order to authenticate yourself, you must pass <code>user</code> and <code>pass</code> parameters with user&rsquo;s credentials or, if you&rsquo;re worried about sending passwords in plaintext over network, use <a href="http://en.wikipedia.org/wiki/Digest_access_authentication">HTTP digest authentication</a>.</p>
 	</section>
 
 	<section>
@@ -52,7 +54,7 @@ EOF
 		<p>In this session we&rsquo;re going to edit &ldquo;movies&rdquo; list and set &ldquo;The Matrix&rdquo; score to 9.</p>
 
 		<p>First, we retrieve the list itself using plaintext authentication:</p>
-		<pre><code>curl --data "user=example&amp;pass=test&amp;jobs[0][name]=show-list&amp;jobs[0][args][list-id]=movies" <?= Api::getUrl() ?> -o -</code></pre>
+		<pre><code>curl --data "user=example&amp;pass=test&amp;jobs[0][name]=show-list&amp;jobs[0][args][user-name]=example&amp;jobs[0][args][list-id]=movies" <?= Api::getUrl() ?> -o -</code></pre>
 
 		<p>Executing it is going to retrieve JSON that looks like following:</p>
 		<pre><code><?= TextHelper::keepWhiteSpace(<<<EOF
@@ -152,7 +154,7 @@ EOF
 ); ?>
 
 		<p>Most interesting parts for this task were highlighted in red; namely column with user score and row with data of &ldquo;The Matrix&rdquo;. We take their ID fields and execute cell edit job, this time using HTTP digest authentication:</p>
-		<pre><code>curl --digest -u example:test --globoff --data "jobs[0][name]=list-edit-cell&amp;jobs[0][args][list-id]=movies&amp;jobs[0][args][column-id]=2&amp;jobs[0][args][row-id]=35&amp;jobs[0][args][new-cell-text]=9" <?= Api::getUrl() ?> -o -</code></pre>
+		<pre><code>curl --digest -u example:test --globoff --data "jobs[0][name]=list-edit-cell&amp;jobs[0][args][user-name]=example&amp;jobs[0][args][list-id]=movies&amp;jobs[0][args][column-id]=2&amp;jobs[0][args][row-id]=35&amp;jobs[0][args][new-cell-text]=9" <?= Api::getUrl() ?> -o -</code></pre>
 		<p>&hellip;and we&rsquo;re done.</p>
 	</section>
 

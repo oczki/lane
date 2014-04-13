@@ -1,7 +1,7 @@
 <?php
 abstract class AbstractJob implements IJob
 {
-	protected $arguments = [];
+	private $arguments = [];
 
 	public function __construct(array $arguments)
 	{
@@ -11,6 +11,11 @@ abstract class AbstractJob implements IJob
 	public function setArguments(array $arguments)
 	{
 		$this->arguments = $arguments;
+	}
+
+	public function getArguments()
+	{
+		return $this->arguments;
 	}
 
 	public function getArgument($key)
@@ -27,11 +32,6 @@ abstract class AbstractJob implements IJob
 		return TextCaseConverter::convert($name,
 			TextCaseConverter::UPPER_CAMEL_CASE,
 			TextCaseConverter::SPINAL_CASE);
-	}
-
-	public function getApiUser()
-	{
-		return Auth::getLoggedInUser();
 	}
 
 	public abstract function execute();

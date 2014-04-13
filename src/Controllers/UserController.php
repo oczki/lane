@@ -14,7 +14,7 @@ class UserController
 	{
 		$this->preWork();
 
-		if (!ControllerHelper::canEditData($this->context->user))
+		if (!ApiHelper::canEdit($this->context->user))
 			throw new UnprivilegedOperationException();
 
 		if (!$this->context->isSubmit)
@@ -73,7 +73,7 @@ class UserController
 		$this->context->viewName = 'messages';
 		$this->preWork();
 
-		if (!ControllerHelper::canEditData($this->context->user))
+		if (!ApiHelper::canEdit($this->context->user))
 			throw new UnprivilegedOperationException();
 
 		if (!$this->context->isSubmit)

@@ -18,11 +18,10 @@
 		</p>
 	<?php endif ?>
 
-	<?php $lists = array_filter($this->context->lists, ['ListController', 'canShow']) ?>
-	<?php if (!empty($lists)): ?>
+	<?php if (!empty($this->context->lists)): ?>
 		<div id="sidebar-nav">
 			<ul id="lists">
-				<?php foreach ($lists as $list): ?>
+				<?php foreach ($this->context->lists as $list): ?>
 					<?php
 						$active = (isset($this->context->list) and
 							$list->urlName == $this->context->list->urlName);

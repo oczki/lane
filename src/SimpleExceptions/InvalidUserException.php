@@ -3,7 +3,7 @@ class InvalidUserException extends SimpleException
 {
 	public function __construct($userName)
 	{
-		if ($userName !== null)
+		if ($userName)
 			parent::__construct('User with name = ' . $userName . ' wasn\'t found.');
 
 		else

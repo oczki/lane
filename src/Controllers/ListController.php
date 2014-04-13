@@ -15,16 +15,6 @@ class ListController
 		}
 	}
 
-	public static function canShow(ListEntity $list)
-	{
-		$context = \Chibi\Registry::getContext();
-		if ($list->visible)
-			return true;
-
-		$owner = UserService::getById($list->userId);
-		return ControllerHelper::canEditData($owner);
-	}
-
 	/**
 	* @route /add
 	* @route /add/
@@ -33,7 +23,7 @@ class ListController
 	{
 		$this->prework();
 
-		if (!ControllerHelper::canEditData($this->context->user))
+		if (!ApiHelper::canEdit($this->context->user))
 			throw new UnprivilegedOperationException();
 
 		if ($this->context->isSubmit)
@@ -110,40 +100,35 @@ class ListController
 	*/
 	public function viewAction($userName, $id = null, $guest = false)
 	{
+		if (!empty($guest))
+			Auth::temporaryLogout();
+
 		$this->preWork($userName);
 		$this->context->layoutName = 'layout-bare';
 
-		if (!empty($guest))
-			ControllerHelper::revokePrivileges($this->context->user);
-
-		$this->context->canEdit = ControllerHelper::canEditData($this->context->user);
+		$this->context->canEdit = ApiHelper::canEdit($this->context->user);
 
 		if ($id === null)
 		{
-			$id = null;
-			foreach ($this->context->lists as $list)
-			{
-				if (self::canShow($list))
-				{
-					$id = $list->urlName;
-					break;
-				}
-			}
-			if (empty($id))
+			if (empty($this->context->lists))
 				throw new InvalidListException(null, InvalidListException::REASON_PRIVATE);
+			$list = reset($this->context->lists);
+			$id = $list->id;
 		}
-
-		$list = ListService::getByUrlName($this->context->user, $id);
-		if (empty($list))
+		else
 		{
-			Bootstrap::markReturn(
-				'Return to ' . $userName . '\'s lane',
-				\Chibi\UrlHelper::route('list', 'view', ['userName' => $userName]));
+			$list = ListService::getByUrlName($this->context->user, $id);
+			if (empty($list))
+			{
+				Bootstrap::markReturn(
+					'Return to ' . $userName . '\'s lane',
+					\Chibi\UrlHelper::route('list', 'view', ['userName' => $userName]));
 
-			throw new InvalidListException($id);
+				throw new InvalidListException($id);
+			}
 		}
 
-		if (!self::canShow($list))
+		if (!ApiHelper::canShowList($list))
 		{
 			Bootstrap::markReturn(
 				'Return to ' . $userName . '\'s lane',
@@ -164,7 +149,7 @@ class ListController
 	{
 		$this->preWork();
 
-		if (!ControllerHelper::canEditData($this->context->user))
+		if (!ApiHelper::canEdit($this->context->user))
 			throw new UnprivilegedOperationException();
 
 		if ($this->context->isSubmit)
@@ -207,15 +192,14 @@ class ListController
 			$outFileName = 'lane_export-' . date('Y-m-d_h-i-s') . '.zip';
 			$zipPath = tempnam(sys_get_temp_dir(), 'lane-export');
 
-			$lists = array_filter($this->context->lists, [__CLASS__, 'canShow']);
-			if (empty($lists))
+			if (empty($this->context->lists))
 				throw new InvalidListException(null, InvalidListException::REASON_PRIVATE);
 
 			$zip = new ZipArchive();
 			if (!$zip->open($zipPath))
 				throw new SimpleException('Failed to create ZIP archive.');
 
-			foreach ($lists as $list)
+			foreach ($this->context->lists as $list)
 				$zip->addFromString($list->urlName . '.json', ListService::serialize($list));
 
 			$zip->close();
@@ -229,7 +213,7 @@ class ListController
 		}
 		else
 		{
-			if (!self::canShow($this->context->list))
+			if (!ApiHelper::canShowList($this->context->list))
 				throw new UnprivilegedOperationException();
 			$outFileName = $this->context->list->urlName . '.json';
 

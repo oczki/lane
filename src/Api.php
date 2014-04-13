@@ -59,6 +59,11 @@ class Api
 		return $class->newInstanceArgs([$jobArgs]);
 	}
 
+	public static function getApiUser()
+	{
+		return Auth::getLoggedInUser();
+	}
+
 	public static function getUrl()
 	{
 		return \Chibi\UrlHelper::route('api', 'run');

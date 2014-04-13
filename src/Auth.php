@@ -1,6 +1,8 @@
 <?php
 class Auth
 {
+	protected static $temporaryLogout = false;
+
 	public static function logout()
 	{
 		unset($_SESSION['logged-in']);
@@ -8,6 +10,11 @@ class Auth
 
 		setcookie('auth-name', '', 0, '/');
 		setcookie('auth-pass-hash', '', 0, '/');
+	}
+
+	public static function temporaryLogout()
+	{
+		self::$temporaryLogout = true;
 	}
 
 	public static function login($userName, $password, $remember)
@@ -34,12 +41,19 @@ class Auth
 
 	public static function isLoggedIn()
 	{
-		return isset($_SESSION['logged-in']);
+		return !self::isTemporarilyLoggedOut() and isset($_SESSION['logged-in']);
+	}
+
+	public static function isTemporarilyLoggedOut()
+	{
+		return self::$temporaryLogout;
 	}
 
 	public static function getLoggedInUser()
 	{
-		return UserService::getById($_SESSION['user-id']);
+		return self::isLoggedIn()
+			? UserService::getById($_SESSION['user-id'])
+			: null;
 	}
 
 	public static function loginFromDigest()

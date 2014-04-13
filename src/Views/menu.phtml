@@ -16,13 +16,10 @@
 				$links []= ['import', \Chibi\UrlHelper::route('list', 'import', ['userName' => $this->context->user->name]), 'Import new list'];
 				$links []= ['export', \Chibi\UrlHelper::route('list', 'export', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]), 'Export this list'];
 				if (isset($this->context->list) and $this->context->list->userId == Auth::getLoggedInUser()->id)
-				{
-					if (ControllerHelper::canEditData($this->context->user))
-						$links []= ['view-as-guest', \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName, 'guest' => 'guest']), 'View as guest'];
-					else
-						$links []= ['view-as-guest', \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]), 'Back to edit mode'];
-				}
+					$links []= ['view-as-guest', \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName, 'guest' => 'guest']), 'View as guest'];
 			}
+			elseif (Auth::isTemporarilyLoggedOut())
+				$links []= ['view-as-guest', \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]), 'Back to edit mode'];
 
 			$links []= ['help', \Chibi\UrlHelper::route('index', 'help'), 'Editing help'];
 			$links []= ['about', \Chibi\UrlHelper::route('index', 'about'), 'About'];

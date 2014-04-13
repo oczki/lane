@@ -1,8 +1,6 @@
 <?php
 class ControllerHelper
 {
-	private static $privilegesRevoked = [];
-
 	public static function attachUser($userName = false)
 	{
 		$context = \Chibi\Registry::getContext();
@@ -16,23 +14,6 @@ class ControllerHelper
 		$context->user = $user;
 	}
 
-	public static function revokePrivileges(UserEntity $user)
-	{
-		self::$privilegesRevoked[$user->id] = true;
-	}
-
-	public static function canEditData($user)
-	{
-		$context = \Chibi\Registry::getContext();
-
-		return
-			$user and
-			!isset(self::$privilegesRevoked[$user->id]) and
-			Auth::isLoggedIn() and
-			Auth::getLoggedInUser() and
-			$user->id == Auth::getLoggedInUser()->id;
-	}
-
 	public static function attachLists($userName)
 	{
 		$context = \Chibi\Registry::getContext();
@@ -40,22 +21,14 @@ class ControllerHelper
 			$user = UserService::getByName($userName);
 		elseif (Auth::isLoggedIn() and Auth::getLoggedInUser())
 			$user = Auth::getLoggedInUser();
+		else
+			$user = null;
 
 		if (!$user)
 			throw new InvalidUserException($userName);
 
-		$context->lists = ListService::getByUserId($user->id);
+		$job = Api::jobFactory('show-lists', ['user-name' => $user->name]);
 
-		if (empty($context->lists))
-		{
-			$job = new ListAddJob([
-				'user-name' => $user->name,
-				'new-list-name' => 'New blank list',
-				'new-list-visibility' => true]);
-
-			Api::run($job);
-
-			$context->lists = ListService::getByUserId($user->id);
-		}
+		$context->lists = $job->getLists();
 	}
 }
