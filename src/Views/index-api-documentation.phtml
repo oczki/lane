@@ -1,0 +1,159 @@
+<?php
+\Chibi\AssetViewDecorator::addStylesheet('index-text.css');
+\Chibi\AssetViewDecorator::setTitle('lane&nbsp;&ndash; API documentation');
+?>
+
+<div id="api-documentation" class="text">
+
+	<section>
+		<h1>Introduction to API</h1>
+		<p>Almost everything you do on lane boils down to executing various <em>jobs</em>, such as adding new rows, editing cell contents etc. Each operation has its own atomic job, which takes various arguments and upon execution returns some feedback to the end user.</p>
+		<p>In order to execute jobs, you must pass specific POST web requests to <a href="<?= Api::getUrl() ?>"><?= Api::getUrl() ?></a>.</p>
+	</section>
+
+	<section>
+		<h1>Basic I/O</h1>
+		<h2>Serializing jobs</h2>
+		<p>In order to execute some jobs, you must specify them in following form:</p>
+		<pre><code><?= TextHelper::keepWhiteSpace(<<<EOF
+jobs =
+[
+	{
+		name: 'show-list',
+		args:
+		{
+			list-id: 5
+		}
+	}
+]
+EOF
+); ?></code></pre>
+		<p>This should be represented in your requests in following format:</p>
+		<pre><code><?= TextHelper::keepWhiteSpace(<<<EOF
+jobs[0][name]=show-list
+jobs[0][args][list-id]=5
+EOF
+); ?></code></pre>
+		<p>As you probably already figured it out, you may run many jobs using just one HTTP request. This brings us to next concept, which is&hellip;</p>
+
+		<h2>Content IDs</h2>
+		<p>Whenever you add new row or new column, it gets new ID so it can be easily identified when you want to say &ldquo;edit <em>this</em> cell&rdquo; and &ldquo;remove <em>that</em> row&rdquo;. But it doesn&rsquo;t happen automatically&nbsp;&ndash; it is <em>you</em> who decides what its ID should be. This is to lengthen time you can stay offline without counselling API. Suppose you want to add new row full of data; in this model you forge your row an&nbsp;ID and then schedule in advance cell edit jobs that refer to that ID. Then you can just execute all of these jobs with just one request.</p>
+		<p>Forging unique IDs ain&rsquo;t easy task, therefore API tries to make it simpler for you. Each list tracks its last used content ID and makes this information publicly available. This way you can just increment this value in memory and simulate job execution locally, without ever asking the API how the list changed (which is expensive), taking note of its <code>200 OK</code> responses instead.</p>
+
+		<h2>Responses</h2>
+		<p>Output is always in JSON. If requests succeeds, response yields HTTP code <code>200 OK</code> and returns JSON with <code>status</code> field containing array of job execution statuses in order they were executed (usually status is empty). Upon failure, whole transaction is rolled back, error message is shown in <code>error</code> field (sorry, no error IDs) and response yields <code>400 Bad Request</code>.</p>
+
+		<h2>Authentication</h2>
+		<p>Currently you must be logged in to use any API functionalities. Note that this may change in future for jobs that don&rsquo;t require credentials, e.g. enumerating someone&rsquo;s lists. In order to authenticate yourself, you must pass <code>user</code> and <code>pass</code> parameters with user&rsquo;s credentials or, if you&rsquo;re worried about sending passwords in plaintext over network, use <a href="http://en.wikipedia.org/wiki/Digest_access_authentication">HTTP digest authentication</a>.</p>
+	</section>
+
+	<section>
+		<h1>Wrapping it up&nbsp;&ndash; example CURL session</h1>
+		<p>In this session we&rsquo;re going to edit &ldquo;movies&rdquo; list and set &ldquo;The Matrix&rdquo; score to 9.</p>
+
+		<p>First, we retrieve the list itself using plaintext authentication:</p>
+		<pre><code>curl --data "user=example&amp;pass=test&amp;jobs[0][name]=show-list&amp;jobs[0][args][list-id]=movies" <?= Api::getUrl() ?> -o -</code></pre>
+
+		<p>Executing it is going to retrieve JSON that looks like following:</p>
+		<pre><code><?= TextHelper::keepWhiteSpace(<<<EOF
+{
+	"status":
+	[
+		{
+			"content":
+			{
+				"columns":
+				[
+					{
+						"align": "left",
+						"id": 1,
+						"name": "Title",
+						"width": 40.289999999999999
+					},
+					<span style="color:red">{
+						"align": "center",
+						"id": 2,
+						"name": "My score",
+						"width": 10.32
+					}</span>,
+					{
+						"align": "center",
+						"id": "38",
+						"name": "Year",
+						"width": 15.109999999999999
+					},
+					{
+						"align": "left",
+						"id": 3,
+						"name": "Genres",
+						"width": 29.850000000000001
+					}
+				],
+				"customCss": "",
+				"lastContentId": "38",
+				"rows":
+				[
+					{
+						"content":
+						[
+							"Fight Club",
+							"8",
+							"1999",
+							"drama"
+						],
+						"id": "6"
+					},
+					<span style="color:red">{
+						"content":
+						[
+							"Matrix[gray], The",
+							"7",
+							"1999",
+							"action, sci-fi"
+						],
+						"id": "35"
+					}</span>,
+					{
+						"content":
+						[
+							"Prestige[gray], The",
+							"10",
+							"2006",
+							"drama, thriller, sci-fi"
+						],
+						"id": "36"
+					},
+					{
+						"content":
+						[
+							"Shining[gray], The",
+							"6",
+							"1980",
+							"horror"
+						],
+						"id": "37"
+					}
+				],
+				"showRowIds": "1",
+				"sortStyle": "[[0,0]]",
+				"useCustomCss": "0"
+			},
+			"id": "15",
+			"lastUpdate": "1397347005",
+			"name": "Movies",
+			"priority": "1",
+			"urlName": "movies",
+			"userId": "3",
+			"visible": "1"
+		}
+	]
+}</code></pre>
+EOF
+); ?>
+
+		<p>Most interesting parts for this task were highlighted in red; namely column with user score and row with data of &ldquo;The Matrix&rdquo;. We take their ID fields and execute cell edit job, this time using HTTP digest authentication:</p>
+		<pre><code>curl --digest -u example:test --globoff --data "jobs[0][name]=list-edit-cell&amp;jobs[0][args][list-id]=movies&amp;jobs[0][args][column-id]=2&amp;jobs[0][args][row-id]=35&amp;jobs[0][args][new-cell-text]=9" <?= Api::getUrl() ?> -o -</code></pre>
+		<p>&hellip;and we&rsquo;re done.</p>
+	</section>
+
+</div>

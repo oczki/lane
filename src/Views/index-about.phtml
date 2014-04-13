@@ -15,11 +15,13 @@
 	</section>
 
 	<section>
-		<h1>Contact</h1>
+		<h1>Contact and technical info</h1>
 
 		<p>You can send us a message at&nbsp;<?= EmailObfuscator::embedJavascript(sprintf('%s@%s', $this->config->mail->userContact, $this->config->mail->domain)) ?></p>
 
 		<p>Lane is <a href="https://github.com/rr-/lane/">open source</a> and released under MIT license.</p>
+
+		<p>Developers might want to take a look at <?= HtmlHelper::wrapTag('a', ['href' => \Chibi\UrlHelper::route('index', 'api-documentation')], 'lane API documentation') ?>.</p>
 	</section>
 
 	<section>

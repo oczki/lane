@@ -3,6 +3,7 @@
 }
 
 .text h1,
+.text h2,
 .text p {
 	text-align: left;
 }
@@ -27,4 +28,14 @@ body.logo .text {
 .text table td {
 	border: 1px solid gainsboro;
 	padding: 0.2em 0.5em;
+}
+
+pre {
+	white-space: pre-wrap;
+	tab-size: 2;
+	-moz-tab-size: 2;
+	-o-tab-size: 2;
+	background: ghostwhite;
+	border-left: 4px solid gainsboro;
+	padding: 0.5em 0.5em 0.5em 1em;
 }

@@ -37,6 +37,15 @@ class IndexController
 	}
 
 	/**
+	* @route /api-docs
+	* @route /api-docs/
+	*/
+	public function apiDocumentationAction()
+	{
+		$this->context->allowIndexing = true;
+	}
+
+	/**
 	* @route /example
 	* @route /example/
 	*/
