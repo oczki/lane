@@ -5,6 +5,8 @@ class ListSetPriorityJob extends AbstractJob
 	{
 		$allListEntities = array_values(ListService::getByUser($owner));
 		$listEntity = ListService::getByUrlName($owner, $this->arguments['list-id']);
+		if (empty($listEntity))
+			throw new InvalidListException($this->arguments['list-id']);
 
 		$newIndex = intval($this->arguments['new-list-priority']) - 1;
 		$previousIndex = null;

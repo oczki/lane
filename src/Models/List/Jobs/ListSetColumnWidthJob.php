@@ -4,6 +4,9 @@ class ListSetColumnWidthJob extends AbstractJob
 	public function execute(UserEntity $owner)
 	{
 		$listEntity = ListService::getByUrlName($owner, $this->arguments['list-id']);
+		if (empty($listEntity))
+			throw new InvalidListException($this->arguments['list-id']);
+
 		$pos = ListService::getColumnPos($listEntity, $this->arguments['column-id']);
 
 		$listEntity->content->columns[$pos]->width = floatval($this->arguments['new-column-width']);

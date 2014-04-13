@@ -6,6 +6,8 @@ class ListSetNameJob extends AbstractJob
 		ListService::validateListName($this->arguments['new-list-name']);
 
 		$listEntity = ListService::getByUrlName($owner, $this->arguments['list-id']);
+		if (empty($listEntity))
+			throw new InvalidListException($this->arguments['list-id']);
 
 		$listEntity->name = $this->arguments['new-list-name'];
 
