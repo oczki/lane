@@ -12,20 +12,19 @@ class Auth
 
 	public static function login($userName, $password, $remember)
 	{
-		$passwordHash = UserService::hashPassword($password);
+		$user = UserService::getByName($userName);
+		if (empty($user))
+			throw new ValidationException('User not found.');
+
+		$passwordHash = UserService::hashPassword($user, $password);
+		if ($passwordHash != $user->passHash)
+			throw new ValidationException('Invalid password.');
 
 		if ($remember)
 		{
 			setcookie('auth-name', $userName, time() + 60 * 60 * 24 * 30, '/');
 			setcookie('auth-pass-hash', $passwordHash, time() + 60 * 60 * 24 * 30, '/');
 		}
-
-		$user = UserService::getByName($userName);
-		if (empty($user))
-			throw new ValidationException('User not found.');
-
-		if ($passwordHash != $user->passHash)
-			throw new ValidationException('Invalid password.');
 
 		$_SESSION['logged-in'] = true;
 		$_SESSION['user-id'] = $user->id;
@@ -43,7 +42,7 @@ class Auth
 		return UserService::getById($_SESSION['user-id']);
 	}
 
-	public static function tryAutoLogin()
+	public static function loginFromCookie()
 	{
 		if (Auth::isLoggedIn())
 			return true;

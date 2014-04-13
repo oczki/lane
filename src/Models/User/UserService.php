@@ -3,9 +3,9 @@ use Chibi\Database as Database;
 
 class UserService
 {
-	public static function hashPassword($password)
+	public static function hashPassword(UserEntity $user, $password)
 	{
-		return sha1($password);
+		return md5($user->name . ':lane:' . $password);
 	}
 
 	public static function getFilteredUsers(UserFilter $userFilter)

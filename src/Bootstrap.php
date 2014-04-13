@@ -48,7 +48,7 @@ class Bootstrap
 
 		$this->context->isSubmit = $_SERVER['REQUEST_METHOD'] == 'POST';
 		if (!Auth::isLoggedIn())
-			Auth::tryAutoLogin();
+			Auth::loginFromCookie();
 
 		try
 		{

@@ -24,12 +24,12 @@ class UserController
 		$this->context->user->settings->showCheatSheet = boolval(InputHelper::getPost('show-cheat-sheet'));
 
 		$currentPassword = InputHelper::getPost('current-password');
-		$currentPasswordHash = UserService::hashPassword($currentPassword);
+		$currentPasswordHash = UserService::hashPassword($this->context->user, $currentPassword);
 		$currentPasswordOk = $currentPasswordHash == $this->context->user->passHash;
 
 		$newPassword1 = InputHelper::getPost('new-password1');
 		$newPassword2 = InputHelper::getPost('new-password2');
-		$newPasswordHash = UserService::hashPassword($newPassword1);
+		$newPasswordHash = UserService::hashPassword($this->context->user, $newPassword1);
 		$newEmail = InputHelper::getPost('new-e-mail');
 
 		if ($newPassword1)
@@ -80,7 +80,7 @@ class UserController
 			return;
 
 		$currentPassword = InputHelper::getPost('current-password');
-		$currentPasswordHash = UserService::hashPassword($currentPassword);
+		$currentPasswordHash = UserService::hashPassword($this->context->user, $currentPassword);
 		$currentPasswordOk = $currentPasswordHash == $this->context->user->passHash;
 
 		if (!$currentPasswordOk)

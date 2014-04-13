@@ -99,7 +99,7 @@ class AuthController
 		$newPassword = substr($newPassword, 0, 8);
 
 		$user->settings->passwordResetToken = null;
-		$user->passHash = UserService::hashPassword($newPassword);
+		$user->passHash = UserService::hashPassword($user, $newPassword);
 		UserService::saveOrUpdate($user);
 
 		Bootstrap::markReturn('Log in now', \Chibi\UrlHelper::route('auth', 'login'));
@@ -127,7 +127,6 @@ class AuthController
 		if ($pass1 != $pass2)
 			throw new ValidationException('Passwords must be the same.');
 		$pass = $pass1;
-		$passHash = UserService::hashPassword($pass);
 
 		$validator = new Validator($pass, 'password');
 		$validator->checkMinLength(1);
@@ -145,11 +144,11 @@ class AuthController
 
 		$user = new UserEntity();
 		$user->name = $name;
-		$user->passHash = $passHash;
 		$user->email = $email;
 		$user->settings = new UserSettings();
 		$user->settings->showGuestsLastUpdate = true;
 		$user->settings->showCheatSheet = false;
+		$user->passHash = UserService::hashPassword($user, $pass);
 		UserService::saveOrUpdate($user);
 
 		$listEntity = new ListEntity();
