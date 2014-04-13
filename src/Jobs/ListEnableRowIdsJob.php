@@ -12,7 +12,7 @@ class ListEnableRowIdsJob extends GenericListJob
 	{
 		$list = $this->getList();
 
-		$list->content->showRowIds = $this->getArgument('new-list-row-ids-enabled');
+		$list->content->showRowIds = boolval($this->getArgument('new-list-row-ids-enabled'));
 
 		ListService::saveOrUpdate($list);
 	}

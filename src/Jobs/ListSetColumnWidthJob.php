@@ -20,6 +20,7 @@ class ListSetColumnWidthJob extends GenericListJob
 		$totalSum = 0;
 		foreach ($list->content->columns as $otherPos => $column)
 			$totalSum += $column->width;
+
 		if ($totalSum > 100)
 			foreach ($list->content->columns as $otherPos => $column)
 				$column->width *= 100. / $totalSum;

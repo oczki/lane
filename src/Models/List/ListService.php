@@ -254,4 +254,17 @@ class ListService
 		$validator->checkMinLength(1);
 		$validator->checkMaxLength(100);
 	}
+
+	public static function validateCellContent($content)
+	{
+		$validator = new Validator($content, 'cell text');
+		$validator->checkMaxLength(200);
+	}
+
+	public static function validateContentId(ListEntity $list, $id)
+	{
+		$id = intval($id);
+		if ($id <= $list->content->lastContentId)
+			throw new ValidationException('Invalid content ID or it was already used.');
+	}
 }

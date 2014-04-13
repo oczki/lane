@@ -12,7 +12,7 @@ class ListEnableCustomCssJob extends GenericListJob
 	{
 		$list = $this->getList();
 
-		$list->content->useCustomCss = $this->getArgument('new-list-custom-css-enabled');
+		$list->content->useCustomCss = boolval($this->getArgument('new-list-custom-css-enabled'));
 
 		ListService::saveOrUpdate($list);
 	}

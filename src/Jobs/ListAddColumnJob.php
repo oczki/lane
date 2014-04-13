@@ -14,14 +14,10 @@ class ListAddColumnJob extends GenericListJob
 	{
 		$list = $this->getList();
 		ListService::validateColumnName($this->getArgument('new-column-name'));
-
-		if ($this->getArgument('new-column-id') <= $list->content->lastContentId)
-			throw new SimpleException('Column ID already exists: ' . $this->getArgument('new-column-id') . '.');
+		ListService::validateContentID($list, $this->getArgument('new-column-id'));
 
 		if (!in_array($this->getArgument('new-column-align'), ListService::getPossibleColumnAlign()))
 			throw new SimpleException('Invalid column align: ' . $this->getArgument('new-column-align') . '.');
-
-		$list->content->lastContentId = $this->getArgument('new-column-id');
 
 		$mul = count($list->content->columns);
 		$mul /= ($mul + 1);
@@ -35,6 +31,8 @@ class ListAddColumnJob extends GenericListJob
 			? $this->getArgument('new-column-align')
 			: ListColumn::ALIGN_LEFT;
 		$column->width = 100. / (count($list->content->columns) + 1);
+
+		$list->content->lastContentId = $column->id;
 
 		$list->content->columns []= $column;
 		foreach ($list->content->rows as $row)

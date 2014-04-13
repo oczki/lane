@@ -12,7 +12,27 @@ class ListSetSortStyleJob extends GenericListJob
 	{
 		$list = $this->getList();
 
-		$list->content->sortStyle = $this->getArgument('new-sort-style');
+		$sortStyle = $this->getArgument('new-sort-style');
+		$sortStyle = json_decode($sortStyle);
+
+		if (empty($sortStyle))
+		{
+			$sortStyle = null;
+		}
+		else
+		{
+			foreach ($sortStyle as &$sortDefinition)
+			{
+				if (!is_array($sortDefinition) or count($sortDefinition) != 2)
+					throw new ValidationException('Invalid sort style.');
+
+				$sortDefinition[0] = intval($sortDefinition[0]);
+				$sortDefinition[1] = intval(boolval($sortDefinition[1]));
+			}
+			$sortStyle = json_encode($sortStyle);
+		}
+
+		$list->content->sortStyle = $sortStyle;
 
 		ListService::saveOrUpdate($list);
 	}

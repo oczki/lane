@@ -18,7 +18,7 @@ class ListAddJob extends GenericUserJob
 		$list->priority = ListService::getNewPriority($user);
 		$list->userId = $user->id;
 		$list->name = $this->getArgument('new-list-name');
-		$list->visible = $this->getArgument('new-list-visibility');
+		$list->visible = boolval($this->getArgument('new-list-visibility'));
 		$list->content = new ListContent();
 
 		$column1 = new ListColumn();

@@ -14,6 +14,8 @@ class ListEditCellJob extends GenericListJob
 	{
 		$list = $this->getList();
 
+		ListService::validateCellContent($this->getArgument('new-cell-text'));
+
 		$rowPos = ListService::getRowPos($list, $this->getArgument('row-id'));
 		$columnPos = ListService::getColumnPos($list, $this->getArgument('column-id'));
 

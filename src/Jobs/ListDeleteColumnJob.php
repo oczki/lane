@@ -12,6 +12,9 @@ class ListDeleteColumnJob extends GenericListJob
 	{
 		$list = $this->getList();
 
+		if (count($list->content->columns) == 1)
+			throw new ValidationException('Cannot delete last column.');
+
 		$pos = ListService::getColumnPos($list, $this->getArgument('column-id'));
 
 		self::delete($list->content->columns, $pos);
