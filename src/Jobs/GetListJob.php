@@ -1,11 +1,12 @@
 <?php
 /**
-* Retrieves whole user's list. If authenticated, shows also lists invisible to public.
+* Retrieves whole user's list. If authenticated, shows the list even if it's
+* invisible to public.
 *
 * @user-name: name of list owner
 * @list-id: id of list
 */
-class ShowListJob extends GenericListJob
+class GetListJob extends GenericListJob
 {
 	public function requiresAuthentication()
 	{

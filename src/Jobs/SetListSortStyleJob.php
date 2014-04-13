@@ -4,15 +4,15 @@
 *
 * @user-name: name of list owner
 * @list-id: id of list
-* @new-sort-style: array containing new sort style, compatible with jquery TableSorter syntax
+* @new-style: string representing new sort style (example: <code>[[0,0],[2,1]]</code> will sort by first column in ascending order, then by third column in descending order.)
 */
-class ListSetSortStyleJob extends GenericListJob
+class SetListSortStyleJob extends GenericListJob
 {
 	public function execute()
 	{
 		$list = $this->getList();
 
-		$sortStyle = $this->getArgument('new-sort-style');
+		$sortStyle = $this->getArgument('new-style');
 		$sortStyle = json_decode($sortStyle);
 
 		if (empty($sortStyle))

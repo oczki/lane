@@ -5,15 +5,15 @@
 * @user-name: name of list owner
 * @list-id: id of list
 * @column-id: id of column to change position of
-* @new-column-pos: integer specifying desired column position
+* @new-position: integer specifying desired column position
 */
-class ListSetColumnPosJob extends GenericListJob
+class SetColumnPositionJob extends GenericListJob
 {
 	public function execute()
 	{
 		$list = $this->getList();
 
-		$newPos = intval($this->getArgument('new-column-pos'));
+		$newPos = intval($this->getArgument('new-position'));
 		if ($newPos < 0 or $newPos >= count($list->content->columns))
 			throw new SimpleException('Invalid column target position: ' . $newPos . '.');
 

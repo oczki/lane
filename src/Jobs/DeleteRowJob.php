@@ -6,7 +6,7 @@
 * @list-id: id of list
 * @row-id: id of row to delete
 */
-class ListDeleteRowJob extends GenericListJob
+class DeleteRowJob extends GenericListJob
 {
 	public function execute()
 	{

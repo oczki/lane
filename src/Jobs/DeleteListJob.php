@@ -5,7 +5,7 @@
 * @user-name: name of list owner
 * @list-id: id of list
 */
-class ListDeleteJob extends GenericListJob
+class DeleteListJob extends GenericListJob
 {
 	public function execute()
 	{
@@ -18,10 +18,10 @@ class ListDeleteJob extends GenericListJob
 
 		if (empty($lists))
 		{
-			$job = Api::jobFactory('list-add', [
+			$job = Api::jobFactory('add-list', [
 				'user-name' => $user->name,
-				'new-list-name' => 'New blank list',
-				'new-list-visibility' => true]);
+				'new-name' => 'New blank list',
+				'new-visibility' => true]);
 
 			Api::run($job);
 		}

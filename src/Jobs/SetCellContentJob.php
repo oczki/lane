@@ -6,20 +6,20 @@
 * @list-id: id of list
 * @column-id: id of column that contains given cell
 * @row-id: id of row that contains given cell
-* @new-cell-text: new cell contents
+* @new-content: new cell contents
 */
-class ListEditCellJob extends GenericListJob
+class SetCellContentJob extends GenericListJob
 {
 	public function execute()
 	{
 		$list = $this->getList();
 
-		ListService::validateCellContent($this->getArgument('new-cell-text'));
+		ListService::validateCellContent($this->getArgument('new-content'));
 
 		$rowPos = ListService::getRowPos($list, $this->getArgument('row-id'));
 		$columnPos = ListService::getColumnPos($list, $this->getArgument('column-id'));
 
-		$list->content->rows[$rowPos]->content[$columnPos] = $this->getArgument('new-cell-text');
+		$list->content->rows[$rowPos]->content[$columnPos] = $this->getArgument('new-content');
 
 		ListService::saveOrUpdate($list);
 	}

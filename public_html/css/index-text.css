@@ -47,3 +47,7 @@ tr.odd {
 hr {
 	margin-bottom: 3em;
 }
+
+td:first-child {
+	white-space: nowrap;
+}

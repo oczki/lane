@@ -27,7 +27,7 @@ class ControllerHelper
 		if (!$user)
 			throw new InvalidUserException($userName);
 
-		$job = Api::jobFactory('show-lists', ['user-name' => $user->name]);
+		$job = Api::jobFactory('get-lists', ['user-name' => $user->name]);
 
 		$context->lists = $job->getLists();
 	}

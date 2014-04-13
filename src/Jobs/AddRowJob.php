@@ -4,32 +4,32 @@
 *
 * @user-name: name of list owner
 * @list-id: id of list
-* @new-row-id: id of new row
-* @new-row-content: array with row content
+* @new-id: id of new row
+* @new-content: array with row content
 */
-class ListAddRowJob extends GenericListJob
+class AddRowJob extends GenericListJob
 {
 	public function execute()
 	{
 		$list = $this->getList();
-		ListService::validateContentID($list, $this->getArgument('new-row-id'));
+		ListService::validateContentID($list, $this->getArgument('new-id'));
 
 		$row = new ListRow();
-		$row->id = $this->getArgument('new-row-id');
+		$row->id = $this->getArgument('new-id');
 
-		if (empty($this->getArgument('new-row-content')))
+		if (empty($this->getArgument('new-content')))
 		{
 			$row->content = array_fill(0, count($list->content->columns), '');
 		}
 		else
 		{
-			if (count($this->getArgument('new-row-content')) != count($list->content->columns))
+			if (count($this->getArgument('new-content')) != count($list->content->columns))
 				throw new SimpleException('Invalid column count.');
 
-			foreach ($this->getArgument('new-row-content') as $cellContent)
+			foreach ($this->getArgument('new-content') as $cellContent)
 				ListService::validateCellContent($cellContent);
 
-			$row->content = $this->getArgument('new-row-content');
+			$row->content = $this->getArgument('new-content');
 		}
 
 		$list->content->lastContentId = $row->id;

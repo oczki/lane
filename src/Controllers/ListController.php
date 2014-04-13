@@ -30,10 +30,10 @@ class ListController
 		{
 			$this->context->viewName = 'messages';
 
-			$job = Api::jobFactory('list-add', [
+			$job = Api::jobFactory('add-list', [
 				'user-name' => $this->context->user->name,
-				'new-list-name' => InputHelper::getPost('name'),
-				'new-list-visibility' => boolval(InputHelper::getPost('visible'))]);
+				'new-name' => InputHelper::getPost('name'),
+				'new-visibility' => boolval(InputHelper::getPost('visible'))]);
 
 			$statuses = Api::run($job);
 			$newId = $statuses[0]['list-id'];

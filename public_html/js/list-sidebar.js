@@ -24,10 +24,10 @@ $(function()
 				var userName = dragger.parents('li').attr('data-user-name');
 				var listId = dragger.parents('li').attr('data-list-id');
 				var priority = dragger.parents('li').index() + 1;
-				queue.push(new Job('list-set-priority', {
+				queue.push(new Job('set-list-position', {
 					'user-name': userName,
 					'list-id': listId,
-					'new-list-priority': priority}));
+					'new-position': priority}));
 				queue.delayedFlush();
 			});
 		});

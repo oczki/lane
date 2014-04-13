@@ -4,9 +4,9 @@
 *
 * @user-name: name of list owner
 * @list-id: id of list
-* @new-list-priority: integer specifying desired list position
+* @new-position: integer specifying desired list position
 */
-class ListSetPriorityJob extends GenericListJob
+class SetListPositionJob extends GenericListJob
 {
 	public function execute()
 	{
@@ -14,7 +14,7 @@ class ListSetPriorityJob extends GenericListJob
 
 		$allLists = array_values(ListService::getByUser($this->getUser()));
 
-		$newIndex = intval($this->getArgument('new-list-priority')) - 1;
+		$newIndex = intval($this->getArgument('new-position')) - 1;
 		$previousIndex = null;
 		foreach ($allLists as $index => $otherList)
 			if ($otherList->urlName == $list->urlName)

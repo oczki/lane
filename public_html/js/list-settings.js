@@ -136,7 +136,7 @@ $(function()
 					e.preventDefault();
 					e.stopPropagation();
 					var sortStyle = $('#list').attr('data-sort-style');
-					$(this).find('[name*=sort]').val(sortStyle);
+					$(this).find('[name*=style]').val(sortStyle);
 					var url = $(this).attr('action');
 					var data = $(this).serialize();
 					sendAjax(url, data, function()
@@ -211,7 +211,7 @@ $(function()
 			if (!(previousColumn.id in currentColumns))
 			{
 				//delete removed columns
-				jobs.push(new Job('list-delete-column', {
+				jobs.push(new Job('delete-column', {
 					'user-name': userName,
 					'list-id': listId,
 					'column-id': previousColumn.id}));
@@ -223,20 +223,20 @@ $(function()
 
 				if (previousColumn.name != currentColumn.name)
 				{
-					jobs.push(new Job('list-set-column-name', {
+					jobs.push(new Job('set-column-name', {
 						'user-name': userName,
 						'list-id': listId,
 						'column-id': currentColumn.id,
-						'new-column-name': currentColumn.name}));
+						'new-name': currentColumn.name}));
 				}
 
 				if (previousColumn.align != currentColumn.align)
 				{
-					jobs.push(new Job('list-set-column-align', {
+					jobs.push(new Job('set-column-align', {
 						'user-name': userName,
 						'list-id': listId,
 						'column-id': currentColumn.id,
-						'new-column-align': currentColumn.align}));
+						'new-align': currentColumn.align}));
 				}
 			}
 		});
@@ -247,49 +247,49 @@ $(function()
 			if (currentColumn.id in previousColumns)
 				return;
 
-			jobs.push(new Job('list-add-column', {
+			jobs.push(new Job('add-column', {
 				'user-name': userName,
 				'list-id': listId,
-				'new-column-id': currentColumn.id,
-				'new-column-name': currentColumn.name,
-				'new-column-align': currentColumn.align}));
+				'new-id': currentColumn.id,
+				'new-name': currentColumn.name,
+				'new-align': currentColumn.align}));
 		});
 
 		//set order to all columns now that they were removed and added
 		$.each(currentColumns, function(i, currentColumn)
 		{
-			jobs.push(new Job('list-set-column-pos', {
+			jobs.push(new Job('set-column-position', {
 				'user-name': userName,
 				'list-id': listId,
 				'column-id': currentColumn.id,
-				'new-column-pos': currentColumn.priority}));
+				'new-position': currentColumn.priority}));
 		});
 
 		//set other stuff
-		jobs.push(new Job('list-set-name', {
+		jobs.push(new Job('set-list-name', {
 			'user-name': userName,
 			'list-id': listId,
-			'new-list-name': $(this).find('.basic-settings [name=name]').val()}));
+			'new-name': $(this).find('.basic-settings [name=name]').val()}));
 
-		jobs.push(new Job('list-set-visibility', {
+		jobs.push(new Job('set-list-visibility', {
 			'user-name': userName,
 			'list-id': listId,
-			'new-list-visibility': $(this).find('.basic-settings [name=visibility]').is(':checked') ? 1 : 0}));
+			'new-visibility': $(this).find('.basic-settings [name=visibility]').is(':checked') ? 1 : 0}));
 
-		jobs.push(new Job('list-enable-row-ids', {
+		jobs.push(new Job('set-list-row-ids-state', {
 			'user-name': userName,
 			'list-id': listId,
-			'new-list-row-ids-enabled': $(this).find('.basic-settings [name=row-ids]').is(':checked') ? 1 : 0}));
+			'new-state': $(this).find('.basic-settings [name=row-ids]').is(':checked') ? 1 : 0}));
 
-		jobs.push(new Job('list-set-custom-css', {
+		jobs.push(new Job('set-list-css-content', {
 			'user-name': userName,
 			'list-id': listId,
-			'new-list-custom-css': $(this).find('.custom-css-edit textarea').val()}));
+			'new-content': $(this).find('.custom-css-edit textarea').val()}));
 
-		jobs.push(new Job('list-enable-custom-css', {
+		jobs.push(new Job('set-list-css-state', {
 			'user-name': userName,
 			'list-id': listId,
-			'new-list-custom-css-enabled': $('#list-settings .basic-settings .custom-css').is(':checked') ? 1 : 0}));
+			'new-state': $('#list-settings .basic-settings .custom-css').is(':checked') ? 1 : 0}));
 
 		$(this).data('serializer', function()
 		{

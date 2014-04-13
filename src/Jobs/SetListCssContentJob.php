@@ -4,15 +4,15 @@
 *
 * @user-name: name of list owner
 * @list-id: id of list
-* @new-list-custom-css: new content of custom CSS
+* @new-content: new content of custom CSS
 */
-class ListSetCustomCssJob extends GenericListJob
+class SetListCssContentJob extends GenericListJob
 {
 	public function execute()
 	{
 		$list = $this->getList();
 
-		$list->content->customCss = $this->getArgument('new-list-custom-css');
+		$list->content->customCss = $this->getArgument('new-content');
 
 		ListService::saveOrUpdate($list);
 	}

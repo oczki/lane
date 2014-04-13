@@ -3,22 +3,22 @@
 * Adds new list.
 *
 * @user-name: name of list owner
-* @new-list-name: name of the new list
-* @new-list-visibility: whether new list should be visible or not
+* @new-name: name of the new list
+* @new-visibility: whether to show the list to the public (1) or make it private (0)
 */
-class ListAddJob extends GenericUserJob
+class AddListJob extends GenericUserJob
 {
 	public function execute()
 	{
 		$user = $this->getUser();
 
-		ListService::validateListName($this->getArgument('new-list-name'));
+		ListService::validateListName($this->getArgument('new-name'));
 
 		$list = new ListEntity();
 		$list->priority = ListService::getNewPriority($user);
 		$list->userId = $user->id;
-		$list->name = $this->getArgument('new-list-name');
-		$list->visible = boolval($this->getArgument('new-list-visibility'));
+		$list->name = $this->getArgument('new-name');
+		$list->visible = boolval($this->getArgument('new-visibility'));
 		$list->content = new ListContent();
 
 		$column1 = new ListColumn();

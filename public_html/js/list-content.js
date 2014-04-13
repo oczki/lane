@@ -40,11 +40,11 @@ $(function()
 				set: function(elementId, newWidth)
 				{
 					var columnId = this.convert(elementId);
-					queue.push(new Job('list-set-column-width', {
+					queue.push(new Job('set-column-width', {
 						'user-name': userName,
 						'list-id': listId,
 						'column-id': columnId,
-						'new-column-width': newWidth}));
+						'new-width': newWidth}));
 					queue.delayedFlush();
 				}
 			}
@@ -244,12 +244,12 @@ $(function()
 
 		if (text != oldText)
 		{
-			queue.push(new Job('list-edit-cell', {
+			queue.push(new Job('set-cell-content', {
 				'user-name': userName,
 				'list-id': listId,
 				'row-id': rowId,
 				'column-id': columnId,
-				'new-cell-text': text}));
+				'new-content': text}));
 			queue.delayedFlush();
 		}
 		rowUpdateStarted(tableRow);
@@ -282,7 +282,7 @@ $(function()
 			e.preventDefault();
 			var tableRow = $(tableRowNode);
 			var rowId = tableRow.attr('data-content-id');
-			queue.push(new Job('list-delete-row', {
+			queue.push(new Job('delete-row', {
 				'user-name': userName,
 				'list-id': listId,
 				'row-id': rowId}));
@@ -301,11 +301,11 @@ $(function()
 			content: new Array(listColumns.length).map(String.prototype.valueOf, '')
 		};
 
-		queue.push(new Job('list-add-row', {
+		queue.push(new Job('add-row', {
 			'user-name': userName,
 			'list-id': listId,
-			'new-row-id': newRow.id,
-			'new-row-content': newRow.content}));
+			'new-id': newRow.id,
+			'new-content': newRow.content}));
 		queue.delayedFlush();
 
 		var tableRow = $('tfoot tr').clone();

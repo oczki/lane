@@ -1,13 +1,14 @@
 <?php
 /**
-* Sets new column width.
+* Sets new column width. Note that width of other columns will change as well,
+* so they all add up to 100%.
 *
 * @user-name: name of list owner
 * @list-id: id of list
 * @column-id: id of column to change width of
-* @new-column-width: new column width
+* @new-width: new column width
 */
-class ListSetColumnWidthJob extends GenericListJob
+class SetColumnWidthJob extends GenericListJob
 {
 	public function execute()
 	{
@@ -15,7 +16,7 @@ class ListSetColumnWidthJob extends GenericListJob
 
 		$pos = ListService::getColumnPos($list, $this->getArgument('column-id'));
 
-		$list->content->columns[$pos]->width = floatval($this->getArgument('new-column-width'));
+		$list->content->columns[$pos]->width = floatval($this->getArgument('new-width'));
 
 		$totalSum = 0;
 		foreach ($list->content->columns as $otherPos => $column)
