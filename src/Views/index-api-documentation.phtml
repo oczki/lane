@@ -172,12 +172,8 @@ EOF
 
 				$jobName = $classInstance->getName();
 				$jobAuth = $classInstance->requiresAuthentication();
-
-				preg_match_all('/^\s*\*[ \t]+@([a-zA-Z_-]+):?[ \t]+(.+)$/m', $docComment, $matches);
-				$jobArguments = array_combine($matches[1], $matches[2]);
-
-				preg_match_all('/^\s*\*[ \t]+(?![@#])(.+)/m', $docComment, $matches);
-				$jobDescription = implode(' ', $matches[1]);
+				$jobDescription = $classInstance->getDescription();
+				$jobArguments = $classInstance->getArgumentsDescription();
 		?>
 			<article>
 				<h2><strong><code><?= $jobName ?></code></strong></h2>

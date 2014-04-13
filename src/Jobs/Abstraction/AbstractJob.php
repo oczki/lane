@@ -13,6 +13,25 @@ abstract class AbstractJob implements IJob
 		$this->arguments = $arguments;
 	}
 
+	private function getDocComment()
+	{
+		$reflectionClass = new ReflectionClass(get_called_class());
+		$docComment = $reflectionClass->getDocComment();
+		return $docComment;
+	}
+
+	public function getArgumentsDescription()
+	{
+		preg_match_all('/^\s*\*[ \t]+@([a-zA-Z_-]+):?[ \t]+(.+)$/m', $this->getDocComment(), $matches);
+		return array_combine($matches[1], $matches[2]);
+	}
+
+	public function getDescription()
+	{
+		preg_match_all('/^\s*\*[ \t]+(?![@#])(.+)/m', $this->getDocComment(), $matches);
+		return implode(' ', $matches[1]);
+	}
+
 	public function getArguments()
 	{
 		return $this->arguments;
@@ -22,6 +41,8 @@ abstract class AbstractJob implements IJob
 	{
 		if (!isset($this->arguments[$key]))
 			throw new SimpleException('Error: must supply "' . $key . '" argument.');
+		if (!isset($this->getArgumentsDescription()[$key]))
+			throw new SimpleException('Error: trying to use undocumented argument "' . $key . '".');
 		return $this->arguments[$key];
 	}
 
