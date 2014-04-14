@@ -2,7 +2,7 @@ $(function()
 {
 	var queue = QueueFactory();
 
-	$('#list-management .add-list, #list-management .settings').click(function(e)
+	$('#sidebar-nav .add-list, #sidebar-nav .settings').click(function(e)
 	{
 		e.preventDefault();
 		showPopup($(this).attr('href'));
@@ -10,7 +10,7 @@ $(function()
 
 	if ($('#sidebar').attr('data-can-edit') == '1')
 	{
-		$('#sidebar #lists a.list').each(function(i, listItem)
+		$('#sidebar a.list').each(function(i, listItem)
 		{
 			var dragger = $('<a>');
 			dragger.attr('href', '#');

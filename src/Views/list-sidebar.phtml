@@ -20,7 +20,7 @@
 
 	<?php if (!empty($this->context->lists)): ?>
 		<div id="sidebar-nav">
-			<ul id="lists">
+			<ul>
 				<?php foreach ($this->context->lists as $list): ?>
 					<?php
 						$active = (isset($this->context->list) and
@@ -42,12 +42,10 @@
 						echo HtmlHelper::tagClose('li');
 					?>
 				<?php endforeach ?>
-			</ul>
 
-			<hr/>
+				<li class="sep"><hr/></li>
 
-			<?php if ($this->context->canEdit): ?>
-				<ul id="list-management">
+				<?php if ($this->context->canEdit): ?>
 					<li>
 						<a class="add-list" href="<?= \Chibi\UrlHelper::route('list', 'add', ['userName' => $this->context->user->name]) ?>">
 							Add new list…
@@ -61,8 +59,9 @@
 							</a>
 						</li>
 					<?php endif ?>
-				</ul>
-			<?php endif ?>
+				<?php endif ?>
+
+			</ul>
 		</div>
 	<?php endif ?>
 </div>

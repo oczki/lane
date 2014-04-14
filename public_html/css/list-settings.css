@@ -21,12 +21,12 @@
 		display: none;
 	}
 	#list-settings table input[type=radio]+label {
-		background-color: lightgray;
+		opacity: .25;
 	}
 	#list-settings table input[type=radio]:checked+label,
 	#list-settings table input[type=radio]+label:focus,
 	#list-settings table input[type=radio]+label:hover {
-		background-color: black;
+		opacity: 1;
 	}
 	#list-settings table label.icon:not(:last-of-type) {
 		margin-right: 0.5em;

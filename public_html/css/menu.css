@@ -42,11 +42,11 @@
 		float: right;
 		padding: 1px;
 		position: relative;
-		background: white;
 		margin-bottom: -1px;
 		margin: 1px;
 	}
 	#menu.active #menu-trigger {
+		background: white;
 		border: 1px solid silver;
 		margin: 0;
 		border-bottom: none;
@@ -54,7 +54,7 @@
 		border-top-right-radius: 3px;
 		box-shadow: 0 0 4px rgba(0,0,0,0.05);
 	}
-	#menu-trigger:after {
+	#menu.active #menu-trigger:after {
 		position: absolute;
 		bottom: -1px;
 		height: 4px;
@@ -69,21 +69,24 @@
 	#menu-trigger .icon {
 		float: right;
 		margin-left: 0.8em;
-		background-color: lightgray;
+	}
+	#menu-trigger span {
+		opacity: 0.25;
 	}
 	#menu-trigger a {
-		color: lightgray;
 		padding-bottom: 0.2em;
 		display: inline-block;
 	}
 	#menu #menu-trigger a:hover,
 	#menu #menu-trigger a:focus,
 	#menu.active #menu-trigger a {
-		color: black;
 		outline: 0;
 	}
+	#menu #menu-trigger a:hover span,
+	#menu #menu-trigger a:focus span,
+	#menu.active #menu-trigger a span,
 	#menu #menu-trigger a:hover .icon,
 	#menu #menu-trigger a:focus .icon,
 	#menu.active #menu-trigger a .icon {
-		background-color: black;
+		opacity: 1;
 	}
