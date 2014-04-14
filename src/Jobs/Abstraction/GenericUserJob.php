@@ -21,4 +21,14 @@ abstract class GenericUserJob extends AbstractJob
 
 		return $user;
 	}
+
+	public function getLists()
+	{
+		$lists = array_values(ListService::getByUser($this->getUser()));
+		$lists = array_filter($lists, function($list)
+		{
+			return ApiHelper::canShowList($list);
+		});
+		return $lists;
+	}
 }

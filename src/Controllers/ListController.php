@@ -159,19 +159,17 @@ class ListController
 				throw new SimpleException('No file provided.');
 
 			$jsonText = file_get_contents($file['tmp_name']);
-			$list = ListService::unserialize($jsonText);
-			$list->userId = $this->context->user->id;
-			$list->priority = ListService::getNewPriority($this->context->user);
-			$list->urlName = ListService::forgeUrlName($list);
-			ListService::saveOrUpdate($list);
+			$importJob = Api::jobFactory('import-list', [
+				'user-name' => $this->context->user->name,
+				'input-data' => $jsonText]);
 
-			$lists = ListService::getByUserId($this->context->user->id);
-			$newList = array_pop($lists);
+			$statuses = Api::run($importJob);
+			$newId = $statuses[0]['list-id'];
 
 			Messenger::success('List imported successfully.');
 			Bootstrap::forward(\Chibi\UrlHelper::route('list', 'view', [
 				'userName' => $this->context->user->name,
-				'id' => $newList->urlName]));
+				'id' => $newId]));
 		}
 	}
 
@@ -190,37 +188,32 @@ class ListController
 		if ($id === null)
 		{
 			$outFileName = 'lane_export-' . date('Y-m-d_h-i-s') . '.zip';
-			$zipPath = tempnam(sys_get_temp_dir(), 'lane-export');
 
-			if (empty($this->context->lists))
-				throw new InvalidListException(null, InvalidListException::REASON_PRIVATE);
-
-			$zip = new ZipArchive();
-			if (!$zip->open($zipPath))
-				throw new SimpleException('Failed to create ZIP archive.');
-
-			foreach ($this->context->lists as $list)
-				$zip->addFromString($list->urlName . '.json', ListService::serialize($list));
-
-			$zip->close();
+			$exportJob = Api::jobFactory('export-lists', [
+				'user-name' => $this->context->user->name]);
+			$statuses = Api::run($exportJob);
+			$outputData = base64_decode($statuses[0]['output-data']);
 
 			\Chibi\HeadersHelper::set('Content-Type', 'application/zip');
 			\Chibi\HeadersHelper::set('Content-Disposition', 'inline; filename="' . $outFileName . '"');
 			\Chibi\HeadersHelper::set('Content-Transfer-Encoding', 'binary');
-			readfile($zipPath);
-			unlink($zipPath);
+			echo $outputData;
 			exit;
 		}
 		else
 		{
-			if (!ApiHelper::canShowList($this->context->list))
-				throw new UnprivilegedOperationException();
 			$outFileName = $this->context->list->urlName . '.json';
+
+			$exportJob = Api::jobFactory('export-list', [
+				'user-name' => $this->context->user->name,
+				'list-id' => $id]);
+			$statuses = Api::run($exportJob);
+			$outputData = $statuses[0]['output-data'];
 
 			\Chibi\HeadersHelper::set('Content-Type', 'application/zip');
 			\Chibi\HeadersHelper::set('Content-Disposition', 'inline; filename="' . $outFileName . '"');
 			\Chibi\HeadersHelper::set('Content-Transfer-Encoding', 'binary');
-			echo ListService::serialize($this->context->list);
+			echo $outputData;
 			exit;
 		}
 	}
