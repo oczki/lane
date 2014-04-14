@@ -51,7 +51,7 @@ class IndexController
 	*/
 	public function exampleAction()
 	{
-		$url = \Chibi\UrlHelper::route('list', 'view', ['userName' => 'test_subject']);
+		$url = \Chibi\UrlHelper::route('list', 'view', ['userName' => 'example']);
 		Bootstrap::forward($url);
 	}
 }

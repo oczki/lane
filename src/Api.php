@@ -3,7 +3,9 @@ use \Chibi\Database as Database;
 
 class Api
 {
+	protected static $forcedUser = null;
 	protected static $jobId = 0;
+
 	public static function serializeJobHtml(AbstractJob $job)
 	{
 		++ self::$jobId;
@@ -59,9 +61,14 @@ class Api
 		return $class->newInstanceArgs([$jobArgs]);
 	}
 
+	public static function forceSetApiUser($user)
+	{
+		self::$forcedUser = $user;
+	}
+
 	public static function getApiUser()
 	{
-		return Auth::getLoggedInUser();
+		return self::$forcedUser ?: Auth::getLoggedInUser();
 	}
 
 	public static function getUrl()
