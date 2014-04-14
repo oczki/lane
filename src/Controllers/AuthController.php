@@ -147,7 +147,6 @@ class AuthController
 		$user->email = $email;
 		$user->settings = new UserSettings();
 		$user->settings->showGuestsLastUpdate = true;
-		$user->settings->showCheatSheet = false;
 		$user->passHash = UserService::hashPassword($user, $pass);
 		UserService::saveOrUpdate($user);
 

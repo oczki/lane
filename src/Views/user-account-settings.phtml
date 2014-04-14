@@ -16,10 +16,6 @@
 			<?= HtmlHelper::labelDecorator('Last update text',
 				HtmlHelper::checkboxInputTag('show-guests-last-update', $this->context->user->settings->showGuestsLastUpdate),
 				'show &ldquo;last save time&rdquo; to guests') ?>
-
-			<?= HtmlHelper::labelDecorator('Sidebar',
-				HtmlHelper::checkboxInputTag('show-cheat-sheet', $this->context->user->settings->showCheatSheet),
-				'show cheat sheet when editing') ?>
 		</div>
 
 		<p>Enter your current password to change options below.</p>

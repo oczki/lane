@@ -10,7 +10,6 @@ class Upgrade5 implements IUpgrade
 		{
 			$user->settings = new UserSettings();
 			$user->settings->showGuestsLastUpdate = true;
-			$user->settings->showCheatSheet = true;
 			UserService::saveOrUpdate($user);
 		}
 	}

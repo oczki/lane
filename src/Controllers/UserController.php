@@ -21,7 +21,6 @@ class UserController
 			return;
 
 		$this->context->user->settings->showGuestsLastUpdate = boolval(InputHelper::getPost('show-guests-last-update'));
-		$this->context->user->settings->showCheatSheet = boolval(InputHelper::getPost('show-cheat-sheet'));
 
 		$currentPassword = InputHelper::getPost('current-password');
 		$currentPasswordHash = UserService::hashPassword($this->context->user, $currentPassword);
