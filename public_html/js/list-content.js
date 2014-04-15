@@ -26,30 +26,78 @@ $(function()
 
 	if (canEdit)
 	{
-		$('#list').resizableColumns({
-			resizeFromBody: false,
-			store: {
-				convert: function(elementId)
-				{
-					return elementId.substring(elementId.indexOf('-') + 1);
-				},
-				get: function(elementId)
-				{
-					return null;
-				},
-				set: function(elementId, newWidth)
-				{
-					var columnId = this.convert(elementId);
-					queue.push(new Job('set-column-width', {
-						'user-name': userName,
-						'list-id': listId,
-						'column-id': columnId,
-						'new-width': newWidth}));
-					queue.delayedFlush();
-				}
-			}
-		});
-		$('.rc-handle').append('<i class="icon icon-drag"/></i>');
+		if ($('#list').attr('data-can-edit') == '1')
+		{
+			$('#list th span').each(function(i, header)
+			{
+				if ($(this).parents('th').next('th').hasClass('row-ops'))
+					return true;
+
+				var dragger = $('<a>');
+				dragger.attr('href', '#');
+				dragger.addClass('dragger');
+				dragger.append('<i class="icon icon-drag">');
+				dragger.insertBefore(header);
+
+				initGenericDragger(
+					dragger,
+					'th',
+
+					function(dragger)
+					{
+						var thisHeader = $(dragger).parents('th');
+						var nextHeader = thisHeader.next('th');
+						var colWidthSum = thisHeader.width() + nextHeader.width();
+						var tableWidthSum = 0;
+						$(dragger).parents('table').find('th:not(.row-ops)').each(function()
+						{
+							tableWidthSum += $(this).width();
+						});
+						thisHeader.data('col-width-sum', colWidthSum);
+						thisHeader.data('table-width-sum', tableWidthSum);
+						thisHeader.data('orig-width', thisHeader.width());
+						nextHeader.data('orig-width', nextHeader.width());
+					},
+
+					function(dragger, e)
+					{
+						var thisHeader = $(dragger).parents('th');
+						var nextHeader = $(thisHeader.next('th'));
+						var x = e.pageX - thisHeader.offset().left;
+						var colWidthSum = thisHeader.data('col-width-sum');
+						var tableWidthSum = thisHeader.data('table-width-sum');
+						var x1 = Math.max(0, Math.min(colWidthSum, x)) * 100. / tableWidthSum;
+						var x2 = Math.max(0, Math.min(colWidthSum, colWidthSum - x)) * 100. / tableWidthSum;
+						x1 = x1.toFixed(3);
+						x2 = x2.toFixed(3);
+						thisHeader.css('width', x1 + '%');
+						nextHeader.css('width', x2 + '%');
+					},
+
+					function(dragger)
+					{
+						var newWidths = [];
+						var totalNewWidth = 0;
+						$(dragger).parents('table').find('th:not(.row-ops)').each(function()
+						{
+							var newWidth = $(this).width();
+							newWidths.push(newWidth);
+							totalNewWidth += newWidth;
+						});
+						$.each(newWidths, function(i, width)
+						{
+							newWidths[i] = width * 100. / totalNewWidth;
+						});
+
+						queue.push(new Job('set-column-widths', {
+							'user-name': userName,
+							'list-id': listId,
+							'new-widths': JSON.stringify(newWidths)}));
+						queue.delayedFlush();
+					});
+
+			});
+		}
 	}
 
 	var urlRegex = new RegExp(/\[url(=([^\]]+))?\](.+?)\[\/url\]/g);
@@ -125,6 +173,7 @@ $(function()
 		var tableRow = tableCell.parents('tr');
 		tableRow.addClass('edit');
 		tableCell.find('span.content-holder').hide();
+		tableCell.addClass('edit');
 		if (tableCell.find('input:visible').length > 0)
 			return;
 
@@ -221,6 +270,7 @@ $(function()
 	{
 		var tableRow = tableCell.parents('tr');
 		tableRow.removeClass('edit');
+		tableCell.removeClass('edit');
 		tableCell.find('.input-wrapper').fadeOut('fast', function()
 		{
 			tableCell.find('span.content-holder').fadeIn();

@@ -21,11 +21,6 @@ function download($source, $destination = null)
 	return $content;
 }
 
-//jQuery resizableColumns
-download(
-	'https://raw.githubusercontent.com/dobtco/jquery-resizable-columns/gh-pages/dist/jquery.resizableColumns.min.js',
-	'public_html' . DS . 'js' . DS . 'jquery.resizableColumns.min.js');
-
 //jQuery Tablesorter
 download(
 	'https://raw.githubusercontent.com/Mottie/tablesorter/master/js/jquery.tablesorter.min.js',

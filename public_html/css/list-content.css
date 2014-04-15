@@ -51,7 +51,7 @@
 	}
 	#list td .input-wrapper {
 		vertical-align: top;
-		margin: 0 30px 0 0;
+		margin: 0 20px 0 0;
 		transition: border-color 0.25s ease 0s;
 		border-top: 3px solid #fff;
 		border-bottom: 3px solid #fff;
@@ -62,31 +62,45 @@
 	#list div {
 		position: relative;
 	}
+
 	#list span.content-holder {
 		vertical-align: middle;
-		line-height: 30px;
 		display: block;
 		max-width: 100%;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
-	#list:not([data-can-edit='1']) span.content-holder {
-		margin-right: 6px;
-	}
-	#list span.content-holder:before {
-		display: inline-block;
-		content: '\a0';
-		cursor: default;
-		width: 0;
-	}
+		#list span.content-holder:before {
+			display: inline-block;
+			content: '\a0';
+			cursor: default;
+			width: 0;
+		}
+		#list:not([data-can-edit='1']) span.content-holder {
+			margin-right: 6px;
+		}
+		#list[data-can-edit='1'] span.content-holder {
+			margin-right: 20px;
+		}
+
+	#list a.dragger,
 	#list a.edit-content {
-		opacity: 0; /* thanks to using opacity for invisibility, focus can be obtained */
 		position: absolute;
+		font-size: 0;
 		right: 0;
-		z-index: 2;
 	}
+	#list tbody tr .icon {
+		opacity: 0; /* thanks to using opacity for invisibility, focus can be obtained */
+	}
+		#list tbody tr:hover .icon {
+			opacity: .12;
+		}
+		#list tbody td:hover .icon,
+		#list tbody td.edit .icon {
+			opacity: 1;
+		}
+
 	#list a .icon {
-		opacity: 1;
 		margin: 5px 0;
 	}
 	#list th.row-ops,
@@ -113,32 +127,27 @@
 		}
 
 		/* because why bother standarizing background-position-y, for crying out loud! */
-		#list tbody tr:hover td .icon-edit,
-		#list tbody tr.edit td .icon-edit { background-position: -200px -20px; }
-		#list tbody tr:hover td .icon-delete,
-		#list tbody tr.edit td .icon-delete { background-position: -180px -20px; }
+		#list tbody td:hover .icon-edit,
+		#list tbody td.edit .icon-edit {
+			background-position: -200px -20px;
+		}
 
-		#list tbody tr:hover td input[type=checkbox]+label.checkbox:before,
-		#list tbody tr.edit td input[type=checkbox]+label.checkbox:before {
+		#list tbody td:hover input[type=checkbox]+label.checkbox:before,
+		#list tbody td.edit input[type=checkbox]+label.checkbox:before {
 			background-position: -280px -20px;
 			opacity: 1;
 		}
-		#list tbody tr:hover td input[type=checkbox]:checked+label.checkbox:before,
-		#list tbody tr.edit td input[type=checkbox]:checked+label.checkbox:before {
+		#list tbody td:hover input[type=checkbox]:checked+label.checkbox:before,
+		#list tbody td.edit input[type=checkbox]:checked+label.checkbox:before {
 			background-position: -300px -20px;
 			opacity: 1;
 		}
-		#list tbody tr td input[type=checkbox]+label.checkbox:before {
+		#list tbody td input[type=checkbox]+label.checkbox:before {
 			background-position: -280px 0;
-			opacity: .25;
+			opacity: .12;
 		}
-		#list tbody tr td input[type=checkbox]:checked+label.checkbox:before {
+		#list tbody td input[type=checkbox]:checked+label.checkbox:before {
 			background-position: -300px 0;
-			opacity: 1;
-		}
-
-		#list tbody tr:hover a.edit-content,
-		#list tbody tr.edit a.edit-content {
 			opacity: 1;
 		}
 
@@ -182,9 +191,3 @@
 	#list[data-show-row-ids="1"] tbody tr:before {
 		content: counter(row);
 	}
-
-#inner-content .rc-handle {
-	width: 20px;
-	margin-left: -23px;
-	line-height: 30px;
-}

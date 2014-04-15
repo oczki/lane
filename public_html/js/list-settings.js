@@ -8,7 +8,7 @@ function createColumnTableRow(data)
 	dragger.attr('href', '#');
 	dragger.addClass('dragger');
 	dragger.append('<i class="icon icon-drag">');
-	initDragger(dragger, 'tr');
+	initMoveDragger(dragger, 'tr');
 	cell.append(dragger);
 	row.append(cell);
 

@@ -13,8 +13,6 @@
 \Chibi\AssetViewDecorator::addStylesheet('list-content.css');
 \Chibi\AssetViewDecorator::addStylesheet('list-classes.css');
 \Chibi\AssetViewDecorator::addScript('list-content.js');
-\Chibi\AssetViewDecorator::addStylesheet('jquery.resizableColumns.custom.css');
-\Chibi\AssetViewDecorator::addScript('jquery.resizableColumns.min.js');
 \Chibi\AssetViewDecorator::addStylesheet('jquery.tablesorter.custom.css');
 \Chibi\AssetViewDecorator::addScript('jquery.tablesorter.min.js');
 
@@ -65,7 +63,6 @@ $showRow = function($row)
 
 <?= HtmlHelper::tag('table', [
 	'id' => 'list',
-	'data-resizable-columns-id' => $this->context->list->urlName,
 	'data-can-edit' => $this->context->canEdit ? '1' : '0',
 	'data-show-row-ids' => $this->context->list->content->showRowIds,
 	'data-sort-style' => $this->context->list->content->sortStyle,
@@ -78,13 +75,14 @@ $showRow = function($row)
 		<tr>
 			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
 				<?= HtmlHelper::tag('th', [
-					'data-resizable-column-id' => $column->id,
 					'class' => join(' ', ListService::getColumnClasses($column)),
 					'style' => sprintf('width: %.02f%%', $column->width),
 				], false) ?>
-					<span>
-						<?= htmlspecialchars($column->name) ?>
-					</span>
+					<div>
+						<span class="content-holder" title="<?= htmlspecialchars($column->name) ?>">
+							<?= htmlspecialchars($column->name) ?>
+						</span>
+					</div>
 				<?= HtmlHelper::tagClose('th') ?>
 			<?php endforeach ?>
 			<?php if ($this->context->canEdit): ?>

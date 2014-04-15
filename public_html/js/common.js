@@ -89,8 +89,43 @@ $(function()
 	});
 });
 
-//dragging
-function dragHandler(e)
+function initGenericDragger(dragger, parentElement, dragStartCallback, dragMoveCallback, dragFinishCallback)
+{
+	$(dragger).mousedown(function(e)
+	{
+		e.preventDefault();
+		var target = $(e.target).parents(parentElement);
+		target.addClass('dragging');
+		target.data('changed', false);
+
+		var internalDragMoveCallback = function(e)
+		{
+			dragMoveCallback(dragger, e);
+		};
+
+		$('body')
+			.addClass('dragging')
+			.on('mousemove', target, internalDragMoveCallback)
+			.one('mouseup', function(e)
+		{
+			e.preventDefault();
+			target.removeClass('dragging');
+			$('body').removeClass('dragging')
+			$('body').off('mousemove', internalDragMoveCallback);
+			if (typeof(dragFinishCallback) !== 'undefined')
+				dragFinishCallback(dragger, target.data('changed'));
+		});
+
+		if (typeof(dragStartCallback) !== 'undefined')
+			dragStartCallback(dragger);
+
+	}).click(function(e)
+	{
+		e.preventDefault();
+	});
+}
+
+function moveDragHandler(e)
 {
 	var target = e.data;
 	while (e.pageY < target.offset().top && target.prev().length > 0)
@@ -105,29 +140,7 @@ function dragHandler(e)
 	}
 }
 
-function initDragger(dragger, parentElement, dragFinishCallback)
+function initMoveDragger(dragger, parentElement, dragStartCallback, dragFinishCallback)
 {
-	$(dragger).mousedown(function(e)
-	{
-		e.preventDefault();
-		var target = $(e.target).parents(parentElement);
-		target.addClass('dragging');
-		target.data('changed', false);
-
-		$('body')
-			.addClass('dragging')
-			.on('mousemove', target, dragHandler)
-			.one('mouseup', function(e)
-		{
-			e.preventDefault();
-			target.removeClass('dragging');
-			$('body').removeClass('dragging')
-			$('body').off('mousemove', dragHandler);
-			if (typeof(dragFinishCallback) !== 'undefined')
-				dragFinishCallback(dragger, target.data('changed'));
-		});
-	}).click(function(e)
-	{
-		e.preventDefault();
-	});
+	return initGenericDragger(dragger, parentElement, dragStartCallback, moveDragHandler, dragFinishCallback);
 }

@@ -240,11 +240,9 @@ body.dragging * {
 	cursor: move;
 }
 .dragger {
-	display: block;
 	float: left;
 	cursor: move;
 }
-.rc-table-resizing .rc-handle .icon,
 body .dragging .dragger .icon {
 	background-position: -100px -20px;
 	opacity: 1;
@@ -256,4 +254,4 @@ body .dragging .dragger .icon {
 }
 .return-link {
 	margin: 0 auto;
-	}
+}
