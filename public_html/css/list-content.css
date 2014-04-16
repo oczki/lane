@@ -44,19 +44,19 @@
 		width: 100%;
 		box-sizing: border-box;
 		-moz-box-sizing: border-box;
-		margin: 0;
+		margin: 0 -3px;
 		outline: 0;
 		border-radius: 0;
-		background: transparent;
+		background: lightyellow;
+		padding-left: 3px;
+		padding-right: 3px;
 	}
 	#list td .input-wrapper {
 		vertical-align: top;
 		margin: 0 20px 0 0;
 		transition: border-color 0.25s ease 0s;
-		border-top: 3px solid #fff;
-		border-bottom: 3px solid #fff;
 		line-height: normal;
-		background: white;
+		background: lightyellow;
 		height: 24px;
 	}
 	#list div {
@@ -88,6 +88,7 @@
 		position: absolute;
 		font-size: 0;
 		right: 0;
+		margin: 0 -2px 0 2px;
 	}
 	#list tbody tr .icon {
 		opacity: 0; /* thanks to using opacity for invisibility, focus can be obtained */
@@ -153,11 +154,15 @@
 		}
 
 	#list th.col-center,
-	#list td.col-center {
+	#list td.col-center,
+	#list th.col-center input[type=text],
+	#list td.col-center input[type=text] {
 		text-align: center;
 	}
 	#list th.col-right,
-	#list td.col-right {
+	#list td.col-right,
+	#list th.col-right input[type=text],
+	#list td.col-right input[type=text] {
 		text-align: right;
 	}
 	#list tfoot {
