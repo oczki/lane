@@ -241,7 +241,7 @@ $(function()
 						? tableCell.next('td')
 						: tableRow.next('tr');
 
-					target.find('.edit-content').first().click();
+					target.find('.edit-content').first().trigger('mousedown');
 					if (target.length == 0)
 						$('.add-row').click();
 				}
@@ -251,7 +251,7 @@ $(function()
 						? tableCell.prev('td')
 						: tableRow.prev('tr');
 
-					target.find('.edit-content').last().click();
+					target.find('.edit-content').last().trigger('mousedown');
 				}
 			}
 
