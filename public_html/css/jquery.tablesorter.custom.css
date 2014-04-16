@@ -2,9 +2,11 @@
 .tablesorter-default .tablesorter-header {
 	cursor: pointer;
 }
-.tablesorter-default .header span:after,
-.tablesorter-default .tablesorter-header span:after {
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAJCAQAAABUUf4oAAAAKElEQVQI12NggID/EIoRicMI4UJlGBgYGBmROJgATRZDL4rJMABVAQAxLwgDUbB0+AAAAABJRU5ErkJggg==);
+.tablesorter-default thead .tablesorter-headerSortUp span:after,
+.tablesorter-default thead .tablesorter-headerAsc span:after,
+.tablesorter-default thead .tablesorter-headerSortDown span:after,
+.tablesorter-default thead .tablesorter-headerDesc span:after {
+	/*background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAJCAQAAABUUf4oAAAAKElEQVQI12NggID/EIoRicMI4UJlGBgYGBmROJgATRZDL4rJMABVAQAxLwgDUbB0+AAAAABJRU5ErkJggg==);*/
 	content: ' ';
 	background-position: center right;
 	background-repeat: no-repeat;
