@@ -83,7 +83,7 @@ a:focus {
 	background-repeat: no-repeat;
 	/*transition: background-color 0.25s ease 0s;*/
 	vertical-align: middle;
-	opacity: .25;
+	opacity: .15;
 }
 a:focus .icon,
 a:hover .icon {

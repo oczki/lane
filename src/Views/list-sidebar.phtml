@@ -43,9 +43,9 @@
 					?>
 				<?php endforeach ?>
 
-				<li class="sep"><hr/></li>
-
 				<?php if ($this->context->canEdit): ?>
+					<li class="sep"><hr/></li>
+
 					<li>
 						<a class="add-list" href="<?= \Chibi\UrlHelper::route('list', 'add', ['userName' => $this->context->user->name]) ?>">
 							Add new list…

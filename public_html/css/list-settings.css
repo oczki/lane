@@ -21,7 +21,7 @@
 		display: none;
 	}
 	#list-settings table input[type=radio]+label {
-		opacity: .25;
+		opacity: .15;
 	}
 	#list-settings table input[type=radio]:checked+label,
 	#list-settings table input[type=radio]+label:focus,

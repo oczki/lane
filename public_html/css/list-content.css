@@ -92,8 +92,9 @@
 	#list tbody tr .icon {
 		opacity: 0; /* thanks to using opacity for invisibility, focus can be obtained */
 	}
-		#list tbody tr:hover .icon {
-			opacity: .12;
+		#list tbody tr:hover .icon,
+		#list tbody tr.edit .icon {
+			opacity: .15;
 		}
 		#list tbody td:hover .icon,
 		#list tbody td.edit .icon {
@@ -144,7 +145,7 @@
 		}
 		#list tbody td input[type=checkbox]+label.checkbox:before {
 			background-position: -280px 0;
-			opacity: .12;
+			opacity: .15;
 		}
 		#list tbody td input[type=checkbox]:checked+label.checkbox:before {
 			background-position: -300px 0;
@@ -178,7 +179,7 @@
 }
 #list[data-show-row-ids="1"] tr:before {
 	display: table-cell;
-	padding-right: 0.2em;
+	padding-right: 0.5em;
 	width: 2.5em;
 	text-align: right;
 	vertical-align: middle;
