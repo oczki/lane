@@ -207,7 +207,6 @@ $(function()
 			e.preventDefault();
 			doEdit(tableCell);
 			cancelEdit(tableCell);
-
 		});
 
 		input.on('keydown', function(e)
@@ -307,11 +306,24 @@ $(function()
 		rowUpdateFinished(tableRow);
 	};
 
-	$('#list tbody').on('click', '.edit-content', function(e)
+	$('#list tbody').on('mousedown', '.edit-content', function(e)
 	{
 		e.preventDefault();
 		var tableCell = $(this).parents('td');
-		startEdit(tableCell);
+
+		if (!tableCell.hasClass('edit'))
+		{
+			startEdit(tableCell);
+		}
+		else
+		{
+			var tableCell = $(this).parents('td');
+			if (tableCell.hasClass('working'))
+				return;
+
+			doEdit(tableCell);
+			cancelEdit(tableCell);
+		}
 	});
 
 	var refreshDeleteRowsButton = function(e)
