@@ -286,7 +286,7 @@ $(function()
 		tableCell.addClass('working');
 		var editLink = tableCell.find('.edit-link');
 		var tableRow = tableCell.parents('tr');
-		var oldText = tableCell.find('span.content-holder').text();
+		var oldText = tableCell.attr('data-orig-text');
 		var text = tableCell.find('input[type=text]').val();
 		var rowId = tableRow.attr('data-content-id');
 		var columnId = listColumns[tableCell.index()].id;
