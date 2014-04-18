@@ -3,6 +3,9 @@
 	float: left;
 	margin-right: 1em;
 }
+#sidebar-top {
+	text-align: center;
+}
 
 #sidebar ul {
 	list-style-type: none;

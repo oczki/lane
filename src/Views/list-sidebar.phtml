@@ -4,19 +4,21 @@
 ?>
 
 <div id="sidebar" data-can-edit="<?= intval($this->context->canEdit) ?>">
-	<a class="logo" href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
-		<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo-small.png') ?>" alt=""/>
-	</a>
+	<div id="sidebar-top">
+		<a class="logo" href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
+			<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo-small.png') ?>" alt=""/>
+		</a>
 
-	<?php if ($this->context->user->settings->showGuestsLastUpdate or $this->context->canEdit): ?>
-		<p id="save-info">
-			<?php if (isset($this->context->list) and $this->context->list->lastUpdate !== null): ?>
-				<?= 'updated ' . TextHelper::formatTimeDelta(time() - $this->context->list->lastUpdate) ?>
-			<?php else: ?>
-				&nbsp;
-			<?php endif ?>
-		</p>
-	<?php endif ?>
+		<?php if ($this->context->user->settings->showGuestsLastUpdate or $this->context->canEdit): ?>
+			<p id="save-info">
+				<?php if (isset($this->context->list) and $this->context->list->lastUpdate !== null): ?>
+					<?= 'updated ' . TextHelper::formatTimeDelta(time() - $this->context->list->lastUpdate) ?>
+				<?php else: ?>
+					&nbsp;
+				<?php endif ?>
+			</p>
+		<?php endif ?>
+	</div>
 
 	<?php if (!empty($this->context->lists)): ?>
 		<div id="sidebar-nav">
