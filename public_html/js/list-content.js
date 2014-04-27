@@ -383,7 +383,7 @@ $(function()
 		tableRow.find('td').attr('data-orig-text', '');
 		$('#list tbody').append(tableRow);
 		$('#list').trigger('addRows', [tableRow, false]);
-		tableRow.find('.edit-content:eq(0)').click();
+		tableRow.find('.edit-content:eq(0)').trigger('mousedown');
 	});
 
 	$('#list tbody tr').each(function(i, tableRowNode)
