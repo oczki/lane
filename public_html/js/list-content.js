@@ -306,6 +306,10 @@ $(function()
 		rowUpdateFinished(tableRow);
 	};
 
+	$('#list tbody').on('click', '.edit-content', function(e)
+	{
+		e.preventDefault();
+	});
 	$('#list tbody').on('mousedown', '.edit-content', function(e)
 	{
 		e.preventDefault();
