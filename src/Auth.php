@@ -74,7 +74,7 @@ class Auth
 			return null;
 		}
 
-		$needed_parts = array_flip([
+		$neededParts = array_flip([
 			'nonce',
 			'nc',
 			'cnonce',
@@ -84,7 +84,7 @@ class Auth
 			'response',
 		]);
 		$data = [];
-		$keys = implode('|', array_keys($needed_parts));
+		$keys = implode('|', array_keys($neededParts));
 
 		preg_match_all(
 			'@(' . $keys . ')=(?:([\'"])([^\2]+?)\2|([^\s,]+))@',
@@ -95,10 +95,10 @@ class Auth
 		foreach ($matches as $m)
 		{
 			$data[$m[1]] = $m[3] ? $m[3] : $m[4];
-			unset($needed_parts[$m[1]]);
+			unset($neededParts[$m[1]]);
 		}
 
-		if (!empty($needed_parts))
+		if (!empty($neededParts))
 			throw new SimpleException('Authorization error');
 
 		$user = UserService::getByName($data['username']);
@@ -108,9 +108,9 @@ class Auth
 		// generate the valid response
 		$a1 = $user->passHash;
 		$a2 = md5($_SERVER['REQUEST_METHOD'] . ':' . $data['uri']);
-		$valid_response = md5(implode(':', [$a1, $data['nonce'], $data['nc'], $data['cnonce'], $data['qop'], $a2]));
+		$validResponse = md5(implode(':', [$a1, $data['nonce'], $data['nc'], $data['cnonce'], $data['qop'], $a2]));
 
-		if ($data['response'] != $valid_response)
+		if ($data['response'] != $validResponse)
 			return null;
 
 		$_SESSION['logged-in'] = true;
