@@ -94,11 +94,13 @@
 		opacity: 0; /* thanks to using opacity for invisibility, focus can be obtained */
 	}
 		#list tbody tr:hover .icon,
-		#list tbody tr.edit .icon {
+		#list tbody tr.edit .icon,
+		#list tbody :focus .icon {
 			opacity: .15;
 		}
 		#list tbody td:hover .icon,
-		#list tbody td.edit .icon {
+		#list tbody td.edit .icon,
+		#list tbody :focus .icon {
 			opacity: 1;
 		}
 
@@ -130,7 +132,8 @@
 
 		/* because why bother standarizing background-position-y, for crying out loud! */
 		#list tbody td:hover .icon-edit,
-		#list tbody td.edit .icon-edit {
+		#list tbody td.edit .icon-edit,
+		#list tbody :focus .icon-edit {
 			background-position: -200px -20px;
 		}
 

@@ -313,6 +313,11 @@ $(function()
 	{
 		e.preventDefault();
 	});
+	$('#list tbody').on('keydown', '.edit-content', function(e)
+	{
+		if (e.keyCode == 13)
+			$(e.target).mousedown();
+	});
 	$('#list tbody').on('mousedown', '.edit-content', function(e)
 	{
 		e.preventDefault();
