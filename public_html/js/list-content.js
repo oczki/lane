@@ -107,6 +107,9 @@ $(function()
 	{
 		var html = newText;
 
+		html = html.replace(/</g, '&lt;');
+		html = html.replace(/>/g, '&gt;');
+
 		//order matters
 		html = html.replace(/\\\]/g, '&#93;');
 		html = html.replace(/\\\\/g, '&#92;');

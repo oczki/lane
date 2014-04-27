@@ -43,9 +43,10 @@ $showRow = function($row)
 						</a>
 					<?php endif ?>
 
-					<span class="content-holder" title="<?= $rowContent ?>">
-						<?= $rowContent ?>
-					</span>
+					<?= HtmlHelper::wrapTag('span', [
+						'class' => 'content-holder',
+						'title' => htmlspecialchars($rowContent)],
+						htmlspecialchars($rowContent)) ?>
 				</div>
 			<?= HtmlHelper::tagClose('td') ?>
 		<?php endforeach ?>
@@ -79,9 +80,10 @@ $showRow = function($row)
 					'style' => sprintf('width: %.02f%%', $column->width),
 				], false) ?>
 					<div>
-						<span class="content-holder" title="<?= htmlspecialchars($column->name) ?>">
-							<?= htmlspecialchars($column->name) ?>
-						</span>
+						<?= HtmlHelper::wrapTag('span', [
+							'class' => 'content-holder',
+							'title' => htmlspecialchars($column->name)],
+							htmlspecialchars($column->name)) ?>
 					</div>
 				<?= HtmlHelper::tagClose('th') ?>
 			<?php endforeach ?>
