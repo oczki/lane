@@ -62,8 +62,14 @@ class Auth
 
 		if (empty($_SERVER['PHP_AUTH_DIGEST']))
 		{
+			$digestString = sprintf(
+				'Digest realm="%s",qop="auth",nonce="%s",opaque="%s"',
+				$realm,
+				uniqid(),
+				md5($realm));
+
 			\Chibi\HeadersHelper::setCode(401);
-			\Chibi\HeadersHelper::set('WWW-Authenticate', 'Digest realm="' . $realm . '",qop="auth",nonce="' . uniqid() . '",opaque="' . md5($realm) . '"');
+			\Chibi\HeadersHelper::set('WWW-Authenticate', $digestString);
 
 			return null;
 		}

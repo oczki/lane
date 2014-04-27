@@ -58,7 +58,10 @@ class AuthController
 		$user->settings->passwordResetToken = md5(microtime(true) . mt_rand());
 		UserService::saveOrUpdate($user);
 
-		$link = \Chibi\UrlHelper::route('auth', 'reset-password-confirm', ['userName' => $user->name, 'token' => $user->settings->passwordResetToken]);
+		$link = \Chibi\UrlHelper::route('auth', 'reset-password-confirm', [
+			'userName' => $user->name,
+			'token' => $user->settings->passwordResetToken]);
+
 		$subject = 'Lane password reset';
 		$body = 'Someone (probably you) requested to reset your password on Lane. ' .
 			'To continue, click on the following link:' . PHP_EOL . PHP_EOL .

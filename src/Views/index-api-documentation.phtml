@@ -55,8 +55,8 @@ jobs[0][args][list-id]=movies</code></pre>
 
 		<p>Forging unique IDs ain&rsquo;t an easy task. API, however, tries to make it as easy as possible. Each list
 		tracks its last used content ID and makes this information publicly available. This way you can just increment
-		this value in memory and simulate job execution locally, without ever asking the API how the list changed (which
-		is expensive), taking note of its <code>200 OK</code> responses instead.</p>
+		this value in memory and simulate job execution locally, without ever asking the API how the list changed
+		(which is expensive), taking note of its <code>200 OK</code> responses instead.</p>
 
 		<h2 id="responses"><a href="#responses">Responses</a></h2>
 
@@ -79,7 +79,19 @@ jobs[0][args][list-id]=movies</code></pre>
 		<p>We&rsquo;re going to edit &ldquo;movies&rdquo; list and set &ldquo;The Matrix&rdquo; score to&nbsp;9.</p>
 
 		<p>First, retrieve the list itself using plaintext authentication:</p>
-		<pre><code>curl --data "user=example&amp;pass=test&amp;jobs[0][name]=get-list&amp;jobs[0][args][user-name]=example&amp;jobs[0][args][list-id]=movies" <?= Api::getUrl() ?> -o -</code></pre>
+		<pre><code>data=''
+data+='user=example'
+data+='&amp;pass=test'
+data+='&amp;jobs[0][name]=get-list'
+data+='&amp;jobs[0][args][user-name]=example'
+data+='&amp;jobs[0][args][list-id]=movies'
+
+curl \
+	--globoff \
+	-o - \
+	--data $data \
+	<?= Api::getUrl() ?></code></pre>
+
 
 		<p>Executing it is going to retrieve JSON that looks like following:</p>
 		<pre><code>{
@@ -202,7 +214,8 @@ curl \
 		<h1 id="all-jobs"><a href="#all-jobs">List of all jobs</a></h1>
 
 		<?php
-			$classes = \Chibi\ReflectionHelper::loadClasses(glob($this->context->rootDir . DS . 'src' . DS . 'Jobs' . DS . '*.php'));
+			$jobSourceFiles = glob($this->context->rootDir . DS . 'src' . DS . 'Jobs' . DS . '*.php');
+			$jobClasses = \Chibi\ReflectionHelper::loadClasses($jobSourceFiles);
 
 			$fixPunctuation = function($text)
 			{
@@ -211,8 +224,8 @@ curl \
 				return $text;
 			};
 
-			foreach ($classes as $i => $class):
-				$reflectionClass = new ReflectionClass($class);
+			foreach ($jobClasses as $i => $jobClass):
+				$reflectionClass = new ReflectionClass($jobClass);
 				$docComment = $reflectionClass->getDocComment();
 				$classInstance = $reflectionClass->newInstance([]);
 
@@ -223,7 +236,9 @@ curl \
 		?>
 
 			<article>
-				<h2 id="job-<?= $jobName ?>"><strong><a href="#job-<?= $jobName ?>"><code><?= $jobName ?></code></a></strong></h2>
+				<h2 id="job-<?= $jobName ?>">
+					<strong><a href="#job-<?= $jobName ?>"><code><?= $jobName ?></code></a></strong>
+				</h2>
 				<p><?= $fixPunctuation($jobDescription) ?></p>
 				<p>Requires authentication: <?= $jobAuth ? 'yes' : 'no' ?></p>
 				<table>

@@ -20,7 +20,8 @@ class UserController
 		if (!$this->context->isSubmit)
 			return;
 
-		$this->context->user->settings->showGuestsLastUpdate = boolval(InputHelper::getPost('show-guests-last-update'));
+		$this->context->user->settings->showGuestsLastUpdate =
+			boolval(InputHelper::getPost('show-guests-last-update'));
 
 		$currentPassword = InputHelper::getPost('current-password');
 		$currentPasswordHash = UserService::hashPassword($this->context->user, $currentPassword);
