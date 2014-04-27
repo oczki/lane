@@ -39,10 +39,6 @@ class ApiController
 			else
 				$user = Auth::loginFromDigest();
 
-			if (!$user)
-				throw new ValidationException('Not authorized.');
-
-
 			$jobs = self::getJobsFromInput();
 			if (empty($jobs))
 				throw new SimpleException('No jobs to execute.');

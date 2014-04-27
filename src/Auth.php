@@ -65,7 +65,7 @@ class Auth
 			\Chibi\HeadersHelper::setCode(401);
 			\Chibi\HeadersHelper::set('WWW-Authenticate', 'Digest realm="' . $realm . '",qop="auth",nonce="' . uniqid() . '",opaque="' . md5($realm) . '"');
 
-			throw new SimpleException('Authorization required');
+			return null;
 		}
 
 		$needed_parts = array_flip([

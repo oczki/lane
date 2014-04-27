@@ -84,6 +84,9 @@ class Api
 		{
 			foreach ($jobs as $job)
 			{
+				if ($job->requiresAuthentication() and !self::getApiUser())
+					throw new ValidationException('Not authorized.');
+
 				$statuses []= $job->execute();
 			}
 		});
