@@ -53,10 +53,10 @@ jobs[0][args][list-id]=movies</code></pre>
 		forge your row an&nbsp;ID and then schedule in advance cell edit jobs that refer to that ID. Then you can
 		execute all of these jobs with just one request.</p>
 
-		<p>Forging unique IDs ain&rsquo;t an easy task, therefore API tries to make it simpler for you. Each list tracks
-		its last used content ID and makes this information publicly available. This way you can just increment this
-		value in memory and simulate job execution locally, without ever asking the API how the list changed (which is
-		expensive), taking note of its <code>200 OK</code> responses instead.</p>
+		<p>Forging unique IDs ain&rsquo;t an easy task. API, however, tries to make it as easy as possible. Each list
+		tracks its last used content ID and makes this information publicly available. This way you can just increment
+		this value in memory and simulate job execution locally, without ever asking the API how the list changed (which
+		is expensive), taking note of its <code>200 OK</code> responses instead.</p>
 
 		<h2 id="responses"><a href="#responses">Responses</a></h2>
 
