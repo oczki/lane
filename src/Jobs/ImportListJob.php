@@ -2,8 +2,8 @@
 /**
 * Imports one previously exported list, effectively creating a new list.
 *
-* @user-name: name of list owner
-* @input-data: data of list to import
+* @param user-name  name of list owner
+* @param input-data data of list to import
 */
 class ImportListJob extends GenericUserJob
 {

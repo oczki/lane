@@ -1,10 +1,9 @@
 <?php
 /**
-* Retrieves whole user's list. If authenticated, shows the list even if it's
-* invisible to public.
+* Retrieves whole user's list. If authenticated, shows the list even if it's invisible to public.
 *
-* @user-name: name of list owner
-* @list-id: id of list
+* @param user-name name of list owner
+* @param list-id   id of list
 */
 class GetListJob extends GenericListJob
 {

@@ -2,10 +2,10 @@
 /**
 * Sets new column position (used for swapping columns).
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @column-id: id of column to change position of
-* @new-position: integer specifying desired column position
+* @param user-name    name of list owner
+* @param list-id      id of list
+* @param column-id    id of column to change position of
+* @param new-position integer specifying desired column position
 */
 class SetColumnPositionJob extends GenericListJob
 {

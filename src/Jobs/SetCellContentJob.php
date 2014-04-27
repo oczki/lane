@@ -2,11 +2,11 @@
 /**
 * Updates existing cell contents.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @column-id: id of column that contains given cell
-* @row-id: id of row that contains given cell
-* @new-content: new cell contents
+* @param user-name    name of list owner
+* @param list-id     id of list
+* @param column-id   id of column that contains given cell
+* @param row-id      id of row that contains given cell
+* @param new-content new cell contents
 */
 class SetCellContentJob extends GenericListJob
 {

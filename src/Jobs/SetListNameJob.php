@@ -1,11 +1,10 @@
 <?php
 /**
-* Sets new list name. Note it doesn't change its ID. See fix-permalink to see
-* how to deal with that.
+* Sets new list name. Note it doesn't change its ID. See fix-permalink to see how to deal with that.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @new-name: new list name
+* @param user-name name of list owner
+* @param list-id   id of list
+* @param new-name  new list name
 */
 class SetListNameJob extends GenericListJob
 {

@@ -2,9 +2,9 @@
 /**
 * Deletes one column from list.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @column-id: id of column to delete
+* @param user-name name of list owner
+* @param list-id   id of list
+* @param column-id id of column to delete
 */
 class DeleteColumnJob extends GenericListJob
 {

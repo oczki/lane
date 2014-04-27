@@ -17,12 +17,13 @@ abstract class AbstractJob implements IJob
 	{
 		$reflectionClass = new ReflectionClass(get_called_class());
 		$docComment = $reflectionClass->getDocComment();
+		$docComment = preg_replace('/(?<!\*\*)\n\s*\*[ \t]+(?!@|\n\n)/', ' ', $docComment);
 		return $docComment;
 	}
 
 	public function getArgumentsDescription()
 	{
-		preg_match_all('/^\s*\*[ \t]+@([a-zA-Z_-]+):?[ \t]+(.+)$/m', $this->getDocComment(), $matches);
+		preg_match_all('/^\s*\*[ \t]+@param ([a-zA-Z_-]+):?[ \t]+(.+$)/m', $this->getDocComment(), $matches);
 		return array_combine($matches[1], $matches[2]);
 	}
 

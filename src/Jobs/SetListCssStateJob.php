@@ -2,9 +2,9 @@
 /**
 * Enables or disables user CSS for given list.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @new-state: whether to enable custom CSS (1) or not (0)
+* @param user-name name of list owner
+* @param list-id   id of list
+* @param new-state whether to enable custom CSS (1) or not (0)
 */
 class SetListCssStateJob extends GenericListJob
 {

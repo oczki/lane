@@ -2,9 +2,9 @@
 /**
 * Sets new list custom CSS.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @new-content: new content of custom CSS
+* @param user-name   name of list owner
+* @param list-id     id of list
+* @param new-content new content of custom CSS
 */
 class SetListCssContentJob extends GenericListJob
 {

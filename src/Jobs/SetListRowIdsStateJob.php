@@ -2,9 +2,9 @@
 /**
 * Enables or disables showing row IDs for given list.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @new-state: whether to enable row IDs (1) or not (0)
+* @param user-name name of list owner
+* @param list-id   id of list
+* @param new-state whether to enable row IDs (1) or not (0)
 */
 class SetListRowIdsStateJob extends GenericListJob
 {

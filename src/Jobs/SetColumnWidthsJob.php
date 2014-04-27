@@ -2,9 +2,10 @@
 /**
 * Sets new column widths. All supplied widths must add up to 100%.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @new-widths: string representing new column widths (example: [60,20,20] will make first column 60% wide and other two columns 20% wide.)
+* @param user-name  name of list owner
+* @param list-id    id of list
+* @param new-widths string representing new column widths (example: <code>[60,20,20]</code> will make first column 60%
+*                   wide and other two columns 20% wide.)
 */
 class SetColumnWidthsJob extends GenericListJob
 {

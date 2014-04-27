@@ -2,10 +2,10 @@
 /**
 * Adds new row to list.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @new-id: id of new row
-* @new-content: array with row content
+* @param user-name   name of list owner
+* @param list-id     id of list
+* @param new-id      id of new row
+* @param new-content array with row content
 */
 class AddRowJob extends GenericListJob
 {

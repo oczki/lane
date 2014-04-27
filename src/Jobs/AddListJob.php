@@ -2,9 +2,9 @@
 /**
 * Adds new list.
 *
-* @user-name: name of list owner
-* @new-name: name of the new list
-* @new-visibility: whether to show the list to the public (1) or make it private (0)
+* @param user-name      name of list owner
+* @param new-name       name of the new list
+* @param new-visibility whether to show the list to the public (1) or make it private (0)
 */
 class AddListJob extends GenericUserJob
 {

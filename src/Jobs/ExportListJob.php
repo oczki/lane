@@ -1,10 +1,10 @@
 <?php
 /**
-* Exports one list to JSON format. If authenticated, exports the list even if
-* it's invisible to public (otherwise returns an error).
+* Exports one list to JSON format. If authenticated, exports the list even if it's invisible to public (otherwise
+* returns an error).
 *
-* @user-name: name of list owner
-* @list-id: id of list
+* @param user-name name of list owner
+* @param list-id   id of list
 */
 class ExportListJob extends GenericListJob
 {

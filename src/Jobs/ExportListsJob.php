@@ -1,10 +1,9 @@
 <?php
 /**
-* Exports all lists in JSON format packed into single ZIP file, base64-encoded.
-* If authenticated, also exports private lists (otherwise only public ones are
-* exported).
+* Exports all lists in JSON format packed into single ZIP file, base64-encoded.  If authenticated, also exports private
+* lists (otherwise only public ones are exported).
 *
-* @user-name: name of list owner
+* @param user-name name of list owner
 */
 class ExportListsJob extends GenericUserJob
 {

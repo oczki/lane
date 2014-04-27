@@ -2,11 +2,11 @@
 /**
 * Adds new column to list.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @new-name: name of the new column
-* @new-id: content id of the new column
-* @new-align: text alignment of the new column (left, right or center)
+* @param user-name name of list owner
+* @param list-id   id of list
+* @param new-name  name of the new column
+* @param new-id    content id of the new column
+* @param new-align text alignment of the new column (left, right or center)
 */
 class AddColumnJob extends GenericListJob
 {

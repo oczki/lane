@@ -1,9 +1,8 @@
 <?php
 /**
-* Retrieves all of user's lists. If authenticated, also shows private lists
-* (otherwise only public ones are retrieved).
+* Retrieves all of user's lists. If authenticated, also shows private lists (otherwise only public ones are retrieved).
 *
-* @user-name: name of list owner
+* @param user-name name of list owner
 */
 class GetListsJob extends GenericUserJob
 {

@@ -2,8 +2,8 @@
 /**
 * Deletes whole list. Should be used with caution.
 *
-* @user-name: name of list owner
-* @list-id: id of list
+* @param user-name name of list owner
+* @param list-id   id of list
 */
 class DeleteListJob extends GenericListJob
 {

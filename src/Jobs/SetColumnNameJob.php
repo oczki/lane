@@ -2,10 +2,10 @@
 /**
 * Sets new column name.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @column-id: id of column to change name of
-* @new-name: new column name
+* @param user-name name of list owner
+* @param list-id   id of list
+* @param column-id id of column to change name of
+* @param new-name  new column name
 */
 class SetColumnNameJob extends GenericListJob
 {

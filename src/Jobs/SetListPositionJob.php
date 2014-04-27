@@ -2,9 +2,9 @@
 /**
 * Sets new list position (used for swapping lists).
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @new-position: integer specifying desired list position
+* @param user-name    name of list owner
+* @param list-id      id of list
+* @param new-position integer specifying desired list position
 */
 class SetListPositionJob extends GenericListJob
 {

@@ -2,9 +2,10 @@
 /**
 * Sets new list sort style.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @new-style: string representing new sort style (example: <code>[[0,0],[2,1]]</code> will sort by first column in ascending order, then by third column in descending order.)
+* @param user-name name of list owner
+* @param list-id   id of list
+* @param new-style string representing new sort style (example: <code>[[0,0],[2,1]]</code> will sort by first column in
+*                  ascending order, then by third column in descending order.)
 */
 class SetListSortStyleJob extends GenericListJob
 {

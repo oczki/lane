@@ -2,9 +2,9 @@
 /**
 * Deletes one row from list.
 *
-* @user-name: name of list owner
-* @list-id: id of list
-* @row-id: id of row to delete
+* @param user-name name of list owner
+* @param list-id   id of list
+* @param row-id    id of row to delete
 */
 class DeleteRowJob extends GenericListJob
 {
