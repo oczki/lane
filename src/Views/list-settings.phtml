@@ -25,7 +25,9 @@ $alignments = [
 				'action' => Api::getUrl(),
 				'class' => 'inline delete-list',
 				'method' => 'post'],
-					Api::serializeJobHtml(Api::jobFactory('delete-list', ['user-name' => $this->context->user->name, 'list-id' => $this->context->list->urlName])) .
+					Api::serializeJobHtml(Api::jobFactory('delete-list', [
+						'user-name' => $this->context->user->name,
+						'list-id' => $this->context->list->urlName])) .
 					HtmlHelper::submitInputTag('Delete this list', ['class' => 'btn hl'])) ?>
 		</li>
 
@@ -35,7 +37,9 @@ $alignments = [
 				'class' => 'inline save-sort',
 				'style' => 'display: none',
 				'method' => 'post'],
-					Api::serializeJobHtml(Api::jobFactory('set-list-sort-style', ['user-name' => $this->context->user->name, 'list-id' => $this->context->list->urlName, 'new-style' => ''])) .
+					Api::serializeJobHtml(Api::jobFactory('set-list-sort-style', [
+						'user-name' => $this->context->user->name,
+						'list-id' => $this->context->list->urlName, 'new-style' => ''])) .
 					HtmlHelper::submitInputTag('Save current sort', ['class' => 'btn hl'])) ?>
 		</li>
 
@@ -45,7 +49,9 @@ $alignments = [
 					'action' => Api::getUrl(),
 					'class' => 'inline fix-permalink',
 					'method' => 'post'],
-						Api::serializeJobHtml(Api::jobFactory('fix-permalink', ['user-name' => $this->context->user->name, 'list-id' => $this->context->list->urlName])) .
+						Api::serializeJobHtml(Api::jobFactory('fix-permalink', [
+							'user-name' => $this->context->user->name,
+							'list-id' => $this->context->list->urlName])) .
 						HtmlHelper::submitInputTag('Fix permalink', ['class' => 'btn hl'])) ?>
 			</li>
 		<?php endif ?>
@@ -61,7 +67,9 @@ $alignments = [
 
 			<div class="basic-settings">
 				<?= HtmlHelper::labelDecorator('List name',
-					HtmlHelper::textInputTag('name', ['placeholder' => 'Some name…', 'value' => $this->context->list->name])) ?>
+					HtmlHelper::textInputTag('name', [
+						'placeholder' => 'Some name…',
+						'value' => $this->context->list->name])) ?>
 
 				<?= HtmlHelper::labelDecorator('Visibility',
 					HtmlHelper::checkboxInputTag('visibility', $this->context->list->visible),
@@ -72,7 +80,8 @@ $alignments = [
 					'show row numbers') ?>
 
 				<?= HtmlHelper::labelDecorator('User CSS',
-					HtmlHelper::checkboxInputTag('custom-css', $this->context->list->content->useCustomCss, ['class' => 'custom-css']),
+					HtmlHelper::checkboxInputTag('custom-css', $this->context->list->content->useCustomCss,
+						['class' => 'custom-css']),
 					'enable custom CSS') ?>
 			</div>
 
@@ -103,7 +112,7 @@ $alignments = [
 
 			<div class="custom-css-edit">
 				<p>Custom CSS</p>
-				<textarea name="custom-css"><?= TextHelper::keepWhitespace($this->context->list->content->customCss) ?></textarea>
+				<textarea name="custom-css"><?= $this->context->list->content->customCss ?></textarea>
 			</div>
 
 			<div class="submit">

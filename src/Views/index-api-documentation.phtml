@@ -7,15 +7,21 @@
 
 	<section>
 		<h1 id="api-intro"><a href="#api-intro">Introduction to API</a></h1>
-		<p>Almost everything you do on lane boils down to executing various <em>jobs</em>, such as adding new rows, editing cell contents, etc. Each operation has its own atomic job, which takes various arguments and upon execution returns some feedback to the end user.</p>
-		<p>In order to execute jobs, you must pass specific POST web requests to <a href="<?= Api::getUrl() ?>"><?= Api::getUrl() ?></a>.</p>
+
+		<p>Almost everything you do on lane boils down to executing various <em>jobs</em>, such as adding new rows,
+		editing cell contents, etc. Each operation has its own atomic job, which takes various arguments and upon
+		execution returns some feedback to the end user.</p>
+
+		<p>In order to execute jobs, you must pass specific POST web requests to <a href="<?= Api::getUrl() ?>"><?=
+		Api::getUrl() ?></a>.</p>
 	</section>
 
 	<section>
 		<h2 id="serializing-jobs"><a href="#serializing-jobs">Serializing jobs</a></h2>
+
 		<p>Jobs to execute have to be specified in the following form:</p>
-		<pre><code><?= TextHelper::keepWhiteSpace(<<<EOF
-{
+
+		<pre><code>{
 	"jobs":
 	[
 		{
@@ -27,27 +33,45 @@
 			}
 		}
 	]
-}
-EOF
-); ?></code></pre>
+}</code></pre>
+
 		<p>Essentially, this should be represented in your requests in following format:</p>
-		<pre><code><?= TextHelper::keepWhiteSpace(<<<EOF
-jobs[0][name]=get-list
+
+		<pre><code>jobs[0][name]=get-list
 jobs[0][args][user-name]=example
-jobs[0][args][list-id]=movies
-EOF
-); ?></code></pre>
-		<p>As you&rsquo;ve probably already figured it out, you can run many jobs using just one HTTP request. This brings us to next concept, which is&hellip;</p>
+jobs[0][args][list-id]=movies</code></pre>
+
+		<p>As you&rsquo;ve probably already figured it out, you can run many jobs using just one HTTP request. This
+		brings us to next concept, which is&hellip;</p>
 
 		<h2 id="content-id"><a href="#content-id">Content ID</a></h2>
-		<p>Whenever you add a new row or column it gets a new ID, so it can be easily identified when you want to say &ldquo;edit <em>this</em> cell&rdquo; or &ldquo;remove <em>that</em> row&rdquo;. But it doesn&rsquo;t happen automatically&nbsp;&ndash; it is <em>you</em> who decides what its ID should be. This is to lengthen the time you can stay offline without counselling API. Suppose you want to add new row full of data; in this model you forge your row an&nbsp;ID and then schedule in advance cell edit jobs that refer to that ID. Then you can execute all of these jobs with just one request.</p>
-		<p>Forging unique IDs ain&rsquo;t an easy task, therefore API tries to make it simpler for you. Each list tracks its last used content ID and makes this information publicly available. This way you can just increment this value in memory and simulate job execution locally, without ever asking the API how the list changed (which is expensive), taking note of its <code>200 OK</code> responses instead.</p>
+
+		<p>Whenever you add a new row or column it gets a new ID, so it can be easily identified when you want to say
+		&ldquo;edit <em>this</em> cell&rdquo; or &ldquo;remove <em>that</em> row&rdquo;. But it doesn&rsquo;t happen
+		automatically&nbsp;&ndash; it is <em>you</em> who decides what its ID should be. This is to lengthen the time
+		you can stay offline without counseling API. Suppose you want to add new row full of data; in this model you
+		forge your row an&nbsp;ID and then schedule in advance cell edit jobs that refer to that ID. Then you can
+		execute all of these jobs with just one request.</p>
+
+		<p>Forging unique IDs ain&rsquo;t an easy task, therefore API tries to make it simpler for you. Each list tracks
+		its last used content ID and makes this information publicly available. This way you can just increment this
+		value in memory and simulate job execution locally, without ever asking the API how the list changed (which is
+		expensive), taking note of its <code>200 OK</code> responses instead.</p>
 
 		<h2 id="responses"><a href="#responses">Responses</a></h2>
-		<p>Output is always represented in JSON. If the request succeeds, response yields HTTP code <code>200 OK</code> and returns JSON with <code>status</code> field containing array of job execution statuses in order they were executed (usually status is empty). Upon failure, whole transaction is rolled back, error message is shown in <code>error</code> field (sorry, no error IDs) and response yields <code>400 Bad Request</code>.</p>
+
+		<p>Output is always represented in JSON. If the request succeeds, response yields HTTP code <code>200 OK</code>
+		and returns JSON with <code>status</code> field containing array of job execution statuses in order they were
+		executed (usually status is empty). Upon failure, whole transaction is rolled back, error message is shown in
+		<code>error</code> field (sorry, no error IDs) and response yields <code>400 Bad Request</code>.</p>
 
 		<h2 id="authentication"><a href="#authentication">Authentication</a></h2>
-		<p>In general, you must be logged in to use any API functionalities; some jobs, however, don&rsquo;t require credentials (e.g. enumerating someone&rsquo;s lists). In order to authenticate yourself, you must pass <code>user</code> and <code>pass</code> parameters with user&rsquo;s credentials or, if you&rsquo;re worried about sending passwords in plaintext over network, use <a href="http://en.wikipedia.org/wiki/Digest_access_authentication">HTTP digest authentication</a>.</p>
+
+		<p>In general, you must be logged in to use any API functionalities; some jobs, however, don&rsquo;t require
+		credentials (e.g. enumerating someone&rsquo;s lists). In order to authenticate yourself, you must pass
+		<code>user</code> and <code>pass</code> parameters with user&rsquo;s credentials or, if you&rsquo;re worried
+		about sending passwords in plaintext over network, use <a
+		href="http://en.wikipedia.org/wiki/Digest_access_authentication">HTTP digest authentication</a>.</p>
 	</section>
 
 	<section>
@@ -58,8 +82,7 @@ EOF
 		<pre><code>curl --data "user=example&amp;pass=test&amp;jobs[0][name]=get-list&amp;jobs[0][args][user-name]=example&amp;jobs[0][args][list-id]=movies" <?= Api::getUrl() ?> -o -</code></pre>
 
 		<p>Executing it is going to retrieve JSON that looks like following:</p>
-		<pre><code><?= TextHelper::keepWhiteSpace(<<<EOF
-{
+		<pre><code>{
 	"status":
 	[
 		{
@@ -151,11 +174,27 @@ EOF
 		}
 	]
 }</code></pre>
-EOF
-); ?>
 
-		<p>Most interesting parts for this task were highlighted in red&nbsp;&ndash; namely, column with user score and row with data of &ldquo;The Matrix&rdquo;. We take their ID fields and execute cell edit job, this time using HTTP digest authentication:</p>
-		<pre><code>curl --digest -u example:test --globoff --data "jobs[0][name]=set-cell-content&amp;jobs[0][args][user-name]=example&amp;jobs[0][args][list-id]=movies&amp;jobs[0][args][column-id]=2&amp;jobs[0][args][row-id]=35&amp;jobs[0][args][new-cell-text]=9" <?= Api::getUrl() ?> -o -</code></pre>
+		<p>Most interesting parts for this task were highlighted in red&nbsp;&ndash; namely, column with user score and
+		row with data of &ldquo;The Matrix&rdquo;. We take their ID fields and execute cell edit job, this time using
+		HTTP digest authentication:</p>
+
+		<pre><code>data=''
+data+='jobs[0][name]=set-cell-content'
+data+='&amp;jobs[0][args][user-name]=example'
+data+='&amp;jobs[0][args][list-id]=movies'
+data+='&amp;jobs[0][args][column-id]=2'
+data+='&amp;jobs[0][args][row-id]=35'
+data+='&amp;jobs[0][args][new-cell-text]=9'
+
+curl \
+	--globoff \
+	--digest \
+	-u example:test \
+	-o - \
+	--data $data \
+	<?= Api::getUrl() ?></code></pre>
+
 		<p>&hellip;and we&rsquo;re done.</p>
 	</section>
 
@@ -182,6 +221,7 @@ EOF
 				$jobDescription = $classInstance->getDescription();
 				$jobArguments = $classInstance->getArgumentsDescription();
 		?>
+
 			<article>
 				<h2 id="job-<?= $jobName ?>"><strong><a href="#job-<?= $jobName ?>"><code><?= $jobName ?></code></a></strong></h2>
 				<p><?= $fixPunctuation($jobDescription) ?></p>
@@ -196,9 +236,9 @@ EOF
 						<?php endforeach ?>
 					</tbody>
 				</table>
-
 				<hr/>
 			</article>
+
 		<?php endforeach ?>
 	</section>
 

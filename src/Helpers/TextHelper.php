@@ -29,16 +29,6 @@ class TextHelper
 		return $out;
 	}
 
-	public static function keepWhiteSpace($text)
-	{
-		$text = str_replace(
-			["\t", "\r", "\n"],
-			['&#9;', '&#13;', '&#10;'],
-			$text);
-		$text = str_replace('  ', '&nbsp; ', $text);
-		return $text;
-	}
-
 	public static function formatTimeDelta($delta)
 	{
 		if ($delta === null)

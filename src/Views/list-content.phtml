@@ -19,9 +19,19 @@
 if (!isset($this->context->list))
 	return;
 
-\Chibi\AssetViewDecorator::setTitle($this->context->user->name . '&rsquo;s lane&nbsp;&ndash; ' . $this->context->list->name);
+\Chibi\AssetViewDecorator::setTitle(sprintf(
+	'%s&rsquo;s lane&nbsp;&ndash; %s',
+	$this->context->user->name,
+	$this->context->list->name));
+
 if ($this->context->list->content->useCustomCss)
-	\Chibi\AssetViewDecorator::addStylesheet(\Chibi\UrlHelper::route('list', 'custom-css', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]));
+{
+	$customCssUrl = \Chibi\UrlHelper::route('list', 'custom-css', [
+		'userName' => $this->context->user->name,
+		'id' => $this->context->list->urlName]);
+
+	\Chibi\AssetViewDecorator::addStylesheet($customCssUrl);
+}
 
 $showRow = function($row)
 {
@@ -32,15 +42,14 @@ $showRow = function($row)
 				$column = ListService::getColumn($this->context->list, $columnIndex);
 				if ($column === null)
 					continue;
+
 				echo HtmlHelper::tag('td', [
 					'class' => join(' ', ListService::getColumnClasses($column))
 				], false);
 			?>
 				<div>
 					<?php if ($this->context->canEdit): ?>
-						<a href="#" class="edit-content">
-							<i class="icon icon-edit"></i>
-						</a>
+						<a href="#" class="edit-content"><i class="icon icon-edit"></i></a>
 					<?php endif ?>
 
 					<?= HtmlHelper::wrapTag('span', [

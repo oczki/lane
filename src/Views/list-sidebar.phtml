@@ -35,7 +35,9 @@
 
 						echo HtmlHelper::tag('a', [
 							'class' => 'list',
-							'href' => \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $list->urlName]),
+							'href' => \Chibi\UrlHelper::route('list', 'view', [
+								'userName' => $this->context->user->name,
+								'id' => $list->urlName]),
 							'title' => $list->name]);
 
 						echo htmlspecialchars($list->name);
@@ -49,16 +51,21 @@
 					<li class="sep"><hr/></li>
 
 					<li>
-						<a class="add-list" href="<?= \Chibi\UrlHelper::route('list', 'add', ['userName' => $this->context->user->name]) ?>">
-							Add new list…
-						</a>
+						<?= HtmlHelper::wrapTag('a', [
+							'class' => 'add-list',
+							'href' => \Chibi\UrlHelper::route('list', 'add', [
+								'userName' => $this->context->user->name])],
+							'Add new list…') ?>
 					</li>
 
 					<?php if (isset($this->context->list)): ?>
 						<li>
-							<a class="settings" href="<?= \Chibi\UrlHelper::route('list', 'settings', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]) ?>">
-								List settings…
-							</a>
+							<?= HtmlHelper::wrapTag('a', [
+								'class' => 'settings',
+								'href' => \Chibi\UrlHelper::route('list', 'settings', [
+									'userName' => $this->context->user->name,
+									'id' => $this->context->list->urlName])],
+								'List settings…') ?>
 						</li>
 					<?php endif ?>
 				<?php endif ?>

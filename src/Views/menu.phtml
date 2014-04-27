@@ -12,34 +12,80 @@
 			$links = [];
 			if (Auth::isLoggedIn())
 			{
-				$links []= ['account-settings', \Chibi\UrlHelper::route('user', 'account-settings', ['userName' => Auth::getLoggedInUser()->name]), 'Account settings'];
-				$links []= ['import', \Chibi\UrlHelper::route('list', 'import', ['userName' => $this->context->user->name]), 'Import new list'];
-				$links []= ['export', \Chibi\UrlHelper::route('list', 'export', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]), 'Export this list'];
+				$links []= [
+					'account-settings',
+					\Chibi\UrlHelper::route('user', 'account-settings', [
+						'userName' => Auth::getLoggedInUser()->name]),
+					'Account settings'];
+
+				$links []= [
+					'import',
+					\Chibi\UrlHelper::route('list', 'import', [
+						'userName' => $this->context->user->name]),
+					'Import new list'];
+
+				$links []= [
+					'export',
+					\Chibi\UrlHelper::route('list', 'export', [
+						'userName' => $this->context->user->name,
+						'id' => $this->context->list->urlName]),
+					'Export this list'];
+
 				if (isset($this->context->list) and $this->context->list->userId == Auth::getLoggedInUser()->id)
-					$links []= ['view-as-guest', \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName, 'guest' => 'guest']), 'View as guest'];
+				{
+					$links []= [
+						'view-as-guest',
+						\Chibi\UrlHelper::route('list', 'view', [
+							'userName' => $this->context->user->name,
+							'id' => $this->context->list->urlName, 'guest' => 'guest']),
+						'View as guest'];
+				}
+
 			}
 			elseif (Auth::isTemporarilyLoggedOut())
-				$links []= ['view-as-guest', \Chibi\UrlHelper::route('list', 'view', ['userName' => $this->context->user->name, 'id' => $this->context->list->urlName]), 'Back to edit mode'];
+			{
+				$links []= [
+					'view-as-guest',
+					\Chibi\UrlHelper::route('list', 'view', [
+						'userName' => $this->context->user->name,
+						'id' => $this->context->list->urlName]),
+					'Back to edit mode'];
+			}
 
-			$links []= ['help', \Chibi\UrlHelper::route('index', 'help'), 'Editing help'];
-			$links []= ['about', \Chibi\UrlHelper::route('index', 'about'), 'About'];
+			$links []= [
+				'help',
+				\Chibi\UrlHelper::route('index', 'help'),
+				'Editing help'];
+
+			$links []= [
+				'about',
+				\Chibi\UrlHelper::route('index', 'about'),
+				'About'];
 
 			if (Auth::isLoggedIn())
 			{
-				$links []= ['logout', \Chibi\UrlHelper::route('auth', 'logout'), 'Log out'];
+				$links []= [
+					'logout',
+					\Chibi\UrlHelper::route('auth', 'logout'),
+					'Log out'];
 			}
 			else
 			{
-				$links []= ['login', \Chibi\UrlHelper::route('auth', 'login'), 'Log in'];
-				$links []= ['register', \Chibi\UrlHelper::route('auth', 'register'), 'Register'];
+				$links []= [
+					'login',
+					\Chibi\UrlHelper::route('auth', 'login'),
+					'Log in'];
+
+				$links []= [
+					'register',
+					\Chibi\UrlHelper::route('auth', 'register'),
+					'Register'];
 			}
 		?>
 		<?php foreach ($links as $link): ?>
 			<?php list ($class, $url, $text) = $link ?>
 			<li>
-				<a href="<?= $url ?>" class="<?= $class ?>">
-					<?= $text ?>
-				</a>
+				<?= HtmlHelper::wrapTag('a', ['href' => $url, 'class' => $class], $text) ?>
 			</li>
 		<?php endforeach ?>
 	</ul>

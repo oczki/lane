@@ -205,7 +205,9 @@ class ListService
 		}
 		catch (Exception $e)
 		{
-			throw new SimpleException('Error while decoding imported list (' . $e->getMessage() . '). Is this valid list?');
+			throw new SimpleException(sprintf(
+				'Error while decoding imported list (%s). Is this valid list?',
+				$e->getMessage()));
 		}
 	}
 

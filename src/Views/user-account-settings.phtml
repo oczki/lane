@@ -14,7 +14,8 @@
 
 		<div class="form-wrapper">
 			<?= HtmlHelper::labelDecorator('Last update text',
-				HtmlHelper::checkboxInputTag('show-guests-last-update', $this->context->user->settings->showGuestsLastUpdate),
+				HtmlHelper::checkboxInputTag('show-guests-last-update',
+					$this->context->user->settings->showGuestsLastUpdate),
 				'show &ldquo;last save time&rdquo; to guests') ?>
 		</div>
 
@@ -52,7 +53,8 @@
 	<div class="danger">
 		<hr/>
 
-		<p>If you want to permanently delete your account, consider exporting your lists data before taking the last step.</p>
+		<p>If you want to permanently delete your account, consider exporting your lists data before taking the last
+		step.</p>
 
 		<?= HtmlHelper::tag('form', [
 			'action' => \Chibi\UrlHelper::route('user', 'delete-account', ['userName' => $this->context->user->name]),

@@ -15,9 +15,12 @@
 
 			<?php if (isset($this->context->returnLink)): ?>
 				<div class="return-link-wrapper">
-					<?= HtmlHelper::tag('a', ['class' => 'btn hl return-link', 'href' => $this->context->returnLink]); ?>
-						<?= $this->context->returnLinkText ?>
-					<?= HtmlHelper::tagClose('a'); ?>
+					<?= HtmlHelper::wrapTag('a',
+						[
+							'class' => 'btn hl return-link',
+							'href' => $this->context->returnLink],
+						$this->context->returnLinkText);
+					?>
 				</div>
 			<?php endif ?>
 		</div>
