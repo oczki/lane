@@ -22,17 +22,17 @@ $(function()
 				dragger,
 				'li',
 
-				function(dragger)
+				function(target)
 				{
 				},
 
-				function(dragger, isChanged)
+				function(target, isChanged)
 				{
 					if (!isChanged)
 						return;
-					var userName = dragger.parents('li').attr('data-user-name');
-					var listId = dragger.parents('li').attr('data-list-id');
-					var priority = dragger.parents('li').index() + 1;
+					var userName = target.attr('data-user-name');
+					var listId = target.attr('data-list-id');
+					var priority = target.index() + 1;
 					queue.push(new Job('set-list-position', {
 						'user-name': userName,
 						'list-id': listId,
