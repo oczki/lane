@@ -1,8 +1,9 @@
 #list-settings {
-	width: 35em;
+	display: inline-block;
 }
 #list-settings .form-wrapper {
 	display: block;
+	min-width: 35em;
 }
 #list-settings .basic-settings {
 	float: left;

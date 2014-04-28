@@ -1,18 +1,29 @@
-#outer-wrapper {
-	display: table;
-	width: 100%;
+body.list {
+	background: #ededed;
+	margin: 0;
+	padding: 0;
 }
-#sidebar { display: table-cell; }
+#main {
+	max-width: 100%;
+}
+#outer-wrapper {
+	width: 100%;
+	overflow: hidden;
+	display: table;
+}
+#sidebar {
+	display: table-cell;
+}
 #outer-content {
-	min-height: 20em;
+	background: white;
 	width: 100%;
 	vertical-align: top;
 	display: table-cell;
 }
 #inner-content {
-	min-height: 20em;
-	margin-top: 1em;
+	margin: 0.75em;
 	clear: both;
+	min-height: 40em;
 }
 
 #inner-header {

@@ -1,21 +1,120 @@
+<p id="search-warning">
+	Showing <span class="shown-rows">0</span> out of <span class="total-rows">0</span> rows.
+</p>
+
 <?php
-\Chibi\AssetViewDecorator::addStylesheet('popups.css');
-\Chibi\AssetViewDecorator::addStylesheet('list.css');
-\Chibi\AssetViewDecorator::addScript('popups.js');
-\Chibi\AssetViewDecorator::addScript('queue.js');
+\Chibi\AssetViewDecorator::addStylesheet('list-content.css');
+\Chibi\AssetViewDecorator::addStylesheet('list-classes.css');
+\Chibi\AssetViewDecorator::addScript('list-content.js');
+\Chibi\AssetViewDecorator::addStylesheet('jquery.tablesorter.custom.css');
+\Chibi\AssetViewDecorator::addScript('jquery.tablesorter.min.js');
+
+if (!isset($this->context->list))
+	return;
+
+\Chibi\AssetViewDecorator::setTitle(sprintf(
+	'%s&rsquo;s lane&nbsp;&ndash; %s',
+	$this->context->user->name,
+	$this->context->list->name));
+
+if ($this->context->list->content->useCustomCss)
+{
+	$customCssUrl = \Chibi\UrlHelper::route('list', 'custom-css', [
+		'userName' => $this->context->user->name,
+		'id' => $this->context->list->urlName]);
+
+	\Chibi\AssetViewDecorator::addStylesheet($customCssUrl);
+}
+
+$showRow = function($row)
+{
+?>
+	<?= HtmlHelper::tag('tr', ['data-content-id' => $row->id]) ?>
+		<?php foreach (ListService::getCells($row) as $columnIndex => $rowContent): ?>
+			<?
+				$column = ListService::getColumn($this->context->list, $columnIndex);
+				if ($column === null)
+					continue;
+
+				echo HtmlHelper::tag('td', [
+					'class' => join(' ', ListService::getColumnClasses($column))
+				], false);
+			?>
+				<div>
+					<?php if ($this->context->canEdit): ?>
+						<a href="#" class="edit-content"><i class="icon icon-edit"></i></a>
+					<?php endif ?>
+
+					<?= HtmlHelper::wrapTag('span', [
+						'class' => 'content-holder',
+						'title' => htmlspecialchars($rowContent)],
+						htmlspecialchars($rowContent)) ?>
+				</div>
+			<?= HtmlHelper::tagClose('td') ?>
+		<?php endforeach ?>
+
+		<?php if ($this->context->canEdit): ?>
+			<td class="row-ops">
+				<input type="checkbox" id="row-<?= intval($row->id) ?>"/>
+				<label for="row-<?= intval($row->id) ?>" class="checkbox"></label>
+			</td>
+		<?php endif ?>
+	<?= HtmlHelper::tagClose('tr') ?>
+<?php
+}
 ?>
 
-<div id="outer-wrapper">
-	<?= $this->renderFile('list-sidebar') ?>
+<?= HtmlHelper::tag('table', [
+	'id' => 'list',
+	'data-can-edit' => $this->context->canEdit ? '1' : '0',
+	'data-show-row-ids' => $this->context->list->content->showRowIds,
+	'data-sort-style' => $this->context->list->content->sortStyle,
+	'data-user-name' => $this->context->user->name,
+	'data-list-id' => $this->context->list->urlName,
+	'data-list-columns' => json_encode($this->context->list->content->columns),
+	'data-last-content-id' => $this->context->list->content->lastContentId], false) ?>
 
-	<div id="outer-content">
-		<div id="inner-header">
-			<?= $this->renderFile('menu') ?>
-		</div>
+	<thead>
+		<tr>
+			<?php foreach (ListService::getColumns($this->context->list) as $columnIndex => $column): ?>
+				<?= HtmlHelper::tag('th', [
+					'class' => join(' ', ListService::getColumnClasses($column)),
+					'style' => sprintf('width: %.02f%%', $column->width),
+				], false) ?>
+					<div>
+						<?= HtmlHelper::wrapTag('span', [
+							'class' => 'content-holder',
+							'title' => htmlspecialchars($column->name)],
+							htmlspecialchars($column->name)) ?>
+					</div>
+				<?= HtmlHelper::tagClose('th') ?>
+			<?php endforeach ?>
+			<?php if ($this->context->canEdit): ?>
+				<th data-noresize="1" class="row-ops"></th>
+			<?php endif ?>
+		</tr>
+	</thead>
 
-		<div id="inner-content">
-			<?php $this->renderFile('messages') ?>
-			<?php $this->renderFile('list-content') ?>
-		</div>
+	<tbody>
+		<?php foreach (ListService::getRows($this->context->list) as $rowIndex => $row): ?>
+			<?php $showRow($row) ?>
+		<?php endforeach ?>
+	</tbody>
+
+	<tfoot>
+		<?php
+			$dummyRow = new ListRow();
+			$dummyRow->content = array_fill(0, count($this->context->list->content->columns), '');
+			$dummyRow->id = '';
+			$showRow($dummyRow);
+		?>
+	</tfoot>
+
+<?= HtmlHelper::tagClose('table') ?>
+
+<?php if ($this->context->canEdit): ?>
+	<div id="table-ops">
+		<?= HtmlHelper::buttonInputTag('Add new row', ['class' => 'btn add-row']) ?>
+		<?= HtmlHelper::buttonInputTag('Delete selected', ['class' => 'btn delete-rows']) ?>
 	</div>
-</div>
+<?php endif ?>

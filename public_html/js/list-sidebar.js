@@ -2,12 +2,6 @@ $(function()
 {
 	var queue = QueueFactory();
 
-	$('#sidebar-nav .add-list, #sidebar-nav .settings').click(function(e)
-	{
-		e.preventDefault();
-		showPopup($(this).attr('href'));
-	});
-
 	if ($('#sidebar').attr('data-can-edit') == '1')
 	{
 		$('#sidebar a.list').each(function(i, listItem)

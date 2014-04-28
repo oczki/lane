@@ -104,8 +104,7 @@ class ListController
 			Auth::temporaryLogout();
 
 		$this->preWork($userName);
-		$this->context->layoutName = 'layout-bare';
-
+		$this->context->layoutName = 'layout-list';
 		$this->context->canEdit = ApiHelper::canEdit($this->context->user);
 
 		if ($id === null)

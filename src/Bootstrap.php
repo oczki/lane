@@ -41,7 +41,8 @@ class Bootstrap
 
 		$this->context->viewDecorators []= new \Chibi\AssetViewDecorator();
 		$this->context->viewDecorators []= new \Chibi\PrettyPrintViewDecorator();
-		$this->context->layoutName = isset($_GET['simple'])
+		$this->context->usingSimpleLayout = isset($_GET['simple']);
+		$this->context->layoutName = $this->context->usingSimpleLayout
 			? 'layout-bare'
 			: 'layout-logo';
 		$this->context->allowIndexing = false;

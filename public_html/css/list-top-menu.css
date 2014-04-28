@@ -1,0 +1,112 @@
+#top-menu {
+	background: #ededed;
+}
+
+#search {
+	/* give .big-buttons space to float */
+	display: inline-block;
+}
+	#search input {
+		margin: 0.5em 1em 0.5em 0;
+		vertical-align: middle;
+		background: white;
+		border: 0;
+		border-radius: 0;
+	}
+	#search p {
+		font-size: 95%;
+		display: inline-block;
+		margin: 0;
+	}
+
+#search-warning {
+	font-size: 90%;
+	color: silver;
+	display: none;
+}
+
+#top-menu .big-buttons {
+	float: right;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+	#top-menu .big-buttons li {
+		display: inline-block;
+		vertical-align: middle;
+		margin: 0.1em 0.5em;
+	}
+	#top-menu .big-buttons a {
+		display: inline-block;
+		padding: 0.4em 1em;
+	}
+	#top-menu .big-buttons .icon {
+		margin-right: 0.8em;
+		opacity: 1;
+	}
+
+#menu-trigger.active a {
+	position: relative;
+	background: white;
+	box-shadow: 0 0 4px rgba(0,0,0,0.05),
+		inset 0 0 0 1px silver;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+	#menu-trigger.active a:after {
+		position: absolute;
+		bottom: -1px;
+		height: 6px;
+		background: white;
+		right: 1px;
+		left: 1px;
+		pointer-events: none;
+		display: block;
+		content: ' ';
+		z-index: 91;
+	}
+	#menu-trigger a:hover,
+	#menu-trigger a:focus,
+	#menu-trigger.active a {
+		outline: 0;
+	}
+
+#menu {
+	margin: 4px 0.5em 0 4px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 90;
+}
+	#menu a {
+		display: block;
+		padding: 0.5em 0.8em;
+		position: relative;
+		white-space: nowrap;
+	}
+	#menu ul {
+		background: white;
+		box-shadow: 0 0 4px rgba(0,0,0,0.05);
+		position: relative;
+		display: none;
+		clear: both;
+		list-style-type: none;
+		border: 1px solid silver;
+		margin: 0;
+		padding: 0;
+		border-top-left-radius: 3px;
+		border-bottom-left-radius: 3px;
+		border-bottom-right-radius: 3px;
+	}
+	#menu.active ul {
+		overflow: hidden;
+		display: block;
+	}
+	#menu li {
+		display: block;
+	}
+	#menu li a:focus,
+	#menu li a:hover {
+		background: #eee;
+		outline: 0;
+	}

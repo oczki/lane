@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<?= $this->renderFile('layout-head-common') ?>
+<body class="list">
+	<div id="main">
+
+		<?php
+			\Chibi\AssetViewDecorator::addStylesheet('popups.css');
+			\Chibi\AssetViewDecorator::addStylesheet('list.css');
+			\Chibi\AssetViewDecorator::addScript('popups.js');
+			\Chibi\AssetViewDecorator::addScript('queue.js');
+		?>
+
+		<div id="outer-wrapper">
+			<?= $this->renderFile('list-sidebar') ?>
+
+			<div id="outer-content">
+				<div id="inner-header">
+					<?= $this->renderFile('list-top-menu') ?>
+				</div>
+
+				<div id="inner-content">
+					<?php $this->renderFile('messages') ?>
+					<?php $this->renderView() ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

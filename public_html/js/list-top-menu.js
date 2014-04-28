@@ -1,11 +1,16 @@
 function showMenu()
 {
-	$('#menu').addClass('active');
+	$('#menu-trigger, #menu').addClass('active');
+	$('#menu').position({
+		collision: 'flip',
+		of: '#menu-trigger',
+		my: 'right top',
+		at: 'right bottom'});
 }
 
 function hideMenu()
 {
-	$('#menu').removeClass('active');
+	$('#menu-trigger, #menu').removeClass('active');
 }
 
 function toggleMenu()
@@ -22,7 +27,7 @@ $(function()
 	{
 		hideMenu();
 	});
-	$('#menu').click(function(e)
+	$('#menu, #menu-trigger').click(function(e)
 	{
 		e.stopPropagation();
 	});
@@ -42,9 +47,10 @@ $(function()
 			e.preventDefault();
 		});
 
-	$.getScript('/js/jquery.focuslost.js', function()
+	$('#top-menu .add-list, #top-menu .list-settings').click(function(e)
 	{
-		$('#menu').focuslost(hideMenu);
+		e.preventDefault();
+		showPopup($(this).attr('href'));
 	});
 
 	$('#menu .import, #menu .account-settings, #menu .login, #menu .register').click(function(e)

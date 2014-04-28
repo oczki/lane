@@ -1,7 +1,7 @@
 #sidebar {
-	width: 12.5em;
+	width: 12em;
 	float: left;
-	margin-right: 1em;
+	padding-top: 0.5em;
 }
 #sidebar-top {
 	text-align: center;
@@ -9,59 +9,32 @@
 
 #sidebar ul {
 	list-style-type: none;
-	margin: 1.5em 0 1em -20px;
+	margin: 1.5em 0 1em 0;
 	padding: 0;
 }
+	#sidebar li {
+		margin: 0;
+		padding: 0;
+		position: relative;
+	}
 
 	#save-info {
-		font-size: 85%;
-		margin: 0;
+		font-size: 70%;
+		margin: 0.5em 0 0;
+		color: gray;
 	}
 
 #sidebar-nav {
 	position: relative;
 }
-	#sidebar-nav ul li:not(.active) {
-		background: repeat-y top right url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAABCAQAAAC4AnxFAAAAE0lEQVR42mNkYGRgYGAGQyYGJQAAkgAwhtrIbQAAAABJRU5ErkJggg==');
-	}
-	#sidebar-nav ul:after {
-		display: block;
-		content: ' ';
-		position: absolute;
-		right: 0;
-		top: -21px;
-		bottom: -21px;
-		width: 7px;
-		background:
-			no-repeat top right url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAVCAQAAAAgRTzIAAAAP0lEQVR4AW2PsQ0AQAgCBfff+ZsrJA8dOQniCSndHqCx4wqrpAgL0+yhWFjJ7pcVnTrZfuxSVN9QTpg+sMxHekpcAHxem5MLAAAAAElFTkSuQmCC'),
-			no-repeat bottom right url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAVCAQAAAAgRTzIAAAASklEQVR4AX2PQQqAMBDE0voT//9FHRkUQy/NnkLYhR0M4OgwOScCUUO45y9AVbFWrJXOZaW6Vk+V1ryy7kaVT+Mp2e/6wu7BYpU8g043B2Kk+Q0AAAAASUVORK5CYII=');
-		pointer-events: none;
-	}
-
-#sidebar-nav ul li.sep {
-	padding: 1em 0;
-}
-
-#sidebar-nav hr {
-	height: 6px;
-	border: none;
-	background: radial-gradient(
-		rgba(0,0,0,0.05) 0%,
-		rgba(255,255,255,0) 100%);
-	background-size: 200% 12px;
-	margin: 0;
-}
 
 #sidebar li a:not(.dragger) {
 	display: block;
 	margin: 0 0 0 20px;
-	padding: 0 0.5em 0 1em;
+	padding: 0 0.5em;
 	line-height: 35px;
 	color: gray;
 }
-	#sidebar li:not(.active) a:not(.dragger):hover {
-		border-right: 4px solid rgba(0,0,0,0.1);
-	}
 
 	#sidebar li a:hover,
 	#sidebar li.active a {
@@ -73,28 +46,14 @@
 	overflow: hidden;
 	white-space: pre;
 	text-overflow: ellipsis;
-	/* outline consistency with li.active a */
-	box-shadow: -1px 1px 3px transparent;
 }
-	#sidebar-nav li.active a.list {
-		position: relative;
-		z-index: 2;
-		margin: -1px 0 -1px 19px;
-		border-top-left-radius: 3px;
-		border-bottom-left-radius: 3px;
-		border-top: 1px solid lightgray;
-		border-bottom: 1px solid lightgray;
-		border-left: 1px solid lightgray;
-		background-image: linear-gradient(to right,
-			hsl(215,80%,80%) 0,
-			hsl(215,80%,80%) 4px,
-			rgba(255,255,255,0) 4px);
+	#sidebar-nav li.active {
+		background: #f6f6f6;
 	}
 
 #sidebar a.dragger {
 	vertical-align: middle;
 	line-height: 35px;
-	margin-left: 0;
 	width: 20px;
 	position: absolute;
 	visibility: hidden; /* disallow focus */

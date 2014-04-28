@@ -1,0 +1,128 @@
+<div id="top-menu">
+	<div id="search">
+		<?php if (isset($this->context->list)): ?>
+			<?= HtmlHelper::textInputTag('search', ['placeholder' => 'Search on this list…']) ?>
+		<?php endif ?>
+		<p><?= $this->context->user->name ?>&rsquo;s lane</p>
+	</div>
+
+	<?php
+	\Chibi\AssetViewDecorator::addStylesheet('list-top-menu.css');
+	\Chibi\AssetViewDecorator::addScript('list-top-menu.js');
+	?>
+
+	<ul class="big-buttons">
+		<?php if ($this->context->canEdit): ?>
+			<li>
+				<?= HtmlHelper::wrapTag('a', [
+					'class' => 'add-list',
+					'href' => \Chibi\UrlHelper::route('list', 'add', [
+						'userName' => $this->context->user->name])],
+					'<i class="icon icon-add"></i> <span>Add new list</span>') ?>
+			</li>
+
+			<?php if (isset($this->context->list)): ?>
+				<li>
+					<?= HtmlHelper::wrapTag('a', [
+						'class' => 'list-settings',
+						'href' => \Chibi\UrlHelper::route('list', 'settings', [
+							'userName' => $this->context->user->name,
+							'id' => $this->context->list->urlName])],
+						'<i class="icon icon-settings"></i> <span>List settings</span>') ?>
+				</li>
+			<?php endif ?>
+		<?php endif ?>
+
+		<li id="menu-trigger">
+			<a href="#"><i class="icon icon-menu"></i> <span>Menu</span></a>
+		</li>
+	</ul>
+
+	<div id="menu">
+		<ul>
+			<?php
+				$links = [];
+				if (Auth::isLoggedIn())
+				{
+					$links []= [
+						'account-settings',
+						\Chibi\UrlHelper::route('user', 'account-settings', [
+							'userName' => Auth::getLoggedInUser()->name]),
+						'Account settings'];
+
+					$links []= [
+						'import',
+						\Chibi\UrlHelper::route('list', 'import', [
+							'userName' => $this->context->user->name]),
+						'Import new list'];
+
+					if (isset($this->context->list))
+					{
+						$links []= [
+							'export',
+							\Chibi\UrlHelper::route('list', 'export', [
+								'userName' => $this->context->user->name,
+								'id' => $this->context->list->urlName]),
+							'Export this list'];
+					}
+
+					if (isset($this->context->list) and $this->context->list->userId == Auth::getLoggedInUser()->id)
+					{
+						$links []= [
+							'view-as-guest',
+							\Chibi\UrlHelper::route('list', 'view', [
+								'userName' => $this->context->user->name,
+								'id' => $this->context->list->urlName, 'guest' => 'guest']),
+							'View as guest'];
+					}
+
+				}
+				elseif (Auth::isTemporarilyLoggedOut())
+				{
+					$links []= [
+						'view-as-guest',
+						\Chibi\UrlHelper::route('list', 'view', [
+							'userName' => $this->context->user->name,
+							'id' => $this->context->list->urlName]),
+						'Back to edit mode'];
+				}
+
+				$links []= [
+					'help',
+					\Chibi\UrlHelper::route('index', 'help'),
+					'Editing help'];
+
+				$links []= [
+					'about',
+					\Chibi\UrlHelper::route('index', 'about'),
+					'About'];
+
+				if (Auth::isLoggedIn())
+				{
+					$links []= [
+						'logout',
+						\Chibi\UrlHelper::route('auth', 'logout'),
+						'Log out'];
+				}
+				else
+				{
+					$links []= [
+						'login',
+						\Chibi\UrlHelper::route('auth', 'login'),
+						'Log in'];
+
+					$links []= [
+						'register',
+						\Chibi\UrlHelper::route('auth', 'register'),
+						'Register'];
+				}
+			?>
+			<?php foreach ($links as $link): ?>
+				<?php list ($class, $url, $text) = $link ?>
+				<li>
+					<?= HtmlHelper::wrapTag('a', ['href' => $url, 'class' => $class], $text) ?>
+				</li>
+			<?php endforeach ?>
+		</ul>
+	</div>
+</div>
