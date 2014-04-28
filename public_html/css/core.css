@@ -90,18 +90,31 @@ a:hover .icon {
 	opacity: 1;
 }
 
-.icon-menu         { background-position: -0px 0; }
-.icon-manage       { background-position: -20px 0; }
-.icon-add          { background-position: -40px 0; }
-.icon-up           { background-position: -60px 0; }
-.icon-down         { background-position: -80px 0; }
-.icon-drag         { background-position: -100px 0; }
-.icon-align-left   { background-position: -120px 0; }
-.icon-align-center { background-position: -140px 0; }
-.icon-align-right  { background-position: -160px 0; }
-.icon-delete       { background-position: -180px 0; }
-.icon-edit         { background-position: -200px 0; }
-.icon-close        { background-position: -220px 0; }
+.icon-menu              { background-position: -0px 0; }
+.icon-settings          { background-position: -20px 0; }
+.icon-add               { background-position: -40px 0; }
+.icon-up                { background-position: -60px 0; }
+.icon-down              { background-position: -80px 0; }
+.icon-drag              { background-position: -100px 0; }
+.icon-align-left        { background-position: -120px 0; }
+.icon-align-center      { background-position: -140px 0; }
+.icon-align-right       { background-position: -160px 0; }
+.icon-delete            { background-position: -180px 0; }
+.icon-edit              { background-position: -200px 0; }
+.icon-close             { background-position: -220px 0; }
+.icon-checkbox          { background-position: -240px 0; }
+.icon-checkbox-checked  { background-position: -260px 0; }
+.icon-checkbox2         { background-position: -280px 0; }
+.icon-checkbox2-checked { background-position: -300px 0; }
+.icon-user              { background-position: -320px 0; }
+.icon-user-add          { background-position: -340px 0; }
+.icon-eye               { background-position: -360px 0; }
+.icon-export            { background-position: -380px 0; }
+.icon-import            { background-position: -400px 0; }
+.icon-question          { background-position: -420px 0; }
+.icon-information       { background-position: -440px 0; }
+.icon-exit              { background-position: -460px 0; }
+.icon-key               { background-position: -480px 0; }
 
 input[type=radio],
 input[type=checkbox] {
