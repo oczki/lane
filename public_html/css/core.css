@@ -90,6 +90,7 @@ a:hover .icon {
 	opacity: 1;
 }
 
+.icon-blank             { background-image: none; }
 .icon-menu              { background-position: -0px 0; }
 .icon-settings          { background-position: -20px 0; }
 .icon-add               { background-position: -40px 0; }

@@ -45,82 +45,94 @@
 				if (Auth::isLoggedIn())
 				{
 					$links []= [
+						'icon-user',
 						'account-settings',
+						'Account settings',
 						\Chibi\UrlHelper::route('user', 'account-settings', [
-							'userName' => Auth::getLoggedInUser()->name]),
-						'Account settings'];
+							'userName' => Auth::getLoggedInUser()->name])];
 
 					$links []= [
+						'icon-import',
 						'import',
+						'Import new list',
 						\Chibi\UrlHelper::route('list', 'import', [
-							'userName' => $this->context->user->name]),
-						'Import new list'];
+							'userName' => $this->context->user->name])];
 
 					if (isset($this->context->list))
 					{
 						$links []= [
+							'icon-export',
 							'export',
+							'Export this list',
 							\Chibi\UrlHelper::route('list', 'export', [
 								'userName' => $this->context->user->name,
-								'id' => $this->context->list->urlName]),
-							'Export this list'];
+								'id' => $this->context->list->urlName])];
 					}
 
 					if (isset($this->context->list) and $this->context->list->userId == Auth::getLoggedInUser()->id)
 					{
 						$links []= [
+							'icon-eye',
 							'view-as-guest',
+							'View as guest',
 							\Chibi\UrlHelper::route('list', 'view', [
 								'userName' => $this->context->user->name,
-								'id' => $this->context->list->urlName, 'guest' => 'guest']),
-							'View as guest'];
+								'id' => $this->context->list->urlName, 'guest' => 'guest'])];
 					}
 
 				}
 				elseif (Auth::isTemporarilyLoggedOut())
 				{
 					$links []= [
+						'icon-edit',
 						'view-as-guest',
+						'Back to edit mode',
 						\Chibi\UrlHelper::route('list', 'view', [
 							'userName' => $this->context->user->name,
-							'id' => $this->context->list->urlName]),
-						'Back to edit mode'];
+							'id' => $this->context->list->urlName])];
 				}
 
 				$links []= [
+					'icon-question',
 					'help',
-					\Chibi\UrlHelper::route('index', 'help'),
-					'Editing help'];
+					'Editing help',
+					\Chibi\UrlHelper::route('index', 'help')];
 
 				$links []= [
+					'icon-information',
 					'about',
-					\Chibi\UrlHelper::route('index', 'about'),
-					'About'];
+					'About',
+					\Chibi\UrlHelper::route('index', 'about')];
 
 				if (Auth::isLoggedIn())
 				{
 					$links []= [
+						'icon-exit',
 						'logout',
-						\Chibi\UrlHelper::route('auth', 'logout'),
-						'Log out'];
+						'Log out',
+						\Chibi\UrlHelper::route('auth', 'logout')];
 				}
 				else
 				{
 					$links []= [
+						'icon-key',
 						'login',
-						\Chibi\UrlHelper::route('auth', 'login'),
-						'Log in'];
+						'Log in',
+						\Chibi\UrlHelper::route('auth', 'login')];
 
 					$links []= [
+						'icon-user-add',
 						'register',
-						\Chibi\UrlHelper::route('auth', 'register'),
-						'Register'];
+						'Register',
+						\Chibi\UrlHelper::route('auth', 'register')];
 				}
 			?>
 			<?php foreach ($links as $link): ?>
-				<?php list ($class, $url, $text) = $link ?>
+				<?php list ($iconClass, $itemClass, $text, $url) = $link ?>
 				<li>
-					<?= HtmlHelper::wrapTag('a', ['href' => $url, 'class' => $class], $text) ?>
+					<?= HtmlHelper::wrapTag('a',
+						['href' => $url, 'class' => $itemClass],
+						'<i class="icon ' . $iconClass . '"></i>' . $text) ?>
 				</li>
 			<?php endforeach ?>
 		</ul>

@@ -110,3 +110,7 @@
 		background: #eee;
 		outline: 0;
 	}
+	#menu .icon {
+		opacity: 1;
+		margin-right: 0.8em;
+	}
