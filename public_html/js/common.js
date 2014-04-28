@@ -100,7 +100,7 @@ function initGenericDragger(dragger, parentElement, dragStartCallback, dragMoveC
 
 		var internalDragMoveCallback = function(e)
 		{
-			dragMoveCallback(dragger, e);
+			dragMoveCallback(target, e);
 		};
 
 		$('body')
@@ -113,11 +113,11 @@ function initGenericDragger(dragger, parentElement, dragStartCallback, dragMoveC
 			$('body').removeClass('dragging')
 			$('body').off('mousemove', internalDragMoveCallback);
 			if (typeof(dragFinishCallback) !== 'undefined')
-				dragFinishCallback(dragger, target.data('changed'));
+				dragFinishCallback(target, target.data('changed'));
 		});
 
 		if (typeof(dragStartCallback) !== 'undefined')
-			dragStartCallback(dragger);
+			dragStartCallback(target);
 
 	}).click(function(e)
 	{
@@ -125,9 +125,8 @@ function initGenericDragger(dragger, parentElement, dragStartCallback, dragMoveC
 	});
 }
 
-function moveDragHandler(e)
+function moveDragHandler(target, e)
 {
-	var target = e.data;
 	while (e.pageY < target.offset().top && target.prev().length > 0)
 	{
 		target.data('changed', true);

@@ -43,13 +43,13 @@ $(function()
 					dragger,
 					'th',
 
-					function(dragger)
+					function(target)
 					{
-						var thisHeader = $(dragger).parents('th');
+						var thisHeader = target;
 						var nextHeader = thisHeader.next('th');
 						var colWidthSum = thisHeader.width() + nextHeader.width();
 						var tableWidthSum = 0;
-						$(dragger).parents('table').find('th:not(.row-ops)').each(function()
+						thisHeader.parents('table').find('th:not(.row-ops)').each(function()
 						{
 							tableWidthSum += $(this).width();
 						});
@@ -59,9 +59,9 @@ $(function()
 						nextHeader.data('orig-width', nextHeader.width());
 					},
 
-					function(dragger, e)
+					function(target, e)
 					{
-						var thisHeader = $(dragger).parents('th');
+						var thisHeader = target;
 						var nextHeader = $(thisHeader.next('th'));
 						var x = e.pageX - thisHeader.offset().left;
 						var colWidthSum = thisHeader.data('col-width-sum');
@@ -74,11 +74,11 @@ $(function()
 						nextHeader.css('width', x2 + '%');
 					},
 
-					function(dragger)
+					function(target)
 					{
 						var newWidths = [];
 						var totalNewWidth = 0;
-						$(dragger).parents('table').find('th:not(.row-ops)').each(function()
+						$(target).parents('table').find('th:not(.row-ops)').each(function()
 						{
 							var newWidth = $(this).width();
 							newWidths.push(newWidth);
