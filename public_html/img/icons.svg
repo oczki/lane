@@ -248,10 +248,10 @@
 			<rect width="20" height="20" x="180" y="0" id="icon_recycle_bin" mask="url(#mask_recycle_bin)"/>
 			<rect width="20" height="20" x="200" y="0" id="icon_form" mask="url(#mask_form)"/>
 			<rect width="20" height="20" x="220" y="0" id="icon_x" mask="url(#mask_x)"/>
-			<rect width="20" height="20" x="240" y="0" id="icon_x" mask="url(#mask_checkbox)"/>
-			<rect width="20" height="20" x="260" y="0" id="icon_x" mask="url(#mask_checkbox_checked)"/>
-			<rect width="20" height="20" x="280" y="0" id="icon_x" mask="url(#mask_checkbox2)"/>
-			<rect width="20" height="20" x="300" y="0" id="icon_x" mask="url(#mask_checkbox2_checked)"/>
+			<rect width="20" height="20" x="240" y="0" id="icon_checkbox" mask="url(#mask_checkbox)"/>
+			<rect width="20" height="20" x="260" y="0" id="icon_checkbox_checked" mask="url(#mask_checkbox_checked)"/>
+			<rect width="20" height="20" x="280" y="0" id="icon_checkbox2" mask="url(#mask_checkbox2)"/>
+			<rect width="20" height="20" x="300" y="0" id="icon_checkbox2_checked" mask="url(#mask_checkbox2_checked)"/>
 		</g>
 	</defs>
 	<use x="0" y="0" fill="#000" xlink:href="#icons"/>
