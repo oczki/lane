@@ -1,4 +1,4 @@
 <?php
-\Chibi\HeadersHelper::set('Content-Type', 'application/json');
+\Chibi\Util\Headers::set('Content-Type', 'application/json');
 $json = json_encode($this->context->json);
 echo $json ? $json : json_encode(['error' => json_last_error_msg()]);

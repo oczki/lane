@@ -1,11 +1,11 @@
 <?php
 require_once 'src/core.php';
 
-$upgradesPath = \Chibi\Registry::getContext()->rootDir . DS . 'src' . DS . 'Upgrades';
+$upgradesPath = getConfig()->rootDir . DS . 'src' . DS . 'Upgrades';
 $upgrades = glob($upgradesPath . DS . '*.php');
 natcasesort($upgrades);
 
-$upgradeClasses = \Chibi\ReflectionHelper::loadClasses($upgrades);
+$upgradeClasses = \Chibi\Util\Reflection::loadClasses($upgrades);
 
 foreach ($upgradeClasses as $upgradeClass)
 {

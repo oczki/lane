@@ -7,8 +7,8 @@
 	</div>
 
 	<?php
-	\Chibi\AssetViewDecorator::addStylesheet('list-top-menu.css');
-	\Chibi\AssetViewDecorator::addScript('list-top-menu.js');
+	Assets::addStylesheet('list-top-menu.css');
+	Assets::addScript('list-top-menu.js');
 	?>
 
 	<ul class="big-buttons">
@@ -16,7 +16,7 @@
 			<li>
 				<?= HtmlHelper::wrapTag('a', [
 					'class' => 'add-list',
-					'href' => \Chibi\UrlHelper::route('list', 'add', [
+					'href' => \Chibi\Router::linkTo(['ListController', 'addAction'], [
 						'userName' => $this->context->user->name])],
 					'<i class="icon icon-add"></i> <span>Add new list</span>') ?>
 			</li>
@@ -25,7 +25,7 @@
 				<li>
 					<?= HtmlHelper::wrapTag('a', [
 						'class' => 'list-settings',
-						'href' => \Chibi\UrlHelper::route('list', 'settings', [
+						'href' => \Chibi\Router::linkTo(['ListController', 'settingsAction'], [
 							'userName' => $this->context->user->name,
 							'id' => $this->context->list->urlName])],
 						'<i class="icon icon-settings"></i> <span>List settings</span>') ?>
@@ -48,14 +48,14 @@
 						'icon-user',
 						'account-settings',
 						'Account settings',
-						\Chibi\UrlHelper::route('user', 'account-settings', [
+						\Chibi\Router::linkTo(['UserController', 'accountSettingsAction'], [
 							'userName' => Auth::getLoggedInUser()->name])];
 
 					$links []= [
 						'icon-import',
 						'import',
 						'Import new list',
-						\Chibi\UrlHelper::route('list', 'import', [
+						\Chibi\Router::linkTo(['ListController', 'importAction'], [
 							'userName' => $this->context->user->name])];
 
 					if (isset($this->context->list))
@@ -64,7 +64,7 @@
 							'icon-export',
 							'export',
 							'Export this list',
-							\Chibi\UrlHelper::route('list', 'export', [
+							\Chibi\Router::linkTo(['ListController', 'exportAction'], [
 								'userName' => $this->context->user->name,
 								'id' => $this->context->list->urlName])];
 					}
@@ -75,7 +75,7 @@
 							'icon-eye',
 							'view-as-guest',
 							'View as guest',
-							\Chibi\UrlHelper::route('list', 'view', [
+							\Chibi\Router::linkTo(['ListController', 'viewAction'], [
 								'userName' => $this->context->user->name,
 								'id' => $this->context->list->urlName, 'guest' => 'guest'])];
 					}
@@ -87,7 +87,7 @@
 						'icon-edit',
 						'view-as-guest',
 						'Back to edit mode',
-						\Chibi\UrlHelper::route('list', 'view', [
+						\Chibi\Router::linkTo(['ListController', 'viewAction'], [
 							'userName' => $this->context->user->name,
 							'id' => $this->context->list->urlName])];
 				}
@@ -96,13 +96,13 @@
 					'icon-question',
 					'help',
 					'Editing help',
-					\Chibi\UrlHelper::route('index', 'help')];
+					\Chibi\Router::linkTo(['IndexController', 'helpAction'])];
 
 				$links []= [
 					'icon-information',
 					'about',
 					'About',
-					\Chibi\UrlHelper::route('index', 'about')];
+					\Chibi\Router::linkTo(['IndexController', 'aboutAction'])];
 
 				if (Auth::isLoggedIn())
 				{
@@ -110,7 +110,7 @@
 						'icon-exit',
 						'logout',
 						'Log out',
-						\Chibi\UrlHelper::route('auth', 'logout')];
+						\Chibi\Router::linkTo(['AuthController', 'logoutAction'])];
 				}
 				else
 				{
@@ -118,13 +118,13 @@
 						'icon-key',
 						'login',
 						'Log in',
-						\Chibi\UrlHelper::route('auth', 'login')];
+						\Chibi\Router::linkTo(['AuthController', 'loginAction'])];
 
 					$links []= [
 						'icon-user-add',
 						'register',
 						'Register',
-						\Chibi\UrlHelper::route('auth', 'register')];
+						\Chibi\Router::linkTo(['AuthController', 'registerAction'])];
 				}
 			?>
 			<?php foreach ($links as $link): ?>

@@ -1,6 +1,6 @@
 <?php
-\Chibi\AssetViewDecorator::addStylesheet('user-account-settings.css');
-\Chibi\AssetViewDecorator::addScript('user-account-settings.js');
+Assets::addStylesheet('user-account-settings.css');
+Assets::addScript('user-account-settings.js');
 ?>
 
 <div id="account-settings">
@@ -8,7 +8,7 @@
 	<h1>Account settings</h1>
 
 	<?= HtmlHelper::tag('form', [
-		'action' => \Chibi\UrlHelper::currentUrl(),
+		'action' => \Chibi\Util\Url::currentUrl(),
 		'method' => 'post',
 		], false) ?>
 
@@ -57,7 +57,7 @@
 		step.</p>
 
 		<?= HtmlHelper::tag('form', [
-			'action' => \Chibi\UrlHelper::route('user', 'delete-account', ['userName' => $this->context->user->name]),
+			'action' => \Chibi\Router::linkTo(['UserController', 'deleteAccountAction'], ['userName' => $this->context->user->name]),
 			'class' => 'inline delete-account',
 			'method' => 'post',
 			], false) ?>
@@ -70,7 +70,7 @@
 			<div class="submit">
 
 				<?= HtmlHelper::wrapTag('a', [
-					'href' => \Chibi\URlHelper::route('list', 'export', ['userName' => $this->context->user->name]),
+					'href' => \Chibi\Router::linkTo(['ListController', 'exportAction'], ['userName' => $this->context->user->name]),
 					'class' => 'btn export-all-data'], 'Export all data') ?>
 
 				<?= HtmlHelper::submitInputTag('Delete account') ?>

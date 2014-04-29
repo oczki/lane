@@ -68,8 +68,8 @@ class Auth
 				uniqid(),
 				md5($realm));
 
-			\Chibi\HeadersHelper::setCode(401);
-			\Chibi\HeadersHelper::set('WWW-Authenticate', $digestString);
+			\Chibi\Util\Headers::setCode(401);
+			\Chibi\Util\Headers::set('WWW-Authenticate', $digestString);
 
 			return null;
 		}

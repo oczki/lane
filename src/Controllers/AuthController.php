@@ -1,13 +1,12 @@
 <?php
 class AuthController
 {
-	/**
-	* @route /auth/login
-	* @route /auth/login/
-	*/
 	public function loginAction()
 	{
-		if (!$this->context->isSubmit)
+		$context = getContext();
+		$context->viewName = 'auth-login';
+
+		if (!$context->isSubmit)
 			return;
 
 		$name = InputHelper::getPost('name');
@@ -17,36 +16,18 @@ class AuthController
 		Auth::login($name, $pass, $remember);
 
 		Messenger::success('Logged in.');
-		Bootstrap::forward('/');
+		ControllerHelper::forward('/');
 	}
 
-	/**
-	* @route /auth/logout
-	* @route /auth/logout/
-	*/
 	public function logoutAction()
 	{
-		$this->context->viewName = null;
-
-		if (!$this->context->isSubmit)
-			return;
-
 		Auth::logout();
 		Messenger::success('Logged out.');
-		Bootstrap::forward('/');
+		ControllerHelper::forward('/');
 	}
 
-	/**
-	* @route /auth/reset-password
-	* @route /auth/reset-password/
-	*/
 	public function resetPasswordAction()
 	{
-		$this->context->viewName = null;
-
-		if (!$this->context->isSubmit)
-			return;
-
 		$email = InputHelper::getPost('e-mail');
 		$validator = new Validator($email, 'e-mail');
 		$validator->checkEmail();
@@ -58,7 +39,7 @@ class AuthController
 		$user->settings->passwordResetToken = md5(microtime(true) . mt_rand());
 		UserService::saveOrUpdate($user);
 
-		$link = \Chibi\UrlHelper::route('auth', 'reset-password-confirm', [
+		$link = \Chibi\Router::linkTo(['AuthController', 'resetPasswordConfirmAction'], [
 			'userName' => $user->name,
 			'token' => $user->settings->passwordResetToken]);
 
@@ -68,26 +49,21 @@ class AuthController
 			$link . PHP_EOL . PHP_EOL .
 			'If you didn\'t request this reset, please ignore this message.' . PHP_EOL . PHP_EOL .
 			'---' . PHP_EOL . PHP_EOL .
-			'Lane (list and nothing else) - ' . \Chibi\UrlHelper::route('index', 'index');
+			'Lane (list and nothing else) - ' . \Chibi\Router::linkTo(['IndexController', 'indexAction']);
 
-		$mail = $this->config->mail->userBot . '@' . $this->config->mail->domain;
+		$mail = getConfig()->mail->userBot . '@' . getConfig()->mail->domain;
 		$headers = 'From: "Lane bot" <' . $mail . '>';
 
 		mail($user->email, $subject, $body, $headers);
 
 		Messenger::success('An e-mail with link to reset your password was sent.');
-		Bootstrap::forward(\Chibi\UrlHelper::route('auth', 'login'));
+		ControllerHelper::forward(\Chibi\Router::linkTo(['AuthController', 'loginAction']));
 	}
 
-	/**
-	* @route /auth/reset-password-confirm/{userName}/{token}
-	* @route /auth/reset-password-confirm/{userName}/{token}/
-	* @validate userName [a-zA-Z0-9_-]+
-	* @validate token [a-fA-F0-9]+
-	*/
 	public function resetPasswordConfirmAction($userName, $token)
 	{
-		$this->context->viewName = 'messages';
+		$context = getContext();
+		$context->viewName = 'messages';
 
 		$user = UserService::getByName($userName);
 		if (empty($user))
@@ -105,17 +81,16 @@ class AuthController
 		$user->passHash = UserService::hashPassword($user, $newPassword);
 		UserService::saveOrUpdate($user);
 
-		Bootstrap::markReturn('Log in now', \Chibi\UrlHelper::route('auth', 'login'));
+		ControllerHelper::markReturn('Log in now', \Chibi\Router::linkTo(['AuthController', 'loginAction']));
 		Messenger::success('Your new password: ' . $newPassword);
 	}
 
-	/**
-	* @route /auth/register
-	* @route /auth/register/
-	*/
 	public function registerAction()
 	{
-		if (!$this->context->isSubmit)
+		$context = getContext();
+		$context->viewName = 'auth-register';
+
+		if (!$context->isSubmit)
 			return;
 
 		$name = InputHelper::getPost('name');
@@ -200,7 +175,7 @@ class AuthController
 			['', 'Or... [blue]make your sort default.', ''],
 			['', 'Or even [red]reorder the lists.', ''],
 			['', '', ''],
-			['[url=' . \Chibi\UrlHelper::route('index', 'help') . ']Click here[/url] to read more about editing.', '', ''],
+			['[url=' . \Chibi\Router::linkTo(['IndexController', 'helpAction']) . ']Click here[/url] to read more about editing.', '', ''],
 			['', '', ''],
 			['[row:green][row:b]The rest is all up to you.', 'Start by creating a new list.', ''],
 		];
@@ -220,6 +195,6 @@ class AuthController
 		$_SESSION['user-id'] = $user->id;
 
 		Messenger::success('Registration successful');
-		Bootstrap::forward('/');
+		ControllerHelper::forward('/');
 	}
 }

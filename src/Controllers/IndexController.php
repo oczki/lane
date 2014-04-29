@@ -1,57 +1,46 @@
 <?php
 class IndexController
 {
-	/**
-	* @route /
-	*/
 	public function indexAction()
 	{
-		$this->context->allowIndexing = true;
+		$context = getContext();
+		$context->allowIndexing = true;
+		$context->viewName = 'index-index';
 
 		if (Auth::isLoggedIn())
 		{
 			$lists = ListService::getByUserId(Auth::getLoggedInUser()->id);
 
-			$url = \Chibi\UrlHelper::route('list', 'view', ['userName' => Auth::getLoggedInUser()->name]);
+			$url = \Chibi\Router::linkTo(['ListController', 'viewAction'], ['userName' => Auth::getLoggedInUser()->name]);
 
-			Bootstrap::forward($url);
+			ControllerHelper::forward($url);
 		}
 	}
 
-	/**
-	* @route /about
-	* @route /about/
-	*/
 	public function aboutAction()
 	{
-		$this->context->allowIndexing = true;
+		$context = getContext();
+		$context->allowIndexing = true;
+		$context->viewName = 'index-about';
 	}
 
-	/**
-	* @route /help
-	* @route /help/
-	*/
 	public function helpAction()
 	{
-		$this->context->allowIndexing = true;
+		$context = getContext();
+		$context->allowIndexing = true;
+		$context->viewName = 'index-help';
 	}
 
-	/**
-	* @route /api-docs
-	* @route /api-docs/
-	*/
 	public function apiDocumentationAction()
 	{
-		$this->context->allowIndexing = true;
+		$context = getContext();
+		$context->allowIndexing = true;
+		$context->viewName = 'index-api-documentation';
 	}
 
-	/**
-	* @route /example
-	* @route /example/
-	*/
 	public function exampleAction()
 	{
-		$url = \Chibi\UrlHelper::route('list', 'view', ['userName' => 'example']);
-		Bootstrap::forward($url);
+		$url = \Chibi\Router::linkTo(['ListController', 'viewAction'], ['userName' => 'example']);
+		ControllerHelper::forward($url);
 	}
 }

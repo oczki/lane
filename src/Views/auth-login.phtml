@@ -1,14 +1,14 @@
 <?php
-\Chibi\AssetViewDecorator::setTitle('lane&nbsp;&ndash; Login form');
-\Chibi\AssetViewDecorator::addStylesheet('auth-login.css');
-\Chibi\AssetViewDecorator::addScript('auth-login.js');
+Assets::setTitle('lane&nbsp;&ndash; Login form');
+Assets::addStylesheet('auth-login.css');
+Assets::addScript('auth-login.js');
 ?>
 
 <div id="auth-login">
 
 	<h1>Login form</h1>
 
-	<form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post">
+	<form action="<?= \Chibi\Util\Url::currentUrl() ?>" method="post">
 
 		<div class="form-wrapper">
 
@@ -36,7 +36,7 @@
 
 		<p>To reset your password, enter the e-mail address you specified during registration.</p>
 
-		<form class="forgot-form" action="<?= \Chibi\UrlHelper::route('auth', 'reset-password') ?>" method="post">
+		<form class="forgot-form" action="<?= \Chibi\Router::linkTo(['AuthController', 'doResetPasswordAction']) ?>" method="post">
 
 			<div class="form-wrapper">
 

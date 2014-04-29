@@ -3,7 +3,7 @@ class ControllerHelper
 {
 	public static function attachUser($userName = false)
 	{
-		$context = \Chibi\Registry::getContext();
+		$context = getContext();
 		if ($userName)
 			$user = UserService::getByName($userName);
 		elseif (Auth::isLoggedIn() and Auth::getLoggedInUser())
@@ -16,7 +16,7 @@ class ControllerHelper
 
 	public static function attachLists($userName)
 	{
-		$context = \Chibi\Registry::getContext();
+		$context = getContext();
 		if ($userName)
 			$user = UserService::getByName($userName);
 		elseif (Auth::isLoggedIn() and Auth::getLoggedInUser())
@@ -30,5 +30,21 @@ class ControllerHelper
 		$job = Api::jobFactory('get-lists', ['user-name' => $user->name]);
 
 		$context->lists = $job->getLists();
+	}
+
+	public static function markReturn($linkText = null, $link = null)
+	{
+		$context = getContext();
+		if (isset($context->returnLinkText))
+			return;
+		$context->returnLinkText = $linkText ?: 'Return to lane';
+		$context->returnLink = $link ?: \Chibi\Router::linkTo(['IndexController', 'indexAction']);
+	}
+
+	public static function forward($url)
+	{
+		\Chibi\Util\Headers::setCode(303);
+		\Chibi\Util\Url::forward($url);
+		exit;
 	}
 }

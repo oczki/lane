@@ -1,7 +1,7 @@
 <?php
-\Chibi\AssetViewDecorator::addStylesheet('list-settings.css');
-\Chibi\AssetViewDecorator::addScript('list-settings.js');
-\Chibi\AssetViewDecorator::addScript('queue.js');
+Assets::addStylesheet('list-settings.css');
+Assets::addScript('list-settings.js');
+Assets::addScript('queue.js');
 
 $alignments = [
 	ListColumn::ALIGN_LEFT => 'left',
@@ -58,7 +58,7 @@ $alignments = [
 	</ul>
 
 	<?= HtmlHelper::tag('form', [
-		'action' => \Chibi\UrlHelper::currentUrl(),
+		'action' => \Chibi\Util\Url::currentUrl(),
 		'method' => 'post',
 		'class' => 'main-settings',
 		], false) ?>

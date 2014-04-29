@@ -1,12 +1,12 @@
 <?php
-\Chibi\AssetViewDecorator::addScript('list-import.js');
+Assets::addScript('list-import.js');
 ?>
 
 <div id="list-import">
 
 	<h1>Import new list</h1>
 
-	<form action="<?= \Chibi\UrlHelper::currentUrl() ?>" method="post" enctype="multipart/form-data">
+	<form action="<?= \Chibi\Util\Url::currentUrl() ?>" method="post" enctype="multipart/form-data">
 
 		<?= HtmlHelper::labelDecorator('JSON file',
 			HtmlHelper::fileInputTag('file', [])) ?>

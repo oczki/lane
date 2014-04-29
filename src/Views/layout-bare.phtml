@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-<?= $this->renderFile('layout-head-common') ?>
+<?php \Chibi\View::render('layout-head-common', $this->context) ?>
 <body>
 	<div id="main">
 		<div class="content-wrapper">
-			<?php $this->renderFile('messages') ?>
-			<?php $this->renderView() ?>
+			<?php \Chibi\View::render('messages', $this->context) ?>
+			<?php \Chibi\View::render($this->context->viewName, $this->context) ?>
 		</div>
 	</div>
 </body>

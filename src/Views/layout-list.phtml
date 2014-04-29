@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
-<?= $this->renderFile('layout-head-common') ?>
+<?php \Chibi\View::render('layout-head-common', $this->context) ?>
 <body class="list">
 	<div id="main">
 
 		<?php
-			\Chibi\AssetViewDecorator::addStylesheet('popups.css');
-			\Chibi\AssetViewDecorator::addStylesheet('list.css');
-			\Chibi\AssetViewDecorator::addScript('popups.js');
-			\Chibi\AssetViewDecorator::addScript('queue.js');
+			Assets::addStylesheet('popups.css');
+			Assets::addStylesheet('list.css');
+			Assets::addScript('popups.js');
+			Assets::addScript('queue.js');
 		?>
 
 		<div id="outer-wrapper">
-			<?= $this->renderFile('list-sidebar') ?>
+			<?php \Chibi\View::render('list-sidebar', $this->context) ?>
 
 			<div id="outer-content">
 				<div id="inner-header">
-					<?= $this->renderFile('list-top-menu') ?>
+					<?php \Chibi\View::render('list-top-menu', $this->context) ?>
 				</div>
 
 				<div id="inner-content">
-					<?php $this->renderFile('messages') ?>
-					<?php $this->renderView() ?>
+					<?php \Chibi\View::render('messages', $this->context) ?>
+					<?php \Chibi\View::render($this->context->viewName, $this->context) ?>
 				</div>
 			</div>
 		</div>

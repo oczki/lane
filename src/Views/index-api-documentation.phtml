@@ -1,6 +1,6 @@
 <?php
-\Chibi\AssetViewDecorator::addStylesheet('index-text.css');
-\Chibi\AssetViewDecorator::setTitle('lane&nbsp;&ndash; API documentation');
+Assets::addStylesheet('index-text.css');
+Assets::setTitle('lane&nbsp;&ndash; API documentation');
 ?>
 
 <div id="api-documentation" class="text">
@@ -214,8 +214,8 @@ curl \
 		<h1 id="all-jobs"><a href="#all-jobs">List of all jobs</a></h1>
 
 		<?php
-			$jobSourceFiles = glob($this->context->rootDir . DS . 'src' . DS . 'Jobs' . DS . '*.php');
-			$jobClasses = \Chibi\ReflectionHelper::loadClasses($jobSourceFiles);
+			$jobSourceFiles = glob(getConfig()->rootDir . DS . 'src' . DS . 'Jobs' . DS . '*.php');
+			$jobClasses = \Chibi\Util\Reflection::loadClasses($jobSourceFiles);
 
 			$fixPunctuation = function($text)
 			{

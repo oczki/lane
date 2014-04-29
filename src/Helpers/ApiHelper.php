@@ -3,7 +3,7 @@ class ApiHelper
 {
 	public static function canEdit($someUser)
 	{
-		$context = \Chibi\Registry::getContext();
+		$context = getContext();
 		$apiUser = Api::getApiUser();
 
 		return

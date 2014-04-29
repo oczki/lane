@@ -73,7 +73,7 @@ class Api
 
 	public static function getUrl()
 	{
-		return \Chibi\UrlHelper::route('api', 'run');
+		return \Chibi\Router::linkTo(['ApiController', 'runAction']);
 	}
 
 	public static function run($jobs)

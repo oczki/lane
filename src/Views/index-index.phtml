@@ -1,11 +1,11 @@
 <?php
-\Chibi\AssetViewDecorator::addStylesheet('popups.css');
-\Chibi\AssetViewDecorator::addScript('popups.js');
-\Chibi\AssetViewDecorator::addStylesheet('index-index.css');
-\Chibi\AssetViewDecorator::addScript('index-index.js');
+Assets::addStylesheet('popups.css');
+Assets::addScript('popups.js');
+Assets::addStylesheet('index-index.css');
+Assets::addScript('index-index.js');
 ?>
 
-<?php $this->renderFile('messages') ?>
+<?php \Chibi\View::render('messages', $this->context) ?>
 
 <p>Easily create multiple lists of whatever you want.<br/>
 No community nonsense. No restrictions.<br/>
@@ -13,15 +13,15 @@ Just your list and nothing else.</p>
 
 <ul id="index-nav">
 	<li>
-		<a class="btn hl" id="login" href="<?= \Chibi\UrlHelper::route('auth', 'login') ?>">Log in</a>
+		<a class="btn hl" id="login" href="<?= \Chibi\Router::linkTo(['AuthController', 'loginAction']) ?>">Log in</a>
 	</li>
 	<li>
-		<a class="btn" id="about" href="<?= \Chibi\UrlHelper::route('index', 'about') ?>">About</a>
+		<a class="btn" id="about" href="<?= \Chibi\Router::linkTo(['IndexController', 'aboutAction']) ?>">About</a>
 	</li>
 	<li>
-		<a class="btn hl" id="register" href="<?= \Chibi\UrlHelper::route('auth', 'register') ?>">Register</a>
+		<a class="btn hl" id="register" href="<?= \Chibi\Router::linkTo(['AuthController', 'registerAction']) ?>">Register</a>
 	</li>
 	<li>
-		<a class="btn" id="example" href="<?= \Chibi\UrlHelper::route('index', 'example') ?>">View sample</a>
+		<a class="btn" id="example" href="<?= \Chibi\Router::linkTo(['IndexController', 'exampleAction']) ?>">View sample</a>
 	</li>
 </ul>

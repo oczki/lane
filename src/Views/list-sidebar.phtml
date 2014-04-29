@@ -1,12 +1,12 @@
 <?php
-\Chibi\AssetViewDecorator::addStylesheet('list-sidebar.css');
-\Chibi\AssetViewDecorator::addScript('list-sidebar.js');
+Assets::addStylesheet('list-sidebar.css');
+Assets::addScript('list-sidebar.js');
 ?>
 
 <div id="sidebar" data-can-edit="<?= intval($this->context->canEdit) ?>">
 	<div id="sidebar-top">
-		<a class="logo" href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
-			<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo-small.png') ?>" alt=""/>
+		<a class="logo" href="<?= \Chibi\Util\Url::makeAbsolute('/') ?>">
+			<img src="<?= \Chibi\Util\Url::makeAbsolute('/img/logo-small.png') ?>" alt=""/>
 		</a>
 
 		<?php if ($this->context->user->settings->showGuestsLastUpdate or $this->context->canEdit): ?>
@@ -35,7 +35,7 @@
 
 						echo HtmlHelper::tag('a', [
 							'class' => 'list',
-							'href' => \Chibi\UrlHelper::route('list', 'view', [
+							'href' => \Chibi\Router::linkTo(['ListController', 'viewAction'], [
 								'userName' => $this->context->user->name,
 								'id' => $list->urlName]),
 							'title' => $list->name]);

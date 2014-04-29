@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
-<?= $this->renderFile('layout-head-common') ?>
+<?php \Chibi\View::render('layout-head-common', $this->context) ?>
 <body class="logo">
 	<div id="main">
-		<a class="logo" href="<?= \Chibi\UrlHelper::absoluteUrl('/') ?>">
-			<img src="<?= \Chibi\UrlHelper::absoluteUrl('/img/logo.png') ?>" alt=""/>
+		<a class="logo" href="<?= \Chibi\Util\Url::makeAbsolute('/') ?>">
+			<img src="<?= \Chibi\Util\Url::makeAbsolute('/img/logo.png') ?>" alt=""/>
 		</a>
 		<br/>
 
 		<div class="content-wrapper">
-			<?php $this->renderFile('messages') ?>
-			<?php $this->renderView() ?>
+			<?php \Chibi\View::render('messages', $this->context) ?>
+			<?php \Chibi\View::render($this->context->viewName, $this->context) ?>
 			<div class="clear"></div>
 
 			<?php if (isset($this->context->returnLink)): ?>
@@ -27,7 +27,7 @@
 
 		<div class="clear"></div>
 		<footer>
-			<p>Load: <?= sprintf('%.07fs', Bootstrap::getUptime()) ?></p>
+			<p>Load: <?= sprintf('%.07fs', getUptime()) ?></p>
 		</footer>
 	</div>
 </body>

@@ -1,9 +1,9 @@
 <?php
-\Chibi\AssetViewDecorator::setTitle('lane&nbsp;&ndash; list and nothing else');
-\Chibi\AssetViewDecorator::addStylesheet('core.css');
-\Chibi\AssetViewDecorator::addScript('http://code.jquery.com/jquery-1.11.0.min.js');
-\Chibi\AssetViewDecorator::addScript('http://code.jquery.com/ui/1.10.4/jquery-ui.min.js');
-\Chibi\AssetViewDecorator::addScript('common.js');
+Assets::setTitle('lane&nbsp;&ndash; list and nothing else');
+Assets::addStylesheet('core.css');
+Assets::addScript('http://code.jquery.com/jquery-1.11.0.min.js');
+Assets::addScript('http://code.jquery.com/ui/1.10.4/jquery-ui.min.js');
+Assets::addScript('common.js');
 ?>
 
 <head>
@@ -18,15 +18,15 @@
 	<?= HtmlHelper::tag('meta', [
 		'name' => 'application-name',
 		'content' => 'lane - list and nothing else',
-		'data-current-url' => \Chibi\UrlHelper::currentUrl(),
+		'data-current-url' => \Chibi\Util\Url::currentUrl(),
 		'data-job-executor-url' => Api::getUrl()], true) ?>
 
 	<?= HtmlHelper::tag('link', [
 		'rel' => 'icon',
 		'type' => 'image/png',
-		'href' => \Chibi\UrlHelper::absoluteUrl('/img/favicon.png')], true) ?>
+		'href' => \Chibi\Util\Url::makeAbsolute('/img/favicon.png')], true) ?>
 
-	<?php if ($this->config->main->enableAnalytics): ?>
+	<?php if (getConfig()->main->enableAnalytics): ?>
 		<script type="text/javascript">
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

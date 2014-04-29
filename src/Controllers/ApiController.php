@@ -17,21 +17,17 @@ class ApiController
 		return $jobs;
 	}
 
-	/**
-	* @route /api
-	* @route /api/
-	*/
 	public function runAction()
 	{
-		$this->context->layoutName = 'layout-json';
-		$this->context->viewName = 'messages';
-		$this->context->json = [];
+		$context = getContext();
+		$context->layoutName = 'layout-json';
+		$context->viewName = 'messages';
+		$context->json = [];
+		if (!$context->isSubmit)
+			return;
 
 		try
 		{
-			if (!$this->context->isSubmit)
-				throw new SimpleException('Not a POST request.');
-
 			if (Auth::isLoggedIn())
 				$user = Auth::getLoggedInUser();
 			elseif (InputHelper::getPost('user'))
@@ -44,13 +40,13 @@ class ApiController
 				throw new SimpleException('No jobs to execute.');
 
 			$statuses = Api::run($jobs);
-			$this->context->json['status'] = $statuses;
+			$context->json['status'] = $statuses;
 		}
 		catch (Exception $e)
 		{
-			if (\Chibi\HeadersHelper::getCode() != 401)
-				\Chibi\HeadersHelper::setCode(400);
-			$this->context->json['error'] = $e->getMessage();
+			if (\Chibi\Util\Headers::getCode() != 401)
+				\Chibi\Util\Headers::setCode(400);
+			$context->json['error'] = $e->getMessage();
 		}
 	}
 }
