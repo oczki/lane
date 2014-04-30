@@ -35,7 +35,7 @@ Assets::setTitle('lane&nbsp;&ndash; about');
 		<p>Lane is <a href="https://github.com/rr-/lane/">open source</a> and released under MIT license.</p>
 
 		<p>Developers might want to take a look at <?= HtmlHelper::wrapTag('a', ['href' =>
-		\Chibi\Router::linkTo('IndexController', 'apiDocumentationAction'])], 'lane API documentation') ?>.</p>
+		\Chibi\Router::linkTo(['IndexController', 'apiDocumentationAction'])], 'lane API documentation') ?>.</p>
 	</section>
 
 	<section>

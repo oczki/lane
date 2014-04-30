@@ -24,8 +24,7 @@ class Logger
 	private static function open()
 	{
 		$config = getConfig();
-		$context = getContext();
-		$logPath = $context->rootDir . DIRECTORY_SEPARATOR . $config->main->logPath;
+		$logPath = $config->rootDir . DIRECTORY_SEPARATOR . $config->main->logPath;
 		self::$fh = fopen($logPath, 'ab');
 	}
 

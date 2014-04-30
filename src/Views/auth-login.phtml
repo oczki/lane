@@ -36,7 +36,7 @@ Assets::addScript('auth-login.js');
 
 		<p>To reset your password, enter the e-mail address you specified during registration.</p>
 
-		<form class="forgot-form" action="<?= \Chibi\Router::linkTo(['AuthController', 'doResetPasswordAction']) ?>" method="post">
+		<form class="forgot-form" action="<?= \Chibi\Router::linkTo(['AuthController', 'resetPasswordAction']) ?>" method="post">
 
 			<div class="form-wrapper">
 

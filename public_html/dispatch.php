@@ -22,6 +22,7 @@ if (!Auth::isLoggedIn())
 \Chibi\Router::register(['IndexController', 'helpAction'], 'GET', '/help');
 \Chibi\Router::register(['IndexController', 'aboutAction'], 'GET', '/about');
 \Chibi\Router::register(['IndexController', 'apiDocumentationAction'], 'GET', '/api-docs');
+\Chibi\Router::register(['IndexController', 'exampleAction'], 'GET', '/example');
 
 \Chibi\Router::register(['ApiController', 'runAction'], 'POST', '/api');
 
