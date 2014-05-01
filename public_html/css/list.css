@@ -28,8 +28,8 @@ body.list {
 	display: table-cell;
 }
 #inner-content {
-	margin: 0.75em;
-	clear: both;
+	margin: 0.75em 1.5em 0.75em 0.75em;
+	padding-right: 150px;
 	min-height: 40em;
 }
 
@@ -42,3 +42,10 @@ body.list {
 		display: block;
 	}
 
+
+#right-ad-unit {
+	margin: 0.75em;
+	width: 150px;
+	height: 600px;
+	float: right;
+}
