@@ -45,6 +45,37 @@
 		opacity: 1;
 	}
 
+/* circle on hover */
+#top-menu .big-buttons li .icon {
+	position: relative;
+	z-index: 2;
+}
+	#top-menu .big-buttons li {
+		position: relative;
+	}
+	#top-menu .big-buttons li:before {
+		position: absolute;
+		top: 9px;
+		left : 10px;
+		width: 0;
+		height: 0;
+		margin-top: 0.5em;
+		margin-left: 1em;
+		display: block;
+		content: ' ';
+		z-index: 1;
+		background: hsla(215,97%,80%,0.5);
+		border-radius: 50%;
+
+		transition: width 0.15s, height 0.15s, left 0.15s, top 0.15s;
+	}
+	#top-menu .big-buttons li:not(.active):hover:before {
+		top: -6px;
+		left: -5px;
+		width: 30px;
+		height: 30px;
+	}
+
 #menu-trigger.active a {
 	position: relative;
 	background: white;
