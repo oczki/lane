@@ -1,3 +1,10 @@
+html,
+body,
+#main,
+#outer-wrapper {
+	height:100%;
+}
+
 body.list {
 	background: #ededed;
 	margin: 0;
