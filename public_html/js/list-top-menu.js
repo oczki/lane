@@ -1,11 +1,7 @@
 function showMenu()
 {
 	$('#menu-trigger, #menu').addClass('active');
-	$('#menu').position({
-		collision: 'flip',
-		of: '#menu-trigger',
-		my: 'right top',
-		at: 'right bottom'});
+	repositionMenu();
 }
 
 function hideMenu()
@@ -21,8 +17,22 @@ function toggleMenu()
 		hideMenu();
 }
 
+function repositionMenu()
+{
+	$('#menu').position({
+		collision: 'fill',
+		of: '#menu-trigger',
+		my: 'right top',
+		at: 'right bottom'});
+}
+
 $(function()
 {
+	$(window).resize(function()
+	{
+		if ($('#menu').is(':visible'))
+			repositionMenu();
+	});
 	$('html').click(function()
 	{
 		hideMenu();
