@@ -31,7 +31,7 @@ $showRow = function($row)
 ?>
 	<?= HtmlHelper::tag('tr', ['data-content-id' => $row->id]) ?>
 		<?php foreach (ListService::getCells($row) as $columnIndex => $rowContent): ?>
-			<?
+			<?php
 				$column = ListService::getColumn($this->context->list, $columnIndex);
 				if ($column === null)
 					continue;
