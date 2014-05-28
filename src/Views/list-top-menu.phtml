@@ -12,6 +12,19 @@
 	?>
 
 	<ul class="big-buttons">
+		<?php if (Auth::isLoggedIn()
+			and isset($this->context->list)
+			and $this->context->list->userId != Auth::getLoggedInUser()->id): ?>
+
+			<li>
+				<?= HtmlHelper::wrapTag('a', [
+					'class' => 'back-to-lane',
+					'href' => \Chibi\Router::linkTo(['ListController', 'viewAction'], [
+						'userName' => Auth::getLoggedInUser()->name])],
+					'<i class="icon icon-lane"></i> <span>Back to your lane</span>') ?>
+			</li>
+		<?php endif ?>
+
 		<?php if ($this->context->canEdit): ?>
 			<li>
 				<?= HtmlHelper::wrapTag('a', [
@@ -51,24 +64,6 @@
 						\Chibi\Router::linkTo(['UserController', 'accountSettingsAction'], [
 							'userName' => Auth::getLoggedInUser()->name])];
 
-					$links []= [
-						'icon-import',
-						'import',
-						'Import new list',
-						\Chibi\Router::linkTo(['ListController', 'importAction'], [
-							'userName' => $this->context->user->name])];
-
-					if (isset($this->context->list))
-					{
-						$links []= [
-							'icon-export',
-							'export',
-							'Export this list',
-							\Chibi\Router::linkTo(['ListController', 'exportAction'], [
-								'userName' => $this->context->user->name,
-								'id' => $this->context->list->urlName])];
-					}
-
 					if (isset($this->context->list) and $this->context->list->userId == Auth::getLoggedInUser()->id)
 					{
 						$links []= [
@@ -78,6 +73,31 @@
 							\Chibi\Router::linkTo(['ListController', 'viewAction'], [
 								'userName' => $this->context->user->name,
 								'id' => $this->context->list->urlName, 'guest' => 'guest'])];
+					}
+
+					$links []= null;
+
+					if (isset($this->context->list) and $this->context->list->userId == Auth::getLoggedInUser()->id)
+					{
+						$links []= [
+							'icon-import',
+							'import',
+							'Import new list',
+							\Chibi\Router::linkTo(['ListController', 'importAction'], [
+								'userName' => $this->context->user->name])];
+					}
+
+					if (isset($this->context->list))
+					{
+						$links []= [
+							'icon-export',
+							'export',
+							$this->context->list->userId != Auth::getLoggedInUser()->id
+								? 'Steal this list'
+								: 'Export this list',
+							\Chibi\Router::linkTo(['ListController', 'exportAction'], [
+								'userName' => $this->context->user->name,
+								'id' => $this->context->list->urlName])];
 					}
 
 				}
@@ -92,6 +112,8 @@
 							'id' => $this->context->list->urlName])];
 				}
 
+				$links []= null;
+
 				$links []= [
 					'icon-question',
 					'help',
@@ -103,6 +125,8 @@
 					'about',
 					'About',
 					\Chibi\Router::linkTo(['IndexController', 'aboutAction'])];
+
+				$links []= null;
 
 				if (Auth::isLoggedIn())
 				{
@@ -128,12 +152,16 @@
 				}
 			?>
 			<?php foreach ($links as $link): ?>
-				<?php list ($iconClass, $itemClass, $text, $url) = $link ?>
-				<li>
-					<?= HtmlHelper::wrapTag('a',
-						['href' => $url, 'class' => $itemClass],
-						'<i class="icon ' . $iconClass . '"></i>' . $text) ?>
-				</li>
+				<?php if ($link === null): ?>
+				<hr/>
+				<?php else: ?>
+					<?php list ($iconClass, $itemClass, $text, $url) = $link ?>
+					<li>
+						<?= HtmlHelper::wrapTag('a',
+							['href' => $url, 'class' => $itemClass],
+							'<i class="icon ' . $iconClass . '"></i>' . $text) ?>
+					</li>
+				<?php endif ?>
 			<?php endforeach ?>
 		</ul>
 	</div>

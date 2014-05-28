@@ -116,6 +116,7 @@ a:hover .icon {
 .icon-information       { background-position: -440px 0; }
 .icon-exit              { background-position: -460px 0; }
 .icon-key               { background-position: -480px 0; }
+.icon-lane              { background-position: -500px 0; }
 
 input[type=radio],
 input[type=checkbox] {
